@@ -1,4 +1,5 @@
 <template>
+    <navber></navber>
     <view class="content">
         <image class="logo" src="/static/logo.png"></image>
         <view class="text-area">
@@ -9,6 +10,7 @@
 </template>
 
 <script setup>
+import navber from "../../components/navber/navber.vue";
 import { useMainDatas } from "../../store/mainDatas";
 import "../../network/interceptor";
 import { uniReq } from "../../network/request";
