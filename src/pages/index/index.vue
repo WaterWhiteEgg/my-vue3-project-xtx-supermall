@@ -1,6 +1,6 @@
 <template>
     <navber></navber>
-    <swiper-mian></swiper-mian>
+    <swiper-mian :swiperData="swiperData"></swiper-mian>
     <view class="content">
         <image class="logo" src="/static/logo.png"></image>
         <view class="text-area">
@@ -14,26 +14,39 @@
 import navber from "../../components/navber/navber.vue";
 import { useMainDatas } from "../../store/mainDatas";
 import "../../network/interceptor";
+import { banner } from "../../network/banner";
+
 import { uniReq } from "../../network/request";
+import doBanner from "./js/doBanner";
 import swiperMian from "../../components/swiper/swiperMian.vue";
+import { onMounted, ref } from "vue";
 const mainDatas = useMainDatas();
 const testAdd = () => {
     mainDatas.increment();
     // 使用请求封装
-    uniReq({
-        url: "/home/banner",
-        data: {},
-        header: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-        },
-        method: "GET",
-        sslVerify: true,
-    }).then((res) => {
-        console.log(res);
-    });
+    // uniReq({
+    //     url: "/home/banner",
+    //     data: {},
+    //     header: {
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json",
+    //         "X-Requested-With": "XMLHttpRequest",
+    //     },
+    //     method: "GET",
+    //     sslVerify: true,
+    // }).then((res) => {
+    //     console.log(res);
+    // });
 };
+// 首页渲染时触发
+const swiperData = ref();
+onMounted(() => {
+    // 请求广告数据
+    banner().then((res) => {
+        swiperData.value = res.data.result;
+        console.log(swiperData.value);
+    });
+});
 </script>
 
 <style>
