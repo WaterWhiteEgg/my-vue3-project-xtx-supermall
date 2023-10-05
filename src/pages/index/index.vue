@@ -44,7 +44,7 @@ onMounted(() => {
     // 请求广告数据
     banner().then((res) => {
         swiperData.value = res.data.result;
-        console.log(swiperData.value);
+        // console.log(swiperData.value);
     });
 });
 </script>
