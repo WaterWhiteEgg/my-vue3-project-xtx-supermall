@@ -50,6 +50,7 @@ onMounted(() => {
 </script>
 
 <style>
+@import url("../../static/icon/iconfont.css");
 .content {
     display: flex;
     flex-direction: column;
