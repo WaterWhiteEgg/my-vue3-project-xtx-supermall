@@ -6,13 +6,21 @@
             <text class="navber-title-p">新鲜 · 亲民 · 便捷</text>
         </view>
         <view class="search">
-            <view class="search-box">
+            <view
+                class="search-box"
+                :class="{ 'search-input-flag': inputFlag }"
+            >
                 <input
                     type="text"
                     placeholder="搜索商品"
                     class="search-input iconfont"
+                    @focus="focus"
+                    @blur="blur"
                 />
-                <text class="search-QR iconfont icon-erweima"></text>
+                <text
+                    class="search-QR iconfont icon-erweima"
+                    @click="searchQR"
+                ></text>
             </view>
         </view>
     </view>
@@ -21,14 +29,30 @@
 // uni.getSystemInfoSync获取同步信息，这里用于获取屏幕适配的数值
 
 import { computed, ref } from "vue";
+import { scanCodePr } from "@/utils/promise/scanCode.js";
 
 // 通过安全距离的获取可以动态的适配各种机型的头部距离
 const { safeAreaInsets } = uni.getSystemInfoSync();
+// 获得与失去焦点
+import { inputFlag, focus, blur } from "./js/input.js";
 const searchValue = ref("");
 const input = () => {};
 const search = () => {};
+
+// 扫码提供
+const searchQR = () => {
+    scanCodePr()
+        //   成功后返回
+        .then((res) => {
+            console.log(res);
+        })
+        //   扫码失败
+        .catch((error) => {
+            console.log(error);
+        });
+};
 </script>
-<style >
+<style>
 @import url("../../static/icon/iconfont.css");
 
 .navber {
@@ -83,6 +107,10 @@ const search = () => {};
     padding: 0 3vw;
     font-size: 35rpx;
     pointer-events: none; /* 避免伪元素干扰交互 */
+}
+.search-input-flag {
+    background-color: #fffffd;
+    box-shadow: 0 0 20rpx rgba(255, 255, 255, 0.8);
 }
 .search-QR {
     width: 10vw;
