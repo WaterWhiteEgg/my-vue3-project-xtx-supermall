@@ -1,56 +1,43 @@
 <template>
     <navber></navber>
     <swiper-mian :swiperData="swiperData"></swiper-mian>
-    <view class="content">
-        <image class="logo" src="/static/logo.png"></image>
-        <view class="text-area">
-            <text class="title" @click="testAdd"> {{ mainDatas.count }}</text>
-            <uni-badge text="dddddddddddd"></uni-badge>
-        </view>
-    </view>
+    <view class="content"> </view>
 </template>
 
 <script setup>
 import navber from "../../components/navber/navber.vue";
-import { useMainDatas } from "../../store/mainDatas";
 import "../../network/interceptor";
-import { banner } from "../../network/banner";
+import { bannerData } from "./js/bannerData";
+import { hotMutli } from "../../network/home";
 
-import { uniReq } from "../../network/request";
-import doBanner from "./js/doBanner";
 import swiperMian from "../../components/swiper/swiperMian.vue";
 import { onMounted, ref } from "vue";
-const mainDatas = useMainDatas();
-const testAdd = () => {
-    mainDatas.increment();
-    // 使用请求封装
-    // uniReq({
-    //     url: "/home/banner",
-    //     data: {},
-    //     header: {
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json",
-    //         "X-Requested-With": "XMLHttpRequest",
-    //     },
-    //     method: "GET",
-    //     sslVerify: true,
-    // }).then((res) => {
-    //     console.log(res);
-    // });
-};
-// 首页渲染时触发
+
 const swiperData = ref();
+// 首页渲染时触发
 onMounted(() => {
     // 请求广告数据
-    banner().then((res) => {
-        swiperData.value = res.data.result;
+    bannerData().then((res) => {
+        // 利用res.status返回成功或错误的结果
+        if (!res.status) {
+            // 成功获取数据
+            swiperData.value = res.data;
+        } else {
+            // 失败目前啥也不干，不是一定要用这个地方的可以去doBanner里面
+            // 写逻辑
+        }
         // console.log(swiperData.value);
+    });
+    // 测试
+    hotMutli().then((res) => {
+        console.log(res);
     });
 });
 </script>
 
 <style>
 @import url("../../static/icon/iconfont.css");
+
 .content {
     display: flex;
     flex-direction: column;
