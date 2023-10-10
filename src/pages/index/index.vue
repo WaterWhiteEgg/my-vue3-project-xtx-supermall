@@ -1,19 +1,22 @@
 <template>
     <navber></navber>
     <swiper-mian :swiperData="swiperData"></swiper-mian>
-    <view class="content"> </view>
+    <indexMutli :mutliData="mutliData"></indexMutli>
 </template>
 
 <script setup>
 import navber from "../../components/navber/navber.vue";
 import "../../network/interceptor";
 import { bannerData } from "./js/bannerData";
-import { hotMutli } from "../../network/home";
+import { hotMutli, mutli } from "../../network/home";
 
 import swiperMian from "../../components/swiper/swiperMian.vue";
+import indexMutli from "./indexChild/indexMutli.vue";
+
 import { onMounted, ref } from "vue";
 
 const swiperData = ref();
+const mutliData = ref([]);
 // 首页渲染时触发
 onMounted(() => {
     // 请求广告数据
@@ -22,14 +25,22 @@ onMounted(() => {
         if (!res.status) {
             // 成功获取数据
             swiperData.value = res.data;
-        } else {
-            // 失败目前啥也不干，不是一定要用这个地方的可以去doBanner里面
-            // 写逻辑
         }
+        //  else {
+        // 失败目前啥也不干，不是一定要用这个地方的可以去doBanner里面
+        // 写逻辑
+        // }
         // console.log(swiperData.value);
     });
-    // 测试
+    //热点推荐请求
     hotMutli().then((res) => {
+        console.log(res);
+    });
+    //前台图片数据请求
+
+    mutli().then((res) => {
+        // 获取前台图片数组
+        mutliData.value = res.data.result;
         console.log(res);
     });
 });
