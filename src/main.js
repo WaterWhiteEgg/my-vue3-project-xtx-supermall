@@ -16,3 +16,6 @@ export function createApp() {
 		Pinia
 	};
 }
+
+// 全局使用字体图标
+import "../src/static/icon/iconfont.css"

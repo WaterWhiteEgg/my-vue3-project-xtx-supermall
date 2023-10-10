@@ -16,6 +16,13 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "首页"
 			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "我的"
+			}
 		}
 	],
 	"globalStyle": {
@@ -23,5 +30,25 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"iconfontSrc": "./static/icon/iconfont.ttf",
+		"color": "#000000",
+		"backgroundColor": "#ffffff",
+		"selectedColor": "#00ad26",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "./static/iconPng/notActive/home-g.png",
+				"selectedIconPath": "./static/iconPng/active/home-g.png"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"text": "用户",
+				"iconPath": "./static/iconPng/notActive/wode.png",
+				"selectedIconPath": "./static/iconPng/active/wode.png"
+			}
+		]
 	}
 }
