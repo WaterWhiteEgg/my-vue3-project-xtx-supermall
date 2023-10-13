@@ -28,7 +28,7 @@ const props = defineProps({
     text-align: center;
     font-size: 28rpx;
     color: #3e3e3e;
-    background-color: #f9f9f937;
+    background-color: #f9f9f900;
 }
 .mutli-box {
     display: flex;

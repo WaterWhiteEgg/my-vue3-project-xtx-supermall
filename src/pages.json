@@ -32,7 +32,6 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
-		"iconfontSrc": "./static/icon/iconfont.ttf",
 		"color": "#000000",
 		"backgroundColor": "#ffffff",
 		"selectedColor": "#00ad26",

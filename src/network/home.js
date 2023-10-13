@@ -1,4 +1,4 @@
-// 请求广告
+
 import { uniReq } from "./request";
 
 // 前台好物

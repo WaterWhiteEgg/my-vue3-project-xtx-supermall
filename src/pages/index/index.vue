@@ -2,6 +2,8 @@
     <navber></navber>
     <swiper-mian :swiperData="swiperData"></swiper-mian>
     <indexMutli :mutliData="mutliData"></indexMutli>
+    <IndexHotMutil :hotMutilData="hotMutilData"></IndexHotMutil>
+    <guessLike></guessLike>
 </template>
 
 <script setup>
@@ -12,11 +14,13 @@ import { hotMutli, mutli } from "../../network/home";
 
 import swiperMian from "../../components/swiper/swiperMian.vue";
 import indexMutli from "./indexChild/indexMutli.vue";
-
+import guessLike from "../../components/Content/guessLike/guessLike.vue"
 import { onMounted, ref } from "vue";
+import IndexHotMutil from "./indexChild/indexHotMutil.vue";
 
 const swiperData = ref();
 const mutliData = ref([]);
+const hotMutilData = ref([])
 // 首页渲染时触发
 onMounted(() => {
     // 请求广告数据
@@ -34,14 +38,15 @@ onMounted(() => {
     });
     //热点推荐请求
     hotMutli().then((res) => {
-        console.log(res);
+        // 获取热点请求数据
+        hotMutilData.value = res.data.result
+        // console.log(res.data.result);
     });
     //前台图片数据请求
-
     mutli().then((res) => {
         // 获取前台图片数组
         mutliData.value = res.data.result;
-        console.log(res);
+        // console.log(res);
     });
 });
 </script>
