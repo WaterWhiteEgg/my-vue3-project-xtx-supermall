@@ -2,7 +2,7 @@
     <scroll-view class="scroll" scroll-y @scrolltolower="scrolltolower">
         <view class="showbox">
             <view
-                v-for="(item) in guesslikeDataArray"
+                v-for="item in guesslikeDataArray"
                 :key="item.id"
                 class="showbox-item"
             >
@@ -20,6 +20,8 @@
     </scroll-view>
 </template>
 <script setup>
+import { debounce } from "../../utils/debounce";
+
 // 获取渲染数据
 const props = defineProps({
     guesslikeDataArray: {
@@ -35,6 +37,7 @@ const emit = defineEmits(["tolower"]);
 const scrolltolower = () => {
     // 触发下拉事件时通知父组件
     emit("tolower");
+    // console.log(props.guesslikeDataArray);
 };
 </script>
 <style scoped>

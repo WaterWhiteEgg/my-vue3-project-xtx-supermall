@@ -2,7 +2,7 @@
 import { uniReq } from "./request";
 
 // 猜你喜欢
-export function guesslike(page = 1, pageSize = 10) {
+export function guesslike(page, pageSize) {
     return uniReq({
         url: "/home/goods/guessLike",
         header: {
