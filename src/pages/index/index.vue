@@ -1,4 +1,5 @@
 <template>
+    <skeleton v-if="isSkeleton"></skeleton>
     <navber></navber>
     <swiper-mian :swiperData="swiperData"></swiper-mian>
     <indexMutli :mutliData="mutliData"></indexMutli>
@@ -9,6 +10,7 @@
 <script setup>
 import navber from "../../components/navber/navber.vue";
 import "../../network/interceptor";
+import skeleton from "../../components/Content/skeleton/skeleton.vue";
 import { bannerData } from "./js/bannerData";
 import { hotMutli, mutli } from "../../network/home";
 
@@ -21,8 +23,11 @@ import IndexHotMutil from "./indexChild/indexHotMutil.vue";
 const swiperData = ref();
 const mutliData = ref([]);
 const hotMutilData = ref([])
+const isSkeleton = ref(true)
 // 首页渲染时触发
 onMounted(() => {
+    // 骨架屏隐藏
+    isSkeleton.value = false
     // 请求广告数据
     bannerData().then((res) => {
         // 利用res.status返回成功或错误的结果
@@ -49,6 +54,9 @@ onMounted(() => {
         // console.log(res);
     });
 });
+
+
+
 </script>
 
 <style>
