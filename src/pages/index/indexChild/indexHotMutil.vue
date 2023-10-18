@@ -5,7 +5,12 @@
             :key="item.id"
             class="hotmutil-item"
         >
-            <navigator url="/pages/hot/hot" hover-class="none" class="cards">
+            <navigator
+                :url="'/pages/hot/hot?id=' + item.id"
+                hover-class="none"
+                class="cards"
+            >
+            {{item.id}}
                 <view class="hotmutil-textbox">
                     <text>{{ item.title }}</text>
                     <text class="hotmutil-alt">{{ item.alt }}</text>
@@ -29,7 +34,7 @@ const props = defineProps({
 });
 </script>
 
-<style>
+<style scoped>
 .hotmutil {
     display: flex;
     flex-wrap: wrap;
