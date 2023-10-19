@@ -28,7 +28,7 @@
 			"path": "pages/hot/hot",
 			"style": {
 				"?navigationBarTitleText": "热门推荐",
-				"navigationBarTitleText": "..."
+				"navigationBarTitleText": "hot."
 			}
 		}
 	],

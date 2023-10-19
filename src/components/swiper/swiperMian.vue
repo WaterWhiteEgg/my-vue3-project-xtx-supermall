@@ -50,7 +50,7 @@ const change = (e) => {
     border-radius: 0;
 }
 .swiper-box {
-    background-color: blue;
+    background-color: rgb(240, 240, 240);
     height: 20vh;
 }
 .swiper-item {

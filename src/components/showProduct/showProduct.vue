@@ -2,7 +2,7 @@
     <scroll-view class="scroll" scroll-y @scrolltolower="scrolltolower">
         <view class="showbox">
             <view
-                v-for="item in guesslikeDataArray"
+                v-for="item in dataArray"
                 :key="item.id"
                 class="showbox-item"
             >
@@ -24,7 +24,7 @@ import { debounce } from "../../utils/debounce";
 
 // 获取渲染数据
 const props = defineProps({
-    guesslikeDataArray: {
+    dataArray: {
         type: Array,
         default: function () {
             return [];

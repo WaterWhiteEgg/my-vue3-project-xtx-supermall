@@ -1,6 +1,6 @@
 <template>
     <view class="guesslike-title"> ✨猜你喜欢✨ </view>
-    <showProduct :guesslikeDataArray="guesslikeDataArray" @tolower="tolower"></showProduct>
+    <showProduct :dataArray="guesslikeDataArray" @tolower="tolower"></showProduct>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";

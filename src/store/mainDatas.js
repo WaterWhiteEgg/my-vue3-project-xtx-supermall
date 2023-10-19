@@ -2,13 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useMainDatas = defineStore('mainDatas', () => {
-    const count = ref(1);
-    function increment() {
-        count.value++;
-    }
-
-    return { count, increment };
-
+  
 }, {
     // 设置
 

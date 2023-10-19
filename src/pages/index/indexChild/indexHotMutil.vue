@@ -10,7 +10,6 @@
                 hover-class="none"
                 class="cards"
             >
-            {{item.id}}
                 <view class="hotmutil-textbox">
                     <text>{{ item.title }}</text>
                     <text class="hotmutil-alt">{{ item.alt }}</text>
