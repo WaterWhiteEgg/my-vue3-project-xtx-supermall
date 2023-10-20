@@ -2,8 +2,9 @@
     <hotSkeleton v-if="showing().isSkeleton"></hotSkeleton>
     <view class="hot">
         <hotTitle :img="hotData && hotData.bannerPicture"></hotTitle>
-        <hotTabbar :hotItemArray="hotItemArray"></hotTabbar>
-        <showStaticProduct :dataArray="hotItemArray && hotItemArray[0] && hotItemArray[0].goodsItems.items"></showStaticProduct>
+        <hotTabbar :hotItemArray="hotItemArray" @tabbar-index="changeHotItemArrayIndex"></hotTabbar>
+        <showStaticProduct :dataArray="hotItemActiveArray">
+        </showStaticProduct>
     </view>
 </template>
 
@@ -20,13 +21,14 @@ import { hotNetwork, Hot } from "../../network/hot"
 import { ref, toRaw, onMounted, watch } from 'vue';
 
 // 控制骨架屏开关
-const {closeSkeleton, openSkeleton } = showing()
+const { closeSkeleton, openSkeleton } = showing()
 
 
 const hotArray = ref([])
 const hotData = ref({})
 const hotItemArray = ref([])
 const hotItemActiveArray = ref([])
+
 // 加载时触发，能获取quary
 onLoad((query) => {
     // 开启骨架屏
@@ -46,6 +48,8 @@ onLoad((query) => {
             // 赋值
             hotData.value = res.data.result
             hotItemArray.value = res.data.result.subTypes
+            // 在默认情况下，hotItemActiveArray（活跃的数组）是索引值是0
+            hotItemActiveArray.value = hotItemArray.value[0].goodsItems.items
             // console.log(hotData.value);
             // 动态设置标题
             uni.setNavigationBarTitle({ title: res.data.result.title })
@@ -59,6 +63,11 @@ onLoad((query) => {
 })
 
 
+// 切换hotItemArray的要展示的活跃路由
+const changeHotItemArrayIndex = (index) => {
+    hotItemActiveArray.value = hotItemArray.value[index].goodsItems.items
+
+}
 
 </script>
 
