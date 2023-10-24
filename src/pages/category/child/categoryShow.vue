@@ -1,11 +1,11 @@
 <template>
-    <view class="category-show">
+    <scroll-view scroll-y class="category-show">
         <view v-for="item in categoryActiveItem" :key="item.id">
             {{ item.name }}
             <categoryShowbox :categoryActiveItemGoods="item.goods"></categoryShowbox>
         </view>
 
-    </view>
+    </scroll-view>
 </template>
 <script setup>
 import categoryShowbox from './categoryShowbox.vue';
@@ -22,5 +22,6 @@ const props = defineProps({
 <style scoped>
 .category-show{
     background-color: red;
+    height: 100vh;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <view class="category">
-        <categoryLeft :categoryitem="categoryitem"></categoryLeft>
+        <categoryLeft :categoryitem="categoryitem" @activeItem="activeItem"></categoryLeft>
         <categoryShow :categoryActiveItem="categoryActiveItem"></categoryShow>
     </view>
 </template>
@@ -27,6 +27,12 @@ onMounted(() => {
 
     })
 })
+
+// 获取categoryLeft的活跃点击
+const activeItem = (index) => {
+    // 重新渲染需要出示的数组
+    categoryActiveItem.value = categoryitem.value[index].children
+}
 </script>
 <style scoped>
 .category {

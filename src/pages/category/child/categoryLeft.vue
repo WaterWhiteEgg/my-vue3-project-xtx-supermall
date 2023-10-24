@@ -1,11 +1,12 @@
 <template>
-    <view class="category-left">
         <scroll-view scroll-y class="category-scroll">
-            <view v-for="item in categoryitem" :key="item.id">{{ item.name }}</view>
+            <view v-for="(item, index) in categoryitem" :key="item.id" :class="{ 'active': activeItem === index }"
+                @tap="changeActiveItem(index)">{{
+                    item.name }}</view>
         </scroll-view>
-    </view>
 </template>
 <script setup>
+import { ref } from 'vue'
 // 渲染左列表
 const props = defineProps({
     categoryitem: {
@@ -15,9 +16,22 @@ const props = defineProps({
         }
     }
 })
+const emits = defineEmits(['activeItem'])
+// 活跃点击切换
+const activeItem = ref(0)
+const changeActiveItem = (index) => {
+    activeItem.value = index
+    // 还要通知父元素改变了index
+    emits("activeItem", index)
+
+}
 </script>
 <style scoped>
-.category-left{
+.category-scroll {
     width: 15vw;
+}
+
+.active {
+    background-color: red;
 }
 </style>
