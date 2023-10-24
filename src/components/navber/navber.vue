@@ -5,6 +5,7 @@
             <text class="navber-title-sign">|</text>
             <text class="navber-title-p">新鲜 · 亲民 · 便捷</text>
         </view>
+        <!-- <search></search> -->
         <view class="search">
             <view
                 class="search-box"
@@ -31,13 +32,14 @@
 import { computed, ref } from "vue";
 import { scanCodePr } from "@/utils/promise/scanCode.js";
 
+import search from "../../components/search/search.vue"
+
 // 通过安全距离的获取可以动态的适配各种机型的头部距离
 const { safeAreaInsets } = uni.getSystemInfoSync();
 // 获得与失去焦点
 import { inputFlag, focus, blur } from "./js/input.js";
 const searchValue = ref("");
 const input = () => {};
-const search = () => {};
 
 // 扫码提供
 const searchQR = () => {

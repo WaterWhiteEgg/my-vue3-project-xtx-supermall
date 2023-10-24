@@ -14,15 +14,14 @@ const value = ref("")
 
 </script>
 <style scoped>
-.search-bgc{
-}
+
 .search-container {
     display: flex;
     align-items: center;
     margin: 1vh 1vw;
     width: 98vw;
     border-radius: 35px;
-    background-color: #f0f0f0;
+    background-color: #f5f5f5;
 
 }
 
