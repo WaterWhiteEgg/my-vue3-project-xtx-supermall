@@ -21,7 +21,7 @@ const value = ref("")
     margin: 1vh 1vw;
     width: 98vw;
     border-radius: 35px;
-    background-color: #f5f5f5;
+    background-color: #fbfbfb;
 
 }
 
@@ -29,6 +29,7 @@ const value = ref("")
     font-family: "iconfont";
     font-size: 25rpx;
     padding: 0 2vw;
+    color: #000;
 }
 
 .search {
@@ -36,7 +37,5 @@ const value = ref("")
     font-size: 25rpx;
     font-weight: 100;
     color: #000;
-    border: none;
-    outline: none;
 }
 </style>

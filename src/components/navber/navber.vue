@@ -5,24 +5,10 @@
             <text class="navber-title-sign">|</text>
             <text class="navber-title-p">新鲜 · 亲民 · 便捷</text>
         </view>
-        <!-- <search></search> -->
         <view class="search">
-            <view
-                class="search-box"
-                :class="{ 'search-input-flag': inputFlag }"
-            >
-                <input
-                    type="text"
-                    placeholder="搜索商品"
-                    class="search-input iconfont"
-                    @focus="focus"
-                    @blur="blur"
-                />
-                <text
-                    class="search-QR iconfont icon-erweima"
-                    @click="searchQR"
-                ></text>
-            </view>
+
+            <search class="search-index"></search>
+            <text class="search-QR iconfont icon-erweima" @click="searchQR"></text>
         </view>
     </view>
 </template>
@@ -39,7 +25,7 @@ const { safeAreaInsets } = uni.getSystemInfoSync();
 // 获得与失去焦点
 import { inputFlag, focus, blur } from "./js/input.js";
 const searchValue = ref("");
-const input = () => {};
+const input = () => { };
 
 // 扫码提供
 const searchQR = () => {
@@ -64,59 +50,41 @@ const searchQR = () => {
     background-color: #00db80;
     font-weight: 900;
 }
+
 .navber-title {
     margin-left: 5vw;
     letter-spacing: 3rpx;
 }
+
 .navber-title-main {
     font-family: "Courier New", Courier, monospace;
 }
+
 .navber-title-p {
     padding: 0 2vw;
     font-size: 30rpx;
     font-weight: normal;
     letter-spacing: 0rpx;
 }
+
 .navber-title-sign {
     padding: 0 3vw;
     font-weight: normal;
 }
-.search {
-    padding: 1vh;
+
+
+.search{
+    position: relative;
+    margin-top: 2vh;
+    padding-bottom:.1vh ;
 }
-.search-box {
-    display: flex;
-    margin: 1vh 0 1vh 0;
-    border-radius: 35rpx;
-    background-color: #fff;
-}
-.search-input {
-    margin: auto 1vw;
-    display: flex;
-    width: 90vw;
-    height: 3vh;
-    font-size: 25rpx;
-    font-weight: 100;
-    border-radius: 35rpx;
-    color: #000;
-    background-color: #fff;
-}
-.search-input::before {
-    content: "\e86e"; /* 字体图标的 Unicode 编码 */
-    font-family: "iconfont"; /* 字体图标所在的字体库 */
-    display: flex;
-    align-items: center;
-    padding: 0 3vw;
-    font-size: 35rpx;
-    pointer-events: none; /* 避免伪元素干扰交互 */
-}
-.search-input-flag {
-    background-color: #fffffd;
-    box-shadow: 0 0 20rpx rgba(255, 255, 255, 0.8);
-}
+
 .search-QR {
-    width: 10vw;
+    position: absolute;
+    top: 0;
+    right: 5vw;
     padding: 1vh 0;
+    z-index: 9999;
     font-size: 35rpx;
     border-radius: 35rpx;
 }
