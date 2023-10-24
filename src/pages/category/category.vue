@@ -1,4 +1,5 @@
 <template>
+        <search></search>
     <view class="category">
         <categoryLeft :categoryitem="categoryitem" @activeItem="activeItem"></categoryLeft>
         <categoryShow :categoryActiveItem="categoryActiveItem"></categoryShow>
@@ -9,6 +10,7 @@ import { onMounted, ref } from 'vue';
 
 import categoryLeft from './child/categoryLeft.vue';
 import categoryShow from './child/categoryShow.vue';
+import search from '../../components/search/search.vue';
 // 挂载时执行
 import { category } from "../../network/category"
 // 分离值
