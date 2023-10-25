@@ -2,7 +2,7 @@
         <search></search>
     <view class="category">
         <categoryLeft :categoryitem="categoryitem" @activeItem="activeItem"></categoryLeft>
-        <categoryShow :categoryActiveItem="categoryActiveItem"></categoryShow>
+        <categoryShow :categoryActiveItem="categoryActiveItem" :categoryActivePic="categoryActivePic"></categoryShow>
     </view>
 </template>
 <script setup>
@@ -17,6 +17,7 @@ import { category } from "../../network/category"
 const categoryitem = ref([])
 const categoryActiveItem = ref([])
 const categoryActiveItemGoods = ref([])
+const categoryActivePic = ref('')
 
 onMounted(() => {
     // 进行分页的网路请求
@@ -26,7 +27,7 @@ onMounted(() => {
         categoryitem.value = res.data.result
         categoryActiveItem.value = categoryitem.value[0].children
         categoryActiveItemGoods.value = categoryActiveItem.value.goods
-
+        categoryActivePic.value = categoryitem.value[0].picture
     })
 })
 
