@@ -36,6 +36,12 @@
 				"?navigationBarTitleText": "热门推荐",
 				"navigationBarTitleText": "hot."
 			}
+		},
+		{
+			"path": "pages/showall/showall",
+			"style": {
+				"navigationBarTitleText": "详细列表"
+			}
 		}
 	],
 	"globalStyle": {
