@@ -1,16 +1,8 @@
 <template>
     <scroll-view class="scroll" scroll-y @scrolltolower="scrolltolower">
         <view class="showbox">
-            <view
-                v-for="item in dataArray"
-                :key="item.id"
-                class="showbox-item"
-            >
-                <image
-                    :src="item.picture"
-                    mode="scaleToFill"
-                    class="showbox-pic"
-                />
+            <view v-for="item in dataArray" :key="item.id" class="showbox-item" @tap="toDetail(item.id)">
+                <image :src="item.picture" mode="scaleToFill" class="showbox-pic" />
                 <text class="showbox-title">
                     <text class="showbox-title-name">{{ item.name }}</text>
                     <text class="showbox-title-price">￥{{ item.price }}</text>
@@ -39,6 +31,10 @@ const scrolltolower = () => {
     emit("tolower");
     // console.log(props.guesslikeDataArray);
 };
+// 进入详情页，需要提供id
+const toDetail = (id) => {
+    uni.navigateTo({ url: '/pages/detail/detail?id=' + id })
+}
 </script>
 <style scoped>
 .scroll {
