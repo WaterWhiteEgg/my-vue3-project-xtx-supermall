@@ -14,6 +14,7 @@
 <script setup>
 import { debounce } from "../../utils/debounce";
 
+
 // 获取渲染数据
 const props = defineProps({
     dataArray: {
@@ -32,9 +33,9 @@ const scrolltolower = () => {
     // console.log(props.guesslikeDataArray);
 };
 // 进入详情页，需要提供id
-const toDetail = (id) => {
-    uni.navigateTo({ url: '/pages/detail/detail?id=' + id })
-}
+import { detail } from "../../store/toDetail"
+const { toDetail } = detail()
+
 </script>
 <style scoped>
 .scroll {

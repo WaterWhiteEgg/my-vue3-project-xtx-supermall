@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useMainDatas = defineStore('mainDatas', () => {
-  
+
 }, {
     // 设置
 
