@@ -15,7 +15,8 @@
             class="uni-swiper-dot"
         >
             <swiper class="swiper-box" @change="change" :circular="true">
-                <swiper-item v-for="(item, index) in swiperData" :key="index">
+                <swiper-item v-for="(item, index) in swiperData" :key="item.id" 
+                >
                     <view class="swiper-item">
                         <image :src="item.imgUrl" mode="scaleToFill" />
                     </view>
@@ -27,6 +28,7 @@
 
 <script setup>
 import { ref } from "vue";
+
 
 const props = defineProps({
     swiperData: {
@@ -43,6 +45,8 @@ const mode = "dot";
 const change = (e) => {
     current.value = e.detail.current;
 };
+
+
 </script>
 
 <style>

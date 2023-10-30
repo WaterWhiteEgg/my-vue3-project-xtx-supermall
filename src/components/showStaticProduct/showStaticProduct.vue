@@ -1,6 +1,6 @@
 <template>
     <view class="showbox">
-        <view v-for="(item, index) in dataArray" :key="item.id" class="showbox-item">
+        <view v-for="(item, index) in dataArray" :key="item.id" class="showbox-item" @tap="toDetail(item.id)">
             <image :src="item.picture" mode="scaleToFill" class="showbox-pic" />
             <text class="showbox-title">
                 <text class="showbox-title-name">{{ item.name }}</text>
@@ -13,6 +13,9 @@
 
 
 <script setup>
+
+import { detail } from "../../store/toDetail"
+
 const props = defineProps({
     dataArray: {
         type: Array,
@@ -21,6 +24,10 @@ const props = defineProps({
         }
     }
 })
+
+// 跳转到详情页
+// 进入详情页，需要提供id
+const { toDetail } = detail()
 </script>
 <style scoped>
 .showbox {

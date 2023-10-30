@@ -1,6 +1,6 @@
 <template>
     <view class="category-show-box">
-        <view v-for="item in categoryActiveItemGoods" :key="item.id" class="category-show-item">
+        <view v-for="item in categoryActiveItemGoods" :key="item.id" class="category-show-item" @tap="toDetail(item.id)">
             <view class="category-show-pic">
                 <image :src="item.picture" mode="scaleToFill" />
             </view>
@@ -18,6 +18,9 @@
     </view>
 </template>
 <script setup>
+import { detail } from "../../../store/toDetail"
+
+
 // 渲染右展示区的盒子
 const props = defineProps({
     categoryActiveItemGoods: {
@@ -27,6 +30,8 @@ const props = defineProps({
         }
     }
 })
+// 进入详情页，需要提供id
+const { toDetail } = detail()
 </script>
 <style scoped>
 .category-show-box {
@@ -40,17 +45,19 @@ const props = defineProps({
 .category-show-item {
 
     width: 20vw;
-    margin:1vh 3vw;
+    margin: 1vh 3vw;
 }
 
 .category-show-pic image {
     width: 23vw;
     height: 15vh;
 }
-.category-show-price{
+
+.category-show-price {
     font-size: 25rpx;
     color: rgb(126, 0, 0);
 }
+
 .category-show-title {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -58,4 +65,5 @@ const props = defineProps({
     height: 7vh;
     overflow: hidden;
     text-overflow: ellipsis;
-}</style>
+}
+</style>
