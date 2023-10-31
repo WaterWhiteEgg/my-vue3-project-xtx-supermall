@@ -1,5 +1,4 @@
-  
-  
+
 <template>
     <!-- 轮播图 -->
     <view class="swiper">

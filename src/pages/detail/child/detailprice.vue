@@ -4,7 +4,7 @@
         <view>
             <text class="sign">￥</text>
             <text class="new-price">
-                {{ price }}
+                {{ price.toFixed(2) }}
             </text>
         </view>
         <view v-if="!isNaN(price) && price !== oldPrice">
@@ -49,7 +49,7 @@ const props = defineProps({
 
 .old-sign {
     padding-left: 1vw;
-    font-size: 25rpx;
+    font-size: 15rpx;
     color: red;
 
 

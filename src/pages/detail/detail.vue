@@ -1,13 +1,15 @@
 <template>
     <detailSwiper :detailDataPic="detailDataPic"></detailSwiper>
-    <detailprice :oldPrice="priceData.oldPrice" :price="priceData.price"></detailprice>
+    <detailPrice :oldPrice="priceData.oldPrice" :price="priceData.price"></detailPrice>
+    <detailTitle :name="detailData.name" :desc="detailData.desc"></detailTitle>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
 import { onLoad } from '@dcloudio/uni-app';
 
 import detailSwiper from "./child/detailSwiper.vue";
-import detailprice from "./child/detailprice.vue";
+import detailPrice from "./child/detailprice.vue";
+import detailTitle from "./child/detailTitle.vue"
 
 // 获取id
 // 加载时触发
@@ -19,7 +21,7 @@ const priceData = ref({})
 onLoad((query) => {
     // 获取详情页的数据,query需要传递id
     detail(query.id).then((res) => {
-        console.log(res);
+        console.log(res.data.result);
         detailData.value = res.data.result
         detailDataPic.value = detailData.value.mainPictures
         // 将价格转化为浮点型
