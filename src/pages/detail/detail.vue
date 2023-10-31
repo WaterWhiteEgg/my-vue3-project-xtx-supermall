@@ -2,6 +2,7 @@
     <detailSwiper :detailDataPic="detailDataPic"></detailSwiper>
     <detailPrice :oldPrice="priceData.oldPrice" :price="priceData.price"></detailPrice>
     <detailTitle :name="detailData.name" :desc="detailData.desc"></detailTitle>
+    <detailShop></detailShop>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
@@ -10,6 +11,7 @@ import { onLoad } from '@dcloudio/uni-app';
 import detailSwiper from "./child/detailSwiper.vue";
 import detailPrice from "./child/detailprice.vue";
 import detailTitle from "./child/detailTitle.vue"
+import detailShop from "./child/detailShop.vue";
 
 // 获取id
 // 加载时触发
