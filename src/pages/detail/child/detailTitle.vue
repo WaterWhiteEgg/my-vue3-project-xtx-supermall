@@ -51,9 +51,11 @@ const props = defineProps({
 
 .desc {
     display: block;
-    margin: 1vh 1vw;
+    margin: 0 1vw;
     padding-bottom: 2vh;
     font-size: 25rpx;
     color: red;
 }
+
+
 </style>  
