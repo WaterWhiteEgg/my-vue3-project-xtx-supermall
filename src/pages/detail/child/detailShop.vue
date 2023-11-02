@@ -1,75 +1,72 @@
 <template>
     <view class="shop">
         <view class="shop-fn">
-            <view class="shop-fn-item"><text>ico</text>
+            <view class="shop-fn-item"><text>
+                    <text>&#xe666;</text></text>
                 <text>收藏</text>
             </view>
-            <view class="shop-fn-item"><text>ico</text>
+            <view class="shop-fn-item"><text><text>&#xe8a0;</text> </text>
                 <text>客服</text>
             </view>
-            <view class="shop-fn-item"><text>ico</text>
+            <view class="shop-fn-item"><text><text>&#xe63f;</text> </text>
                 <text>购物车</text>
             </view>
         </view>
-        <view class="shop-buy">
-            <view>添加购物车</view>
-            <view>立即购买</view>
+        <view class="shop-button">
+            <view class="shopcar">添加购物车</view>
+            <view class="buying">立即购买</view>
         </view>
     </view>
 </template>
 <script setup>
 
-const options = [{
-    icon: 'headphones',
-    text: '客服'
-}, {
-    icon: 'shop',
-    text: '店铺',
-    info: 2,
-    infoBackgroundColor: '#007aff',
-    infoColor: "red"
-}, {
-    icon: 'cart',
-    text: '购物车',
-    info: 2
-}]
-const buttonGroup = [{
-    text: '加入购物车',
-    backgroundColor: '#ff0000',
-    color: '#fff'
-},
-{
-    text: '立即购买',
-    backgroundColor: '#ffa200',
-    color: '#fff'
-}
-]
-const onClick = (e) => {
-    uni.showToast({
-        title: `点击${e.content.text}`,
-        icon: 'none'
-    })
-}
-const buttonClick = (e) => {
-    console.log(e)
-    options[2].info++
-}
+
 </script>
 <style scoped>
 .shop {
+    position: absolute;
+    bottom: 0;
+    z-index: 9;
+    padding: .5vh 0;
+    font-family: "iconfont";
     display: flex;
+    justify-content: space-between;
+    font-size: 30rpx;
 }
 
 .shop-fn {
     display: flex;
+    font-size: 30rpx;
+
 }
 
-.shop-buy {
+.shop-fn:first-child {
+    margin-left: 1vw;
+}
+
+.shop-button {
     display: flex;
+}
+
+.shop-button view {
+    padding: 1vh 4vw;
+    margin: 0 1vw;
+    font-size: 35rpx;
+    border-radius: 40rpx;
+    background-color: #12c1a7;
+    color: #fff;
+
 }
 
 .shop-fn-item {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2vw;
+}
+
+.shopcar {
+    background-color: #fe9539 !important;
 }
 </style>
