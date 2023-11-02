@@ -1,6 +1,6 @@
 <template>
   <view class="properties">
-    <view v-for="item in serveItem" :key="item.id" class="serveitem" @click="openPopup(item.id)">
+    <view v-for="item in serveItem" :key="item.id" class="serveitem" @click="activePopup(item.id)">
 
       <view class="serveitem-text">
         <text class="serveitem-name">
@@ -11,7 +11,8 @@
         </text>
       </view>
     </view>
-    <uni-popup ref="popup" type="bottom" background-color="#ffffff" class="popup">
+    <uni-popup ref="popup" type="bottom" background-color="#ffffff" class="popup" :mask-click="false"
+      @maskClick="maskClick">
       <propertiesAddress v-if="isActiveId('address')"></propertiesAddress>
       <propertiesAgreement v-if="isActiveId('agreement')"></propertiesAgreement>
       <propertiesData v-if="isActiveId('select')"></propertiesData>
@@ -20,9 +21,9 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-
+import { computed, ref, watch } from "vue";
 import propertiesAddress from "./childProperties/propertiesAddress.vue";
+
 import propertiesAgreement from "./childProperties/propertiesAgreement.vue";
 import propertiesData from "./childProperties/propertiesData.vue";
 
@@ -48,15 +49,38 @@ const serveItem = ref([
     id: "agreement",
   },
 ]);
+
 // 使用弹窗
-const openPopup = (id) => {
+import { popupShow } from "../../../store/popup";
+const { closePopup, openPopup } = popupShow();
+// 观察isOpen的变化控制弹窗开关
+watch(() => popupShow().isOpen, (newVal) => {
+  if (newVal) {
+    // 弹窗打开时的操作
+    // 启用uniapp-ui弹窗
+    popup.value.open();
+  } else {
+    // 弹窗关闭时的操作
+    // 关闭uniapp-ui弹窗
+    popup.value.close();
+  }
+});
+// 切换活跃的视图，会根据id对比
+const activePopup = (id) => {
   // 切换活跃id显示
   activeId.value = id
-  // 启用uniapp-ui弹窗
-  popup.value.open();
+  // 开启弹窗
+  openPopup()
 
 };
-// 活跃id对应
+// 点击到遮罩外
+const maskClick = () => {
+  // 关闭弹窗
+  closePopup()
+
+}
+
+// 判断活跃是否id对应并返回值
 const isActiveId = computed(() => {
   return (id) => {
     return activeId.value === id
@@ -104,5 +128,4 @@ const isActiveId = computed(() => {
   font-size: 35rpx;
   font-weight: 900;
 }
-
 </style>

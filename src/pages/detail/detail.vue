@@ -42,6 +42,5 @@ onLoad((query) => {
 });
 </script>
 <style scoped>
-.detail-scroll {
-}
+
 </style>
