@@ -50,7 +50,7 @@ const changeActiveItem = (index) => {
     /* 下划线的粗细，可以根据需要进行调整 */
     height: 100%;
     /* 下划线的高度，可以根据需要进行调整 */
-    background-color: rgb(0, 226, 0);
+    background-color: #00e200;
     /* 下划线的颜色 */
     transform: translateX(-50%);
 }
