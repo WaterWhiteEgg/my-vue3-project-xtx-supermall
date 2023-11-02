@@ -1,5 +1,5 @@
 <template>
-    <skeleton v-if="isSkeleton"></skeleton>
+    <skeleton v-if="showing().isSkeleton"></skeleton>
     <navber></navber>
     <swiper-mian :swiperData="swiperData"></swiper-mian>
     <indexMutli :mutliData="mutliData"></indexMutli>
@@ -13,21 +13,25 @@ import "../../network/interceptor";
 import skeleton from "../../components/Content/skeleton/skeleton.vue";
 import { bannerData } from "./js/bannerData";
 import { hotMutli, mutli } from "../../network/home";
+import { showing } from "../../store/show"
 
 import swiperMian from "../../components/swiper/swiperMian.vue";
 import indexMutli from "./indexChild/indexMutli.vue";
 import guessLike from "../../components/Content/guessLike/guessLike.vue"
-import { onMounted, ref } from "vue";
 import IndexHotMutil from "./indexChild/indexHotMutil.vue";
+
+import { onMounted, ref } from "vue";
 
 const swiperData = ref();
 const mutliData = ref([]);
 const hotMutilData = ref([])
-const isSkeleton = ref(true)
+
+// 骨架屏控制
+const { closeSkeleton, openSkeleton, } = showing()
 // 首页渲染时触发
 onMounted(() => {
-    // 骨架屏隐藏
-    isSkeleton.value = false
+    // 骨架屏开启
+    openSkeleton()
     // 请求广告数据
     bannerData().then((res) => {
         // 利用res.status返回成功或错误的结果
@@ -40,7 +44,11 @@ onMounted(() => {
         // 写逻辑
         // }
         // console.log(swiperData.value);
-    });
+    })
+        // bannerData结束时关闭骨架屏
+        .finally(() => {
+            closeSkeleton()
+        })
     //热点推荐请求
     hotMutli().then((res) => {
         // 获取热点请求数据
