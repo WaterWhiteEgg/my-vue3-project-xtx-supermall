@@ -1,11 +1,10 @@
 <template>
-  协议
+  <popupTitle title="服务协议"></popupTitle>
 </template>
 
 <script setup>
+import popupTitle from './title/popupTitle.vue';
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

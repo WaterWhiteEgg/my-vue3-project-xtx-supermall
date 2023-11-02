@@ -1,8 +1,9 @@
 <template>
-  地址栏
+  <popupTitle title="发送至"></popupTitle>
 </template>
 
 <script setup>
+import popupTitle from './title/popupTitle.vue';
 
 </script>
 
