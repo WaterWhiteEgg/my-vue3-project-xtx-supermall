@@ -61,4 +61,3 @@ const props = defineProps({
     text-decoration: line-through;
 }
 </style>
-  
