@@ -24,19 +24,36 @@ const close = () => {
 <style scoped>
 .title {
     display: flex;
-    justify-content: space-between;
+    position: relative;
+    justify-content: center;
     align-items: center;
     height: 7vh;
+    font-size: 35rpx;
 }
 
+.title::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96vw;
+    height: 1px;
+    background-color: #adacac35;
+
+
+
+}
 .title-text {
     padding-left: 2vw;
 }
 
 .close {
+    position: absolute;
+    right: 0;
     padding-right: 5vw;
-    font-size: 35rpx;
+    font-size: 45rpx;
     font-weight: 900;
-    color: rgba(0, 0, 0, 0.377)
+    color: #000000b1
 }
 </style>
