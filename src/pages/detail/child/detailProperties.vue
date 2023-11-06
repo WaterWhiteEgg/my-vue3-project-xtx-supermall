@@ -15,7 +15,7 @@
       @maskClick="maskClick">
       <propertiesAddress v-if="isActiveId('address')"></propertiesAddress>
       <propertiesAgreement v-if="isActiveId('agreement')"></propertiesAgreement>
-      <propertiesData v-if="isActiveId('select')"></propertiesData>
+      <propertiesData v-if="isActiveId('select')" :detailSpecs="detailSpecs"></propertiesData>
     </uni-popup>
   </view>
 </template>
@@ -26,6 +26,15 @@ import propertiesAddress from "./childProperties/propertiesAddress.vue";
 
 import propertiesAgreement from "./childProperties/propertiesAgreement.vue";
 import propertiesData from "./childProperties/propertiesData.vue";
+// 获取尺寸等属性选择
+const prop = defineProps({
+  detailSpecs: {
+    type: Array,
+    default: function () {
+      return []
+    }
+  }
+})
 
 // 进入专门的弹窗
 const activeId = ref("")

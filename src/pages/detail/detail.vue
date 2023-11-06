@@ -6,7 +6,7 @@
       :price="priceData.price"
     ></detailPrice>
     <detailTitle :name="detailData.name" :desc="detailData.desc"></detailTitle>
-    <detailProperties></detailProperties>
+    <detailProperties :detailSpecs="detailSpecs"></detailProperties>
   </scroll-view>
   <detailShop></detailShop>
 </template>
@@ -27,6 +27,7 @@ import { detail } from "../../network/detail";
 const detailData = ref({});
 const detailDataPic = ref([]);
 const priceData = ref({});
+const detailSpecs = ref([])
 onLoad((query) => {
   // 获取详情页的数据,query需要传递id
   detail(query.id).then((res) => {
@@ -38,6 +39,8 @@ onLoad((query) => {
       price: parseFloat(detailData.value.price),
       oldPrice: parseFloat(detailData.value.oldPrice),
     };
+    // 规格
+    detailSpecs.value = res.data.result.specs
   });
 });
 </script>
