@@ -15,8 +15,10 @@
         </view>
       </view>
       <view>
-        <radio :checked="index === activeRadio" @tap="changeRadio(index)" style="transform:scale(0.7) ;"
-          color="#12c1a7" />
+        <radio :checked="index === activeRadio" @tap="
+          changeRadio(index);
+        itemClick(item);
+                                                  " style="transform: scale(0.7)" color="#12c1a7" />
       </view>
     </view>
   </scroll-view>
@@ -26,30 +28,101 @@
 </template>
 
 <script setup>
-import popupTitle from './title/popupTitle.vue';
+import popupTitle from "./title/popupTitle.vue";
 
-import { ref } from 'vue'
+import { pushItemClick } from "./js/pushItemClick"
+
+import { onMounted, ref } from "vue";
+
+const emits = defineEmits(["itemClick"]);
 
 // 测试用的静态地址
-const data = [{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },
-{ name: "坤儿", number: "1145141919", address: "瓦镇德 斯尼亚 EI涯", id: "0" },]
-
-
+const data = [
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address:
+      "瓦镇德 斯尼亚 EI涯qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+  {
+    name: "坤儿",
+    number: "1145141919",
+    address: "瓦镇德 斯尼亚 EI涯",
+    id: "0",
+  },
+];
 
 // 切换单选按钮
-const activeRadio = ref(0)
+const activeRadio = ref(0);
 const changeRadio = (index) => {
-  activeRadio.value = index
-}
+  activeRadio.value = index;
+};
+
+// 挂载时触发
+onMounted(() => {
+  pushItemClick(emits, data[0].address, 0, "address")
+});
+// item点击发送事件
+const itemClick = (item) => {
+  // 将itemValue的内容发送到父元素渲染
+  pushItemClick(emits, data[0].address, 0, "address")
+
+};
 </script>
 
 <style scoped>
@@ -80,7 +153,6 @@ const changeRadio = (index) => {
   display: flex;
   flex-direction: column;
   width: 60vw;
-
 }
 
 .add-button {

@@ -4,8 +4,11 @@
     <view v-for="(item, index) in detailSpecs" :key="item.id" class="detailspecs">
       <text class="name">{{ item.name }}</text>
       <scroll-view scroll-x class="scroll-item">
-        <view v-for="(itemValue, itemIndex) in item.values" class="item" :key="item.name"
-          @tap="changeActiveItem(index, itemIndex)" :class="{ 'active': isActiveItem(index, itemIndex) }">
+        <view v-for="(itemValue, itemIndex) in item.values" class="item" :key="itemValue.name" @tap="
+          changeActiveItem(index, itemIndex);
+        itemClick(itemValue, index);
+                                                                                          "
+          :class="{ active: isActiveItem(index, itemIndex) }">
           <image :src="itemValue.picture" mode="scaleToFill" class="item-image" v-if="itemValue.picture" />
           <text>{{ itemValue.name }}</text>
           <text>{{ item.desc }}</text>
@@ -16,28 +19,43 @@
 </template>
 
 <script setup>
-import popupTitle from './title/popupTitle.vue';
+import popupTitle from "./title/popupTitle.vue";
 
-import { ref, computed } from 'vue'
+import { pushItemClick } from "./js/pushItemClick"
+
+import { ref, computed } from "vue";
 const prop = defineProps({
   detailSpecs: {
     type: Array,
     default: function () {
-      return []
-    }
-  }
-})
+      return [];
+    },
+  },
+});
+
+const emits = defineEmits(["itemClick"]);
+
 // 切换活跃点击
-const activeItem = ref([])
+const activeItem = ref([]);
 // 因为循环的层级有两极，要准确找到的话，得需要数组才可以
-// 通过数组的index决定 detailSpecs 的循环里的 item.values 
+// 通过数组的index决定 detailSpecs 的循环里的 item.values
 // item.values 再决定谁是活跃点击
 const changeActiveItem = (index, itemIndex) => {
-  activeItem.value[index] = itemIndex
-}
+  activeItem.value[index] = itemIndex;
+};
 const isActiveItem = (index, itemIndex) => {
-  return activeItem.value[index] === itemIndex
-}
+  return activeItem.value[index] === itemIndex;
+};
+// 将提供的数据渲染到父组件
+const itemClick = (itemValue, index) => {
+  // 将itemValue的内容发送到父元素渲染
+ pushItemClick(emits,itemValue.name, index, "select")
+
+};
+
+
+
+
 </script>
 
 <style scoped>
@@ -55,15 +73,14 @@ const isActiveItem = (index, itemIndex) => {
   align-items: center;
   width: 96vw;
   margin: 2vh 2vw;
-
 }
 
 .item {
   box-sizing: border-box;
   display: inline-flex;
   padding: 1vh 1vw;
-  margin: .5vh 1vw;
-  border: .5px solid rgba(255, 128, 0, 0.906)
+  margin: 0.5vh 1vw;
+  border: 0.5px solid rgba(255, 128, 0, 0.906);
 }
 
 .name {
@@ -85,6 +102,6 @@ const isActiveItem = (index, itemIndex) => {
 }
 
 .active {
-  background-color: rgba(255, 138, 21, 0.906)
+  background-color: rgba(255, 138, 21, 0.906);
 }
 </style>
