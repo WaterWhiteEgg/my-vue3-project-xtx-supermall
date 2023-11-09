@@ -1,7 +1,13 @@
-<template>user</template>
+<template>
+    user
+</template>
 
-<script>
+<script setup>
+import { onLoad } from '@dcloudio/uni-app';
+
+onLoad((query) => {
+    uni.navigateTo({ url: "/pages/login/login" })
+})
 </script>
 
-<style>
-</style>
+<style></style>
