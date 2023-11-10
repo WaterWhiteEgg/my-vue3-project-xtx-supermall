@@ -12,7 +12,7 @@
       </view>
       <view class="login-other-fn">
         <view>
-          <view class="login-other-fn-ico">
+          <view class="login-other-fn-ico" @tap="dologinTest">
             <image src="@/static/color/iphone.png" />
           </view>
           <view>模拟登录</view>
@@ -32,7 +32,6 @@
       </view>
     </view>
   </view>
-  <text></text>
 </template>
 
 <script setup>
@@ -40,6 +39,10 @@ import { onLoad } from "@dcloudio/uni-app";
 import { ref } from "vue";
 
 import { login } from "../../network/login";
+import { logintest } from "../../network/loginTEST";
+import { useRequest } from "../../store/modules/request"
+const request = useRequest()
+
 // 加载时获取query
 // 获取code
 const code = ref();
@@ -50,11 +53,41 @@ onLoad(async (query) => {
 });
 
 // 尝试登录
-const doLogin = (data) => {
-  login(data).then((res) => {
+const doLogin = () => {
+  login(loginData.value).then((res) => {
     console.log(res);
   });
 };
+
+// 模拟登录，同样是提交给服务器，但是没有经过微信端
+// 由于是静态的，所以直接给个固定的手机号码不需要判断号码的准确性
+const dologinTest = () => {
+  logintest(
+    {
+      phoneNumber: 15603061560
+    }
+  ).then(
+    (res) => {
+      // 用pinia持久化储存数据
+      request.addUserData(res.data.result)
+      request.addToken(res.data.result.token)
+      // 成功后跳转
+      uni.switchTab({ url: "/pages/user/user" })
+      // 显示成功弹窗
+      uni.showToast({
+        title: '登录成功',
+        icon: 'success',
+      })
+
+    })
+    .catch((err) => {
+      console.log(err);
+      uni.showToast({
+        title: 'err',
+        icon: 'error',
+      })
+    })
+}
 
 // 获取必要提交数据，必须是在button里面通过open-type="getPhoneNumber" @getphonenumber="xxx"获取
 const loginData = ref({});
@@ -72,11 +105,7 @@ const getPhoneNumber = (e) => {
     iv,
   };
   //   执行登录
-  doLogin({
-    code: code.value.code,
-    encryptedData,
-    iv,
-  });
+  doLogin();
 };
 </script>
 

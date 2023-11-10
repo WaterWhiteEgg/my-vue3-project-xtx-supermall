@@ -5,7 +5,7 @@ import { uniReq } from "./request";
 // "encryptedData": "string",getphonenumber 事件回调中获取
 // "iv": "string",getphonenumber 事件回调中获取
 export function login(data) {
-    console.log(data);
+    // console.log(data);
     return uniReq({
         url: "/login/wxMin",
         data,
