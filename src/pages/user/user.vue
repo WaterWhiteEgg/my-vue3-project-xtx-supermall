@@ -1,18 +1,18 @@
 <template>
-        <view class="information-bar" :style="{ 'padding-top': safeAreaInsets.top + 'px' }">
-            <view class="information">
-                <view class="information-avatar">
-                    <image :src="datas.avatar" mode="scaleToFill" />
-                </view>
-                <view class="information-account">
-                    <text class="information-account-username">dddddddddddddddddddddd无登录{{ datas.account }}</text>
-                    <text class="information-account-number">点击注册账号</text>
-                </view>
-                <view class="information-system">
-                    <text>设置</text>
-                </view>
+    <view class="information-bar" :style="{ 'padding-top': safeAreaInsets.top + 'px' }">
+        <view class="information">
+            <view class="information-avatar">
+                <image :src="datas.avatar" mode="scaleToFill" />
+            </view>
+            <view class="information-account">
+                <text class="information-account-username">{{ Object.keys(datas).length  ? datas.account : "无登录" }}</text>
+                <text class="information-account-head"> <text> 更新头像昵称</text> </text>
+            </view>
+            <view class="information-system">
+                <text>设置</text>
             </view>
         </view>
+    </view>
 
     <userMethod></userMethod>
 </template>
@@ -46,6 +46,8 @@ const testToken = () => {
     if (useRequest().token) {
         // 赋值
         datas.value = useRequest().userData
+        console.log(datas.value);
+
     } else {
         // 跳转登录去搞一个token
         uni.navigateTo({ url: "/pages/login/login" })
@@ -90,13 +92,22 @@ const testToken = () => {
     font-size: 30rpx;
 }
 
-.information-account-number {
+.information-account-head {
+    margin: 1vh 0;
     font-size: 25rpx;
 }
+
+.information-account-head text {
+    padding: .2vh 2vw;
+    border-radius: 35rpx;
+    border: .01px solid #ffffff;
+}
+
 
 .information-account-username {
     width: 100%;
     max-width: 60vw;
+    margin: .5vh 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
