@@ -84,5 +84,26 @@
 				"selectedIconPath": "./static/iconPng/active/wode.png"
 			}
 		]
+	},
+	"subPackages": [
+		{
+			"root": "pageMember",
+			"pages": [
+				{
+					"path": "settings/settings",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				}
+			]
+		}
+	],
+	"preloadRule": {
+		"pages/user/user": {
+			"network": "all",
+			"packages": [
+				"pageMember"
+			]
+		}
 	}
 }

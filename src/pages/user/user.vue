@@ -5,16 +5,18 @@
                 <image :src="datas.avatar" mode="scaleToFill" />
             </view>
             <view class="information-account">
-                <text class="information-account-username">{{ Object.keys(datas).length  ? datas.account : "无登录" }}</text>
+                <text class="information-account-username" @tap="toLogin(!Object.keys(datas).length)">{{
+                    Object.keys(datas).length ? datas.account :
+                    "无登录" }}</text>
                 <text class="information-account-head"> <text> 更新头像昵称</text> </text>
             </view>
-            <view class="information-system">
+            <view class="information-system" @tap="toSettings">
                 <text>设置</text>
             </view>
         </view>
     </view>
-
     <userMethod></userMethod>
+    <guessLike v-if="Object.keys(datas).length"></guessLike>
 </template>
 
 <script setup>
@@ -23,7 +25,7 @@ import { useRequest } from "../../store/modules/request"
 import { ref, watch } from 'vue'
 
 import userMethod from "./child/userMethod.vue"
-
+import guessLike from "../../components/Content/guessLike/guessLike.vue"
 // 通过安全距离的获取可以动态的适配各种机型的头部距离
 const { safeAreaInsets } = uni.getSystemInfoSync();
 
@@ -52,6 +54,23 @@ const testToken = () => {
         // 跳转登录去搞一个token
         uni.navigateTo({ url: "/pages/login/login" })
     }
+}
+
+// 前往设置
+const toSettings = () => {
+    uni.navigateTo({
+        url: "/pageMember/settings/settings"
+    })
+}
+// 前往登录,但是要看是不是已经登录了
+const toLogin = (flag) => {
+    if (flag) {
+        uni.navigateTo({
+            url: "/pages/login/login"
+
+        })
+    }
+
 }
 </script>
 
