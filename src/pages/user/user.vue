@@ -8,7 +8,8 @@
                 <text class="information-account-username" @tap="toLogin(!Object.keys(datas).length)">{{
                     Object.keys(datas).length ? datas.account :
                     "无登录" }}</text>
-                <text class="information-account-head"> <text> 更新头像昵称</text> </text>
+                <text class="information-account-head" @tap="toProfile(Object.keys(datas).length)"><text> 更新头像昵称</text>
+                </text>
             </view>
             <view class="information-system" @tap="toSettings">
                 <text>设置</text>
@@ -45,11 +46,10 @@ watch(() => {
 
 // 检查token存在以及执行跳转方法
 const testToken = () => {
+    console.log(useRequest().userData);
+    // 赋值
+    datas.value = useRequest().userData
     if (useRequest().token) {
-        // 赋值
-        datas.value = useRequest().userData
-        console.log(datas.value);
-
     } else {
         // 跳转登录去搞一个token
         uni.navigateTo({ url: "/pages/login/login" })
@@ -67,10 +67,18 @@ const toLogin = (flag) => {
     if (flag) {
         uni.navigateTo({
             url: "/pages/login/login"
-
         })
     }
 
+}
+// 前往个人中心，如果没有登录则不需要跳转
+const toProfile = (flag) => {
+    if (flag) {
+
+        uni.navigateTo({
+            url: "/pageMember/profile/profile"
+        })
+    }
 }
 </script>
 

@@ -1,6 +1,5 @@
 import { useRequest } from "../store/modules/request"
 
-const storeRequest = useRequest()
 
 const BaseURL = "https://pcapi-xiaotuxian-front-devtest.itheima.net"
 
@@ -23,7 +22,7 @@ const interceptor = {
 
         }
         // 有些接口需要验证token，从store获取token设置头
-        const token = storeRequest.token.value
+        const token = useRequest().token
         // 判断是否有token
         if (token) {
             // 设置token到Authorization，注意Authorization需要的格式

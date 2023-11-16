@@ -14,9 +14,10 @@ export const useRequest = defineStore('request', () => {
     const addToken = (data) => {
         token.value = data
     }
-    // 清除token
+    // 清除token以及数据
     function clearToken() {
-        token.value = ""
+        token.value = "",
+        userData.value = {}
     }
     return { token, userData, addToken, clearToken, addUserData };
 
