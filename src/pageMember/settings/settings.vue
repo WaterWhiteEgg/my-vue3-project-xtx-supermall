@@ -1,7 +1,7 @@
 <template>
   <view class="settings">
     <view v-for="(item, index) in filterSettingsData('my')" :key="item.id" class="settings-item"
-      :class="{ 'first': index === index === filterSettingsData('my').length - 1 }">
+      :class="{ 'first': index === filterSettingsData('my').length - 1 }">
       <view>
         {{ item.name }}
       </view>
@@ -26,6 +26,7 @@
 import { ref, computed } from 'vue';
 
 import { useRequest } from "../../store/modules/request"
+import { back } from "../../utils/back"
 
 // 设置的静态数据
 const settingsData = ref([
@@ -38,7 +39,6 @@ const settingsData = ref([
 // 筛选静态数据
 const filterSettingsData = computed(() => {
   return (type) => {
-    console.log(type);
     return settingsData.value.filter((item) => {
       return item.type === type
     })
@@ -56,7 +56,7 @@ const outLogin = () => {
         // 清除数据
         useRequest().clearToken()
         // 返回上一页
-        uni.navigateBack()
+        back()
       }
     }
   });
