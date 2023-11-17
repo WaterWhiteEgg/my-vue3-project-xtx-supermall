@@ -83,7 +83,6 @@ const toProfile = (flag) => {
 </script>
 
 <style scoped>
-.information-box {}
 
 .information-bar {
     padding-bottom: 10vh;

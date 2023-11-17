@@ -18,7 +18,7 @@
         <radio :checked="index === activeRadio" @tap="
           changeRadio(index);
         itemClick(item);
-                                                  " style="transform: scale(0.7)" color="#12c1a7" />
+        " style="transform: scale(0.7)" color="#12c1a7" />
       </view>
     </view>
   </scroll-view>
