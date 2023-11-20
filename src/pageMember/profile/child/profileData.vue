@@ -4,11 +4,25 @@
             <view class="list-box">
                 <view class="list-name"> {{ item.key }}</view>
                 <view class="list-value">
-                    <input v-if="!item.selectedGender" type="text" :placeholder="item.prompt" v-model="item.value">
-                    <radio-group @change="changeRadio" v-else>
+                    <input v-if="!item.selectedGender && !item.selectedBirthday && !item.selectedCity" type="text"
+                        :placeholder="item.prompt" v-model="item.value">
+                    <!-- 对于性别选择的特殊情况 -->
+                    <radio-group @change="changeRadio" v-else-if="item.selectedGender">
                         <radio value="男" name="gender" style="transform: scale(0.7)" color="#00ca76" />男
                         <radio value="女" name="gender" style="transform: scale(0.7)" color="#00ca76" />女
                     </radio-group>
+                    <!-- 对于日期选择的特殊情况 -->
+                    <view class="uni-list-cell-db" v-else-if="item.selectedBirthday">
+                        <picker mode="date" :value="date" :end="getDate()" @change="bindDateChange">
+                            <view class="uni-input">{{ date }}</view>
+                        </picker>
+                    </view>
+                    <!-- 对于城市选择的特殊情况 -->
+                    <view class="" v-else-if="item.selectedCity">
+                        <picker mode="multiSelector" @change="bindPickerChange" :value="cityIndex" :range="[['城市名'],['对应城市名的对象数据'],['对应城市名的对象数据里面的数组']]">
+                            <view class="uni-input">{{ cityActive }}</view>
+                        </picker>
+                    </view>
                 </view>
             </view>
 
@@ -17,13 +31,7 @@
 </template>
 <script setup>
 import { reactive, onMounted, ref, watch, toRaw, computed } from "vue";
-// 整理后的userdatas
-const datas = ref([{ key: "账号", value: "", id: "account", prompt: "你没有用户名你怎么来的" },
-{ key: "昵称", value: "", id: "nickname", prompt: "你没有昵称你怎么来的" },
-{ key: "性别", value: "", id: "gender", prompt: "请输入性别", selectedGender: true },
-{ key: "出生日期", value: "", id: "birthday", prompt: "请输入出生日期" },
-{ key: "城市", value: "", id: "fullLocation", prompt: "请输入城市" },
-{ key: "职业", value: "", id: "profession", prompt: "请输入职业" }])
+import CITYDATA from "../../../network/json/pca.json"
 
 const props = defineProps({
     userdatas: {
@@ -33,6 +41,28 @@ const props = defineProps({
         }
     }
 })
+
+// 整理后的userdatas
+const datas = ref([{ key: "账号", value: "", id: "account", prompt: "你没有用户名你怎么来的" },
+{ key: "昵称", value: "", id: "nickname", prompt: "你没有昵称你怎么来的" },
+{ key: "性别", value: "", id: "gender", prompt: "请输入性别", selectedGender: true },
+{ key: "出生日期", value: "", id: "birthday", prompt: "请输入出生日期", selectedBirthday: true },
+{ key: "城市", value: "", id: "fullLocation", prompt: "请输入城市", selectedCity: true },
+{ key: "职业", value: "", id: "profession", prompt: "请输入职业" }])
+
+// 城市信息
+const cityArray = ref(CITYDATA)
+const cityIndex = ref([0, 0, 0])
+const cityActive = ref("111")
+// 切换城市
+const bindPickerChange = (e) => {
+    const val = e.detail.value;
+    const select = cityArray.value[0][val[0]] + '-' +
+        cityArray.value[1][val[1]] + '-' +
+        cityArray.value[2][val[2]];
+    cityActive.value = select;
+}
+
 // 观察userdatas的值变化
 watch(
     () => {
@@ -54,8 +84,32 @@ watch(
     })
 
 // 切换男女选择点击事件
-const changeRadio = (event)=>{
-console.log(event);
+const changeRadio = (event) => {
+    console.log(event);
+}
+
+
+// 获取出生日期,start/end属性输入当前最小/最大的可选择的时间
+// 获取系统时间
+const getDate = () => {
+    // 初始化系统各种事件,默认的时间是现在时间
+    const date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    // 将数据转化为普通的字符串
+    month = month > 9 ? month : '0' + month;
+    day = day > 9 ? day : '0' + day;
+    return `${year}-${month}-${day}`;
+}
+
+// 获取系统默认日期
+const date = ref(getDate())
+
+// 日期的切换事件
+const bindDateChange = (e) => {
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
+    date.value = e.detail.value
 }
 </script>
 <style scoped>
