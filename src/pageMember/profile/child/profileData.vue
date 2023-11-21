@@ -19,8 +19,9 @@
                     </view>
                     <!-- 对于城市选择的特殊情况 -->
                     <view class="" v-else-if="item.selectedCity">
-                        <picker mode="multiSelector" @change="bindPickerChange" :value="cityIndex" :range="[['城市名'],['对应城市名的对象数据'],['对应城市名的对象数据里面的数组']]">
-                            <view class="uni-input">{{ cityActive }}</view>
+                        <picker mode="multiSelector" @change="bindPickerChange" @columnchange="columnchange"
+                            :value="cityIndex" :range="[city, area, county]">
+                            <view class="uni-input">{{ cityActiveText }}</view>
                         </picker>
                     </view>
                 </view>
@@ -30,7 +31,7 @@
     </view>
 </template>
 <script setup>
-import { reactive, onMounted, ref, watch, toRaw, computed } from "vue";
+import { reactive, onMounted, toRef, ref, watch, toRaw, computed } from "vue";
 import CITYDATA from "../../../network/json/pca.json"
 
 const props = defineProps({
@@ -50,17 +51,30 @@ const datas = ref([{ key: "账号", value: "", id: "account", prompt: "你没有
 { key: "城市", value: "", id: "fullLocation", prompt: "请输入城市", selectedCity: true },
 { key: "职业", value: "", id: "profession", prompt: "请输入职业" }])
 
-// 城市信息
-const cityArray = ref(CITYDATA)
+// 城市信息,反正是根据对应的对象渲染数据，逻辑嵌套的很复杂
 const cityIndex = ref([0, 0, 0])
-const cityActive = ref("111")
-// 切换城市
+const cityActiveText = ref("请输入城市")
+
+const city = ref(Object.keys(CITYDATA))
+const area = ref(Object.keys(CITYDATA[city.value[cityIndex.value[0]]]))
+const county = ref(CITYDATA[city.value[cityIndex.value[0]]][area.value[cityIndex.value[1]]])
+// 当决定了点击切换城市时
 const bindPickerChange = (e) => {
-    const val = e.detail.value;
-    const select = cityArray.value[0][val[0]] + '-' +
-        cityArray.value[1][val[1]] + '-' +
-        cityArray.value[2][val[2]];
-    cityActive.value = select;
+    // 记录index
+    cityIndex.value = e.detail.value
+    // 将当前对应的index内容的对象呈字符串显示出来
+    cityActiveText.value = `${city.value[cityIndex.value[0]]} ${area.value[cityIndex.value[1]]} ${county.value[cityIndex.value[2]]}`
+    // console.log(city.value[cityIndex.value[0]],area.value[cityIndex.value[1]],county.value[cityIndex.value[2]]);
+}
+// 城市数据切换时
+const columnchange = (e) => {
+    // 记录当前改变的index
+    cityIndex.value[e.detail.column] = e.detail.value
+    // 改变area的数组
+    area.value = Object.keys(CITYDATA[city.value[cityIndex.value[0]]])
+    // 改变county的数组
+    county.value = CITYDATA[city.value[cityIndex.value[0]]][area.value[cityIndex.value[1]]]
+
 }
 
 // 观察userdatas的值变化
