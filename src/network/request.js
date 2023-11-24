@@ -42,6 +42,31 @@ export const uniReq = (option) => {
         })
     })
 }
+
+// 将 uni.chooseImage 封装成promise
+export const uniImg = (option) => {
+    return new Promise((resolve, reject) => {
+        uni.chooseImage({
+            success: (chooseImageRes) => {
+                const tempFilePaths = chooseImageRes.tempFilePaths;
+                // 发送请求
+                uni.uploadFile({
+                    filePath: tempFilePaths[0],
+                    name: 'file',
+                    ...option,
+                    success: (res) => {
+                        resolve(res)
+                    },
+                    fail: (error) => {
+                        // 弹窗
+                        showToast("网络错误")
+                        reject(error)
+                    }
+                });
+            }
+        });
+    })
+}
 // showToast类似h5里面的弹出框
 function showToast(msg = "请求失败") {
     uni.showToast({
@@ -55,3 +80,4 @@ function clearToken() {
     let request = useRequest()
     request.clearToken()
 }
+
