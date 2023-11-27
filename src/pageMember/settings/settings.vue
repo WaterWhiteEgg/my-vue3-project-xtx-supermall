@@ -1,7 +1,7 @@
 <template>
   <view class="settings">
     <view v-for="(item, index) in filterSettingsData('my')" :key="item.id" class="settings-item"
-      :class="{ 'first': index === filterSettingsData('my').length - 1 }">
+      :class="{ 'first': index === filterSettingsData('my').length - 1 }" @tap="goAddress(index)">
       <view>
         {{ item.name }}
       </view>
@@ -60,6 +60,11 @@ const outLogin = () => {
       }
     }
   });
+}
+
+// 前往地址栏，由于地址栏就一个元素所以不用测都行
+const goAddress = () => {
+uni.navigateTo({ url: '/pageMember/address/address' })
 }
 </script>
 
