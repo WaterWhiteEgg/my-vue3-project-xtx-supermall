@@ -4,14 +4,14 @@
             <view class="item-detail">
                 <view class="item-detail-name">
                     <view>{{ item.name }} {{ item.number }}</view>
-                    <text>选择</text>
+                    <text v-if="true" class="cloose">选择</text>
                 </view>
                 <view class="item-detail-address">{{ item.address }}</view>
             </view>
             <view class="item-fn">
                 <uni-swipe-action>
                     <uni-swipe-action-item>
-                        <view class="modify">修改</view>
+                        <view class="modify" @tap="goNewaddress('id=2')">修改</view>
                         <template #right>
                             <view class="del">删除</view>
                         </template>
@@ -20,6 +20,9 @@
                 </uni-swipe-action>
             </view>
         </view>
+        <view class="additem">
+            <view class="additem-button" @tap="goNewaddress()">新建按钮</view>
+        </view>
     </view>
 </template>
 <script setup>
@@ -27,10 +30,15 @@ import { ref } from 'vue';
 import { debounce } from "../../utils/debounce"
 
 // 测试用的数据
-const data = [{ name: 'zc', number: '11111111111', address: '存储池' }]
+const data = [{ name: 'zc', number: '11111111111', address: '存储池' },
+{ name: 'uu', number: '11111111y65111', address: 'gggg' }]
 
-
-
+// 前往新建/修改地址栏
+const goNewaddress = (query) => {
+    uni.navigateTo({
+        url: "/pageMember/newaddress/newaddress?" + query
+    })
+}
 </script>
 <style scoped>
 .item {
@@ -58,14 +66,35 @@ const data = [{ name: 'zc', number: '11111111111', address: '存储池' }]
 
 .item-fn {
     display: flex;
-    
+
+}
+
+.additem {
+    position: absolute;
+    bottom: 0;
+    height: 6vh;
+    width: 100%;
+}
+
+.additem .additem-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96%;
+    height: 5vh;
+    margin: 0 auto;
+    padding: .1vh 0;
+    border-radius: 35rpx;
+    font-size: 30rpx;
+    color: #fff;
+    background-color: #12c1a7;
 }
 
 .del {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 13vw;
+    width: 12vw;
     background-color: #e91a1a;
     color: #fff;
     font-size: 30rpx;
@@ -76,7 +105,6 @@ const data = [{ name: 'zc', number: '11111111111', address: '存储池' }]
     padding: 0 3vw;
     padding-top: 2vh;
     height: 11vh;
-
     font-size: 27rpx;
     color: #797979;
 }
@@ -92,5 +120,14 @@ const data = [{ name: 'zc', number: '11111111111', address: '存储池' }]
     height: 17%;
     /* 下划线的高度，可以根据需要进行调整 */
     background-color: #797979;
+}
+
+.cloose {
+    margin: 0 2vw;
+    padding: 0 1.5vw;
+    font-size: 25rpx;
+
+    border: 1px solid #16d17a;
+    color: #16d17a;
 }
 </style>
