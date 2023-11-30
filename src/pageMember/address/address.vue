@@ -1,17 +1,17 @@
 <template>
     <view>
-        <view class="item" v-for="item in data" :key="item.address">
+        <view class="item" v-for="item in addressData" :key="item.address">
             <view class="item-detail">
                 <view class="item-detail-name">
-                    <view>{{ item.name }} {{ item.number }}</view>
-                    <text v-if="true" class="cloose">选择</text>
+                    <view>{{ item.receiver }} {{ item.contact }}</view>
+                    <text v-if="item.isDefault" class="cloose">选择</text>
                 </view>
                 <view class="item-detail-address">{{ item.address }}</view>
             </view>
             <view class="item-fn">
                 <uni-swipe-action>
                     <uni-swipe-action-item>
-                        <view class="modify" @tap="goNewaddress('id=2')">修改</view>
+                        <view class="modify" @tap="goNewaddress('id=2&uid=' + item.id)">修改</view>
                         <template #right>
                             <view class="del">删除</view>
                         </template>
@@ -26,12 +26,26 @@
     </view>
 </template>
 <script setup>
-import { ref } from 'vue';
 import { debounce } from "../../utils/debounce"
 
-// 测试用的数据
-const data = [{ name: 'zc', number: '11111111111', address: '存储池' },
-{ name: 'uu', number: '11111111y65111', address: 'gggg' }]
+import { onLoad, onShow } from "@dcloudio/uni-app";
+import { ref } from "vue";
+
+import { back } from "../../utils/back"
+import { address } from "../../network/address"
+
+
+// 渲染地址栏的数据
+const addressData = ref([])
+
+// 每次进入页面时触发
+onShow(() => {
+    // 获取所有地址列表
+    address().then((res) => {
+        addressData.value = res.data.result
+        console.log(res);
+    })
+});
 
 // 前往新建/修改地址栏
 const goNewaddress = (query) => {
