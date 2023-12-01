@@ -13,7 +13,7 @@
                     <uni-swipe-action-item>
                         <view class="modify" @tap="goNewaddress('id=2&uid=' + item.id)">修改</view>
                         <template #right>
-                            <view class="del">删除</view>
+                            <view class="del" @tap="delItem(item.id)">删除</view>
                         </template>
 
                     </uni-swipe-action-item>
@@ -32,7 +32,7 @@ import { onLoad, onShow } from "@dcloudio/uni-app";
 import { ref } from "vue";
 
 import { back } from "../../utils/back"
-import { address } from "../../network/address"
+import { address, delAddress } from "../../network/address"
 
 
 // 渲染地址栏的数据
@@ -52,6 +52,17 @@ const goNewaddress = (query) => {
     uni.navigateTo({
         url: "/pageMember/newaddress/newaddress?" + query
     })
+}
+// 删除选择的当前组件
+const delItem = (uid) => {
+    // 删除请求
+    delAddress(uid).then((res) => {
+        // 删除成功后刷新
+        uni.reLaunch({
+            url: "/pageMember/address/address",
+        });
+    })
+
 }
 </script>
 <style scoped>
