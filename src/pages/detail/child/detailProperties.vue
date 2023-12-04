@@ -6,12 +6,12 @@
       class="serveitem"
       @click="activePopup(item.id)"
     >
-        <text class="serveitem-name">
-          {{ item.name }}
-        </text>
-        <text class="serveitem-desc">
-          {{ getDescText(item.desc) }}
-        </text>
+      <text class="serveitem-name">
+        {{ item.name }}
+      </text>
+      <text class="serveitem-desc">
+        {{ getDescText(item.desc) }}
+      </text>
     </view>
     <uni-popup
       ref="popup"
@@ -29,6 +29,7 @@
       <propertiesData
         v-if="isActiveId('select')"
         :detailSpecs="detailSpecs"
+        :detailSkus="detailSkus"
         @itemClick="itemClick"
       ></propertiesData>
     </uni-popup>
@@ -44,6 +45,12 @@ import propertiesData from "./childProperties/propertiesData.vue";
 // 获取尺寸等属性选择
 const prop = defineProps({
   detailSpecs: {
+    type: Array,
+    default: function () {
+      return [];
+    },
+  },
+  detailSkus: {
     type: Array,
     default: function () {
       return [];
@@ -142,8 +149,6 @@ const getDescText = computed(() => {
   width: 100vw;
   margin: 3vh 0;
 }
-
-
 
 .serveitem-name {
   padding: 0 2vw;

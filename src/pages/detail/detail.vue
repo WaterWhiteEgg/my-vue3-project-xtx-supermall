@@ -6,7 +6,10 @@
       :price="priceData.price"
     ></detailPrice>
     <detailTitle :name="detailData.name" :desc="detailData.desc"></detailTitle>
-    <detailProperties :detailSpecs="detailSpecs"></detailProperties>
+    <detailProperties
+      :detailSpecs="detailSpecs"
+      :detailSkus="detailSkus"
+    ></detailProperties>
   </scroll-view>
   <detailShop></detailShop>
 </template>
@@ -27,7 +30,8 @@ import { detail } from "../../network/detail";
 const detailData = ref({});
 const detailDataPic = ref([]);
 const priceData = ref({});
-const detailSpecs = ref([])
+const detailSpecs = ref([]);
+const detailSkus = ref([]);
 onLoad((query) => {
   // 获取详情页的数据,query需要传递id
   detail(query.id).then((res) => {
@@ -40,10 +44,11 @@ onLoad((query) => {
       oldPrice: parseFloat(detailData.value.oldPrice),
     };
     // 规格
-    detailSpecs.value = res.data.result.specs
+    detailSpecs.value = res.data.result.specs;
+    // 规格对应的sku(是产品入库后一种归类方法,简称规格对应的数组)
+    detailSkus.value = res.data.result.skus;
   });
 });
 </script>
 <style scoped>
-
 </style>
