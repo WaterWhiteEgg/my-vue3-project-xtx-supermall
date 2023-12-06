@@ -1,8 +1,8 @@
 // 点击发送事件
-export const pushItemClick = (emits, value, childIndex, id) => {
+export const pushItemClick = (emits, value, quantity, id) => {
     emits("itemClick", {
         value,
-        childIndex,
+        quantity,
         id,
     });
 

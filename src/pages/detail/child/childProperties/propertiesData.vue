@@ -1,12 +1,12 @@
 <template>
   <popupTitle title="商品规格"></popupTitle>
   <view class="show">
-    <image :src="detailSkus[0].picture" mode="aspectFit"> </image>
+    <image :src="skusItem.picture" mode="aspectFit"> </image>
     <view class="show-desc">
       <view class="show-desc-price"><text class="show-desc-price-ico">￥</text>
-        {{ detailSkus[0].price }}</view>
-      <view class="show-desc-inventory">库存：{{ detailSkus[0].inventory }}</view>
-      <view class="show-desc-select">已选：{{ skusArray }}</view>
+        {{ Number(skusItem.price) * quantity }}</view>
+      <view class="show-desc-inventory">库存：{{ skusItem.inventory }}</view>
+      <view class="show-desc-select">已选：{{ skusArrayItem }}</view>
     </view>
   </view>
   <scroll-view scroll-y class="scroll">
@@ -14,8 +14,8 @@
       <text class="name">{{ item.name }}</text>
       <scroll-view scroll-x class="scroll-item">
         <view v-for="(itemValue, itemIndex) in item.values" class="item" :key="itemValue.name" @tap="
-          changeActiveItem(index, itemIndex, itemValue, item.name);
-        itemClick(itemValue, index);
+          changeActiveItem(index, itemIndex);
+        itemSkusPush();
         " :class="{ active: isActiveItem(index, itemIndex) }">
           <image :src="itemValue.picture" mode="scaleToFill" class="item-image" v-if="itemValue.picture" />
           <text>{{ itemValue.name }}</text>
@@ -26,10 +26,15 @@
   </scroll-view>
   <view class="quantity">
     <view class="quantity-title">数量</view>
-    <view class="quantity-count"><text>+</text>
-      <text class="quantity-count-number">{{ quantity }}</text>
-      <text>-</text>
+    <view class="quantity-count">
+      <text @tap="addQuantity(); itemSkusPush()">+</text>
+      <view class="quantity-count-number"><input type="text" v-model.number="quantity"
+          @input="inputQuantity($event); itemSkusPush()">
+      </view>
+      <text @tap=" reduceQuantity(); itemSkusPush()">-</text>
+
     </view>
+
   </view>
 </template>
 
@@ -55,10 +60,18 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["itemClick"]);
+const emits = defineEmits(["itemSkusPush"]);
 
 // sku对应的数组
 const skusArray = ref([])
+// 将sku对应的数组数据拼接成字符串
+const skusArrayItem = computed(() => {
+  const str = ref("")
+  skusArray.value.forEach((item) => {
+    str.value += ` ${item.name}`
+  })
+  return str.value
+})
 // sku的item对象
 const skusItem = ref({})
 // 初始化skusArray的初始值
@@ -67,7 +80,11 @@ onMounted(() => {
   props.detailSpecs.forEach((item) => {
     skusArray.value.push(item.values[0])
   })
-  // console.log(skusArray.value);
+  // 使skusItem初始化第一个值
+  // 决定skus里面的哪个对象
+  selectDetailSkus()
+  // 将默认选择提交到父组件
+  itemSkusPush()
 })
 
 
@@ -76,13 +93,13 @@ const activeItem = ref([]);
 // 因为循环的层级有两极，要准确找到的话，得需要数组才可以
 // 通过数组的index决定 detailSpecs 的循环里的 item.values
 // 再决定谁是活跃点击
-const changeActiveItem = (index, itemIndex, itemValue, name) => {
+const changeActiveItem = (index, itemIndex) => {
   // 将对应活跃的index切换
   activeItem.value[index] = itemIndex;
   // 切换skusArray对应对象的数据
   skusArray.value[index] = props.detailSpecs[index].values[itemIndex]
   // 切换完后决定skus里面的哪个对象
-  selectDetailSkus(itemValue, name)
+  selectDetailSkus()
 
 };
 // 样式切换的布尔值函数
@@ -96,13 +113,13 @@ const isActiveItem = (index, itemIndex) => {
   return activeItem.value[index] === itemIndex;
 };
 // 将提供的数据渲染到父组件
-const itemClick = (itemValue, index) => {
+const itemSkusPush = () => {
   // 将itemValue的内容发送到父元素渲染
-  pushItemClick(emits, itemValue.name, index, "select");
+  pushItemClick(emits, skusArrayItem.value, quantity.value, "select");
 };
 
 // 选择决定skus里的对象
-const selectDetailSkus = (itemValue, name) => {
+const selectDetailSkus = () => {
   // 遍历detailSkus，寻找相同型号
   for (let item of props.detailSkus) {
     // 记录所有条件正确的值，判断skus的关系
@@ -120,14 +137,40 @@ const selectDetailSkus = (itemValue, name) => {
     // 根据isAllItem的值判断是否全都正确
     if (isAllItem.value) {
       // 若全都正确则将这个sku记录
-      console.log(item);
+      skusItem.value = item
+      // console.log(skusItem.value);
     }
   }
-  // console.log(itemValue === );
-  // console.log(props.detailSkus);
 }
-// 数量记录
+// 数量记录,范围在1-根据库存
 const quantity = ref(1);
+// 增加quantity,注意控制范围
+const addQuantity = () => {
+  if (quantity.value < skusItem.value.inventory) {
+    quantity.value++
+
+  }
+}
+// 减少quantity,注意控制范围
+const reduceQuantity = () => {
+  if (quantity.value > 1) {
+    quantity.value--
+  }
+}
+// 输入quantity的值
+const inputQuantity = (e) => {
+  // console.log(e);
+  // 如果没超过特定的值则能输入
+  if (Number(e.detail.value) > 1 && Number(e.detail.value) < skusItem.value.inventory) {
+    // 转化数字型并同步给quantity
+    quantity.value = Number(e.detail.value)
+  }
+  // 如果条件不达标,则不能将1放入
+  else {
+    quantity.value = 1
+  }
+
+}
 </script>
 
 <style scoped>
@@ -157,6 +200,14 @@ const quantity = ref(1);
 .show-desc-inventory {
   padding: 1vh 0;
   color: #6b6b6b91;
+}
+
+.show-desc-select {
+  width: 60vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .scroll {
@@ -216,6 +267,10 @@ const quantity = ref(1);
   font-weight: 900;
 }
 
+.quantity-count {
+  display: flex;
+}
+
 .quantity-count text {
   padding: .5vh 2vw;
   margin: 0 1vw;
@@ -223,7 +278,21 @@ const quantity = ref(1);
 }
 
 .quantity-count-number {
-  padding: .5vh 4vw !important;
+  display: inline-block;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .5vh 2vw;
+  margin: 0 1vw;
+  background-color: rgb(245, 245, 245);
+
+}
+
+.quantity-count-number input {
+  width: 5vw;
+  min-width: 20px;
+  text-align: center;
 
 }
 </style>

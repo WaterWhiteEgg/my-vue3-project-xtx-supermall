@@ -1,11 +1,6 @@
 <template>
   <view class="properties">
-    <view
-      v-for="item in serveItem"
-      :key="item.id"
-      class="serveitem"
-      @click="activePopup(item.id)"
-    >
+    <view v-for="item in serveItem" :key="item.id" class="serveitem" @click="activePopup(item.id)">
       <text class="serveitem-name">
         {{ item.name }}
       </text>
@@ -13,25 +8,12 @@
         {{ getDescText(item.desc) }}
       </text>
     </view>
-    <uni-popup
-      ref="popup"
-      type="bottom"
-      background-color="#ffffff"
-      class="popup"
-      :mask-click="false"
-      @maskClick="maskClick"
-    >
-      <propertiesAddress
-        v-if="isActiveId('address')"
-        @itemClick="itemClick"
-      ></propertiesAddress>
+    <uni-popup ref="popup" type="bottom" background-color="#ffffff" class="popup" :mask-click="false"
+      @maskClick="maskClick">
+      <propertiesAddress v-if="isActiveId('address')" @itemClick="itemClick"></propertiesAddress>
       <propertiesAgreement v-if="isActiveId('agreement')"></propertiesAgreement>
-      <propertiesData
-        v-if="isActiveId('select')"
-        :detailSpecs="detailSpecs"
-        :detailSkus="detailSkus"
-        @itemClick="itemClick"
-      ></propertiesData>
+      <propertiesData v-if="isActiveId('select')" :detailSpecs="detailSpecs" :detailSkus="detailSkus"
+        @itemClick="itemClick"></propertiesData>
     </uni-popup>
   </view>
 </template>
@@ -121,12 +103,17 @@ const isActiveId = computed(() => {
 
 // dataItemClick改上级模块的内容
 const itemClick = (data) => {
+  // console.log(data);
   for (let index in serveItem.value) {
     // 如果id相同就对其执行desc字符变化
     if (serveItem.value[index].id === data.id) {
-      serveItem.value[index].desc[data.childIndex] = data.value;
+      serveItem.value[index].desc[0] = data.value;
+      // 将数量同步展示
+      // console.log(data.quantity);
+      serveItem.value[index].desc[1] = data.quantity + "个"
       break;
     }
+
   }
 };
 
