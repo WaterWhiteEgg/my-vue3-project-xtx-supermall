@@ -27,11 +27,11 @@
   <view class="quantity">
     <view class="quantity-title">数量</view>
     <view class="quantity-count">
-      <text @tap="addQuantity(); itemSkusPush()">+</text>
+      <text @tap="addQuantity(); quantityPush()">+</text>
       <view class="quantity-count-number"><input type="text" v-model.number="quantity"
-          @input="inputQuantity($event); itemSkusPush()">
+          @input="inputQuantity($event); quantityPush()">
       </view>
-      <text @tap=" reduceQuantity(); itemSkusPush()">-</text>
+      <text @tap=" reduceQuantity(); quantityPush()">-</text>
 
     </view>
 
@@ -41,7 +41,7 @@
 <script setup>
 import popupTitle from "./title/popupTitle.vue";
 
-import { pushItemClick } from "./js/pushItemClick";
+import { pushItemClick, pushQuantity } from "./js/pushItemClick";
 
 import { onLoad, onShow } from '@dcloudio/uni-app';
 import { ref, computed, watch, onMounted } from "vue";
@@ -60,7 +60,7 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["itemSkusPush"]);
+const emits = defineEmits(["itemSkusPush", "pushQuantity"]);
 
 // sku对应的数组
 const skusArray = ref([])
@@ -85,6 +85,9 @@ onMounted(() => {
   selectDetailSkus()
   // 将默认选择提交到父组件
   itemSkusPush()
+  // 将默认数量提交到父组件
+  quantityPush()
+
 })
 
 
@@ -115,7 +118,7 @@ const isActiveItem = (index, itemIndex) => {
 // 将提供的数据渲染到父组件
 const itemSkusPush = () => {
   // 将itemValue的内容发送到父元素渲染
-  pushItemClick(emits, skusArrayItem.value, quantity.value, "select");
+  pushItemClick(emits, skusArrayItem.value, "select");
 };
 
 // 选择决定skus里的对象
@@ -170,6 +173,10 @@ const inputQuantity = (e) => {
     quantity.value = 1
   }
 
+}
+// 提供数量渲染到父组件
+const quantityPush = () => {
+  pushQuantity(emits, quantity.value, "select")
 }
 </script>
 

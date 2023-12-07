@@ -1,13 +1,13 @@
 <template>
   <popupTitle title="配送至"></popupTitle>
   <scroll-view scroll-y class="scroll-item">
-    <view v-for="(item, index) in data" :key="item.id" class="item">
+    <view v-for="(item, index) in useMember().addressData" :key="item.id" class="item">
       <view class="item-address">
         <image src="@/static/color/positioning.png" mode="scaleToFill" class="item-ico" />
         <view class="item-address-text">
           <text class="item-address-text-name">
-            {{ item.name }}
-            {{ item.number }}
+            {{ item.receiver }}
+            {{ item.contact }}
           </text>
           <text class="item-address-text-address">
             {{ item.address }}
@@ -15,114 +15,60 @@
         </view>
       </view>
       <view>
-        <radio :checked="index === activeRadio" @tap="
-          changeRadio(index);
+        <radio :checked="index === useMember().activeRadio" @tap="
+          useMember().changeRadio(index);
         itemClick(item);
         " style="transform: scale(0.7)" color="#12c1a7" />
       </view>
     </view>
   </scroll-view>
   <view class="add-button">
-    <view class="add-button-text">新建地址</view>
+    <view class="add-button-text" @tap="toAddress">管理地址</view>
   </view>
 </template>
 
 <script setup>
 import popupTitle from "./title/popupTitle.vue";
 
-import { pushItemClick } from "./js/pushItemClick"
+import { pushAddress } from "./js/pushItemClick"
+import { address } from "../../../../network/address"
+import { onLoad, onShow, onHide, onBackPress } from '@dcloudio/uni-app';
+import { useMember } from "../../../../store/modules/member"
+import { onMounted, onUpdated, ref } from "vue";
 
-import { onMounted, ref } from "vue";
+const emits = defineEmits(["pushAddress"]);
 
-const emits = defineEmits(["itemClick"]);
-
-// 测试用的静态地址
-const data = [
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address:
-      "瓦镇德 斯尼亚 EI涯qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-  {
-    name: "坤儿",
-    number: "1145141919",
-    address: "瓦镇德 斯尼亚 EI涯",
-    id: "0",
-  },
-];
-
-// 切换单选按钮
-const activeRadio = ref(0);
-const changeRadio = (index) => {
-  activeRadio.value = index;
-};
 
 // 挂载时触发
 onMounted(() => {
-  pushItemClick(emits, data[0].address, 0, "address")
+  // 获取地址的所有数据
+  address().then((res) => {
+    useMember().changeAaddressData(res.data.result)
+    // console.log(res.data.result);
+  }).catch((err) => {
+    // 若未授权则跳转登录
+    if (err.statusCode === 401) {
+      uni.navigateTo({
+        url: '/pages/login/login'
+      });
+    }
+  })
+  // 初始化第一个默认值给父组件
+  pushAddress(emits, useMember().addressData[0] && useMember().addressData.address, "address")
 });
+
 // item点击发送事件
 const itemClick = (item) => {
   // 将itemValue的内容发送到父元素渲染
-  pushItemClick(emits, data[0].address, 0, "address")
+  pushAddress(emits, item.address, "address")
 
 };
+// 前往地址管理
+const toAddress = () => {
+  uni.navigateTo({
+    url: '/pageMember/address/address?id=address'
+  });
+}
 </script>
 
 <style scoped>

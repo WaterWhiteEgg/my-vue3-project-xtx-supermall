@@ -10,10 +10,10 @@
     </view>
     <uni-popup ref="popup" type="bottom" background-color="#ffffff" class="popup" :mask-click="false"
       @maskClick="maskClick">
-      <propertiesAddress v-if="isActiveId('address')" @itemClick="itemClick"></propertiesAddress>
+      <propertiesAddress v-if="isActiveId('address')" @pushAddress="pushAddress"></propertiesAddress>
       <propertiesAgreement v-if="isActiveId('agreement')"></propertiesAgreement>
       <propertiesData v-if="isActiveId('select')" :detailSpecs="detailSpecs" :detailSkus="detailSkus"
-        @itemClick="itemClick"></propertiesData>
+        @itemSkusPush="itemSkusPush" @pushQuantity="pushQuantity"></propertiesData>
     </uni-popup>
   </view>
 </template>
@@ -100,14 +100,35 @@ const isActiveId = computed(() => {
     return activeId.value === id;
   };
 });
+// propertiesAddress切换点击后返回对应地址
+const pushAddress = (data) => {
+  for (let index in serveItem.value) {
+    // 如果id相同就对其执行desc字符变化
+    if (serveItem.value[index].id === data.id) {
+      serveItem.value[index].desc[0] = data.address;
+      break;
+    }
 
-// dataItemClick改上级模块的内容
-const itemClick = (data) => {
-  // console.log(data);
+  }
+}
+
+// propertiesData改serveItem的desc显示数据
+const itemSkusPush = (data) => {
+  console.log(data);
   for (let index in serveItem.value) {
     // 如果id相同就对其执行desc字符变化
     if (serveItem.value[index].id === data.id) {
       serveItem.value[index].desc[0] = data.value;
+      break;
+    }
+
+  }
+};
+// propertiesData修改数量的显示数据
+const pushQuantity = (data) => {
+  for (let index in serveItem.value) {
+    // 如果id相同就对其执行desc字符变化
+    if (serveItem.value[index].id === data.id) {
       // 将数量同步展示
       // console.log(data.quantity);
       serveItem.value[index].desc[1] = data.quantity + "个"
@@ -115,7 +136,8 @@ const itemClick = (data) => {
     }
 
   }
-};
+
+}
 
 // 渲染所有desc的数据
 const getDescText = computed(() => {

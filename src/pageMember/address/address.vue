@@ -28,25 +28,51 @@
 <script setup>
 import { debounce } from "../../utils/debounce"
 
-import { onLoad, onShow } from "@dcloudio/uni-app";
+import { onLoad, onShow, onUnload } from "@dcloudio/uni-app";
 import { ref } from "vue";
 
 import { back } from "../../utils/back"
 import { address, delAddress } from "../../network/address"
+import { useMember } from "../../store/modules/member"
 
 
 // 渲染地址栏的数据
 const addressData = ref([])
+// 记录query
+const query = ref({})
+// 加载页面时触发
+onLoad((q) => {
+    query.value = q
+})
 
 // 每次进入页面时触发
 onShow(() => {
     // 获取所有地址列表
     address().then((res) => {
         addressData.value = res.data.result
-        console.log(res);
+        // console.log(res);
+    }).catch((err) => {
+        // 若未授权则跳转登录
+        if (err.statusCode === 401) {
+            uni.navigateTo({
+                url: '/pages/login/login'
+            });
+        }
     })
 });
+// 销毁时触发
+onUnload(() => {
+    // 如果id是address进来的,则在销毁时帮其刷新一下数据
+    if (query.value.id === "address") {
+        address().then((res) => {
+            useMember().changeAaddressData(res.data.result)
+            // 同时防止混乱,将活跃按钮再次切换为0
+            useMember().changeRadio(0)
 
+        })
+
+    }
+})
 // 前往新建/修改地址栏
 const goNewaddress = (query) => {
     uni.navigateTo({
