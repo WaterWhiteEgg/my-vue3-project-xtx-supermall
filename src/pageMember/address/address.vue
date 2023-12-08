@@ -34,6 +34,7 @@ import { ref } from "vue";
 import { back } from "../../utils/back"
 import { address, delAddress } from "../../network/address"
 import { useMember } from "../../store/modules/member"
+import { useRequest } from "../../store/modules/request"
 
 
 // 渲染地址栏的数据
@@ -47,18 +48,29 @@ onLoad((q) => {
 
 // 每次进入页面时触发
 onShow(() => {
-    // 获取所有地址列表
-    address().then((res) => {
-        addressData.value = res.data.result
-        // console.log(res);
-    }).catch((err) => {
-        // 若未授权则跳转登录
-        if (err.statusCode === 401) {
-            uni.navigateTo({
-                url: '/pages/login/login'
-            });
-        }
-    })
+    // 如果没有token则直接跳转登录
+    if (useRequest().token === "") {
+        console.log("ttt");
+        uni.navigateTo({
+            url: '/pages/login/login'
+        });
+        // 获取所有地址列表
+    } else {
+        address().then((res) => {
+            addressData.value = res.data.result
+            // console.log(res);
+        }).catch((err) => {
+            // 若未授权则跳转登录
+            if (err.statusCode === 401) {
+                uni.navigateTo({
+                    url: '/pages/login/login'
+                });
+            }
+        })
+
+    }
+
+
 });
 // 销毁时触发
 onUnload(() => {
