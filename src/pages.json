@@ -21,6 +21,12 @@
 			}
 		},
 		{
+			"path": "pages/shopcar/shopcar",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
 			"path": "pages/user/user",
 			"style": {
 				"navigationBarTitleText": "我的"
@@ -73,6 +79,12 @@
 				"text": "列表",
 				"iconPath": "./static/iconPng/notActive/fenlei.png",
 				"selectedIconPath": "./static/iconPng/active/fenlei.png"
+			},
+			{
+				"pagePath": "pages/shopcar/shopcar",
+				"text": "购物车",
+				"iconPath": "./static/iconPng/notActive/gouwuche.png",
+				"selectedIconPath": "./static/iconPng/active/gouwuche.png"
 			},
 			{
 				"pagePath": "pages/user/user",
