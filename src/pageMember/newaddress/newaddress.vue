@@ -61,7 +61,7 @@ const address = ref([
 
 // 同步code子传父事件
 const findCode = (code) => {
-  console.log(code);
+  // console.log(code);
   cityCodeIndex.value = code
 }
 
@@ -69,7 +69,7 @@ const findCode = (code) => {
 // code记录
 const cityCodeIndex = ref([])
 const selectCity = (e) => {
-  console.log(e);
+  // console.log(e);
   // 同步修改地址数据
   address.value[
     address.value.findIndex((item) => item.key === "所在地区")
