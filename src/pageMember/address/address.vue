@@ -50,7 +50,6 @@ onLoad((q) => {
 onShow(() => {
     // 如果没有token则直接跳转登录
     if (useRequest().token === "") {
-        console.log("ttt");
         uni.navigateTo({
             url: '/pages/login/login'
         });
@@ -59,13 +58,6 @@ onShow(() => {
         address().then((res) => {
             addressData.value = res.data.result
             // console.log(res);
-        }).catch((err) => {
-            // 若未授权则跳转登录
-            if (err.statusCode === 401) {
-                uni.navigateTo({
-                    url: '/pages/login/login'
-                });
-            }
         })
 
     }
@@ -78,8 +70,6 @@ onUnload(() => {
     if (query.value.id === "address") {
         address().then((res) => {
             useMember().changeAaddressData(res.data.result)
-            // 同时防止混乱,将活跃按钮再次切换为0
-            useMember().changeRadio(0)
 
         })
 
