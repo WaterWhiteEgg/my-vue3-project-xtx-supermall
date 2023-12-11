@@ -46,12 +46,14 @@ const city = ref(
 );
 // 市
 const area = ref(
-  CITYDATA[cityIndex.value[0]].children.map((item) => {
+  CITYDATA[cityIndex.value[0]] && CITYDATA[cityIndex.value[0]].children.map((item) => {
     return item.name;
   })
 );
 // 区
 const county = ref(
+  CITYDATA[cityIndex.value[0]] &&
+  CITYDATA[cityIndex.value[0]].children[cityIndex.value[1]] &&
   CITYDATA[cityIndex.value[0]].children[cityIndex.value[1]].children.map(
     (item) => {
       return item.name;
