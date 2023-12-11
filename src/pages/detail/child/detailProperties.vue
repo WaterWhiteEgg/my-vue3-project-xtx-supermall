@@ -100,11 +100,12 @@ const isActiveId = computed(() => {
     return activeId.value === id;
   };
 });
-// propertiesAddress切换点击后返回对应地址
+// propertiesAddress返回对应地址
 const pushAddress = (data) => {
   for (let index in serveItem.value) {
     // 如果id相同就对其执行desc字符变化
     if (serveItem.value[index].id === data.id) {
+      console.log(data);
       serveItem.value[index].desc[0] = data.address;
       break;
     }

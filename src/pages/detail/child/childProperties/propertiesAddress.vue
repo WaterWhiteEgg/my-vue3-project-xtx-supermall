@@ -53,8 +53,10 @@ onMounted(() => {
       });
     }
   })
-  // 初始化第一个默认值给父组件
-  pushAddress(emits, useMember().addressData[0] && useMember().addressData.address, "address")
+  // 初始化默认选择值给父组件
+  pushAddress(emits, useMember().addressData[useMember().activeRadio].address, "address")
+
+
 });
 
 // item点击发送事件
