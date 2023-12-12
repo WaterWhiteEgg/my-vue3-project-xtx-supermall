@@ -4,7 +4,21 @@
         <view class="ad-desc">满5件，即可享受9折优惠！</view>
     </view>
     <scroll-view scroll-y class="scroll">
-        <view class="shopcar" v-for="item in data">
+        <view class="shopcar" v-for="item in data" :key="item.id">
+            <radio style="transform: scale(0.6)" color="#12c1a7" />
+            <view class="shopcar-image">
+                <image :src="item.picture" mode="scaleToFill" />
+            </view>
+            <view class="shopcar-text">
+                <view>{{ item.name }}</view>
+                <view>{{ item.attrsText }}</view>
+                <view class="shopcar-text-price">
+                    <view>{{ item.price }}</view>
+                    <view>
+                        <counter></counter>
+                    </view>
+                </view>
+            </view>
         </view>
         <guessLike></guessLike>
     </scroll-view>
@@ -28,6 +42,7 @@
 </template>
 <script setup>
 import guessLike from '../../components/Content/guessLike/guessLike.vue';
+import counter from '../../counter/counter.vue';
 // 模拟数据
 const data = [{
     id: "2",
@@ -36,7 +51,7 @@ const data = [{
     count: 0,
     picture: "../../static/color/logo.png",
     skuId: "string",
-    attrsText: "string",
+    attrsText: "瓷白色 尺寸：8寸",
     selected: true,
     nowPrice: 0,
     stock: 0,
@@ -73,6 +88,25 @@ const data = [{
 .scroll {
     height: 88vh;
 
+}
+
+.shopcar {
+    display: flex;
+    width: 100vw;
+    font-size: 25rpx;
+}
+
+.shopcar-image image {
+    width: 15vw;
+    height: 10vh;
+    padding: 0 1vw;
+}
+
+.shopcar-text-price {
+    display: flex;
+    width: 60vw;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .all-shopcar {
