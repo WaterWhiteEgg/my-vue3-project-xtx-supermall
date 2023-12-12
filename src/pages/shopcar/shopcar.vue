@@ -10,10 +10,10 @@
                 <image :src="item.picture" mode="scaleToFill" />
             </view>
             <view class="shopcar-text">
-                <view>{{ item.name }}</view>
-                <view>{{ item.attrsText }}</view>
+                <view class="shopcar-text-title">{{ item.name }}</view>
+                <text class="shopcar-text-attrstext">{{ item.attrsText }}</text>
                 <view class="shopcar-text-price">
-                    <view>{{ item.price }}</view>
+                    <view class="shopcar-text-price-item">￥{{ item.price }}</view>
                     <view>
                         <counter></counter>
                     </view>
@@ -92,21 +92,52 @@ const data = [{
 
 .shopcar {
     display: flex;
-    width: 100vw;
+    width: 96vw;
+    margin: 1vh 2vw;
+    padding: 2vh 0;
+    padding-bottom: 1vh;
     font-size: 25rpx;
+    background-color: #fff;
 }
 
 .shopcar-image image {
     width: 15vw;
     height: 10vh;
     padding: 0 1vw;
+    margin-right: 1vw;
+}
+
+.shopcar-text-title {
+    margin-bottom: 1vh;
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.shopcar-text {
+    width: 70%;
+
+}
+
+.shopcar-text-attrstext {
+    padding: .2vh 1vw;
+    font-size: 23rpx;
+    background-color: #ededed;
+    color: #595959;
 }
 
 .shopcar-text-price {
     display: flex;
-    width: 60vw;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
+}
+
+.shopcar-text-price-item {
+    margin: 1vh 0;
+    font-size: 25rpx;
+    color: #d10000;
 }
 
 .all-shopcar {

@@ -44,7 +44,6 @@ const inputQuantity = (e) => {
 .quantity-count {
     display: flex;
     height: 4vh;
-    background-color: red;
 }
 
 .quantity-count text {
