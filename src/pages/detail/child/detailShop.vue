@@ -1,72 +1,96 @@
 <template>
-    <view class="shop">
-        <view class="shop-fn">
-            <view class="shop-fn-item"><text>
-                    <text>&#xe666;</text></text>
-                <text>收藏</text>
-            </view>
-            <view class="shop-fn-item"><text><text>&#xe8a0;</text> </text>
-                <text>客服</text>
-            </view>
-            <view class="shop-fn-item"><text><text>&#xe63f;</text> </text>
-                <text>购物车</text>
-            </view>
-        </view>
-        <view class="shop-button">
-            <view class="shopcar">添加购物车</view>
-            <view class="buying">立即购买</view>
-        </view>
+  <view class="shop">
+    <view class="shop-fn">
+      <view class="shop-fn-item"
+        ><text> <text>&#xe666;</text></text>
+        <text>收藏</text>
+      </view>
+      <view class="shop-fn-item"
+        ><text><text>&#xe8a0;</text> </text>
+        <text>客服</text>
+      </view>
+      <view class="shop-fn-item"
+        ><text><text>&#xe63f;</text> </text>
+        <text>购物车</text>
+      </view>
     </view>
+    <view class="shop-button">
+      <view class="shopcar" @tap="shopcarJoin">添加购物车</view>
+      <view class="buying">立即购买</view>
+    </view>
+  </view>
 </template>
 <script setup>
+import { joinShopcar } from "../../../network/shopcar";
+import { globalSkuItem } from "../../../store/skus";
 
-
+// 加入购物车
+const shopcarJoin = () => {
+  // 如果没有提交的数组，则提示无法提交
+  if (Object.keys(globalSkuItem().skuItem).length === 0) {
+    // 弹窗提示
+    uni.showToast({
+      title: "请选择产品规格！",
+      icon: "error",
+    });
+  }
+  // 如果有则提交购物车
+  else {
+    joinShopcar({
+      skuId: globalSkuItem().skuItem.id,
+      count: globalSkuItem().quantity,
+    }).then(() => {
+      // 提交成功则提示弹窗
+      uni.showToast({
+        title: "提交成功！",
+      });
+    });
+  }
+};
 </script>
 <style scoped>
 .shop {
-    position: absolute;
-    bottom: 0;
-    z-index: 9;
-    padding: .5vh 0;
-    font-family: "iconfont";
-    display: flex;
-    justify-content: space-between;
-    font-size: 30rpx;
+  position: absolute;
+  bottom: 0;
+  z-index: 9;
+  padding: 0.5vh 0;
+  font-family: "iconfont";
+  display: flex;
+  justify-content: space-between;
+  font-size: 30rpx;
 }
 
 .shop-fn {
-    display: flex;
-    font-size: 30rpx;
-
+  display: flex;
+  font-size: 30rpx;
 }
 
 .shop-fn:first-child {
-    margin-left: 1vw;
+  margin-left: 1vw;
 }
 
 .shop-button {
-    display: flex;
+  display: flex;
 }
 
 .shop-button view {
-    padding: 1vh 4vw;
-    margin: 0 1vw;
-    font-size: 35rpx;
-    border-radius: 40rpx;
-    background-color: #12c1a7;
-    color: #fff;
-
+  padding: 1vh 4vw;
+  margin: 0 1vw;
+  font-size: 35rpx;
+  border-radius: 40rpx;
+  background-color: #12c1a7;
+  color: #fff;
 }
 
 .shop-fn-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2vw;
 }
 
 .shopcar {
-    background-color: #fe9539 !important;
+  background-color: #fe9539 !important;
 }
 </style>

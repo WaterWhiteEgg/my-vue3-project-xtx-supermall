@@ -1,210 +1,44 @@
 <template>
-    <view class="ad">
-        <view class="ad-tag">满减</view>
-        <view class="ad-desc">满5件，即可享受9折优惠！</view>
-    </view>
-    <scroll-view scroll-y class="scroll">
-        <view class="shopcar" v-for="item in data" :key="item.id">
-            <radio style="transform: scale(0.6)" color="#12c1a7" />
-            <view class="shopcar-image">
-                <image :src="item.picture" mode="scaleToFill" />
-            </view>
-            <view class="shopcar-text">
-                <view class="shopcar-text-title">{{ item.name }}</view>
-                <text class="shopcar-text-attrstext">{{ item.attrsText }}</text>
-                <view class="shopcar-text-price">
-                    <view class="shopcar-text-price-item">￥{{ item.price }}</view>
-                    <view>
-                        <counter></counter>
-                    </view>
-                </view>
-            </view>
-        </view>
-        <guessLike></guessLike>
-    </scroll-view>
-    <view class="all-shopcar">
-        <view class="all">
-            <radio style="transform: scale(0.6)" color="#12c1a7" />
-            <view class="all-text">
-                <view>全选</view>
-            </view>
-        </view>
-        <view class="total">
-            <view>合计:</view>
-            <view class="total-box">
-                <text class="total-ico">￥</text>
-                <text class="total-price">10000</text>
-
-            </view>
-        </view>
-        <view class="settlement">去结算(100)</view>
-    </view>
+    <shopcarAD></shopcarAD>
+    <shopcarShop :shopcarDatas="shopcarDatas"></shopcarShop>
 </template>
 <script setup>
-import guessLike from '../../components/Content/guessLike/guessLike.vue';
-import counter from '../../counter/counter.vue';
-// 模拟数据
-const data = [{
-    id: "2",
-    name: "广告",
-    price: 0,
-    count: 0,
-    picture: "../../static/color/logo.png",
-    skuId: "string",
-    attrsText: "瓷白色 尺寸：8寸",
-    selected: true,
-    nowPrice: 0,
-    stock: 0,
-    isCollect: true,
-    discount: 0,
-    isEffective: true
-}]
+import shopcarAD from "./chlid/shopcarAD.vue";
+import shopcarShop from "./chlid/shopcarShop.vue"
+
+import { useRequest } from "../../store/modules/request";
+import { getShopcar } from "../../network/shopcar";
+
+import { onLoad, onShow } from "@dcloudio/uni-app";
+import { ref } from "vue";
+
+// 加载时触发
+onLoad((query) => {
+    // 验证token跳转
+    if (useRequest().token === "") {
+        uni.navigateTo({
+            url: "/pages/login/login",
+        });
+    } else {
+    }
+});
+
+// 储存购物车的数据
+const shopcarDatas = ref([]);
+
+// 进入页面时触发
+onShow(() => {
+    // 尝试请求购物车
+    // 如果有token才请求
+    if (!(useRequest().token === "")) {
+        getShopcar().then((res) => {
+            // 购物车的数据储存赋值
+            shopcarDatas.value = res.data.result;
+        });
+    }
+});
+
+
 </script>
 
-<style scoped>
-.ad {
-    display: flex;
-    align-items: center;
-    height: 5vh;
-    font-size: 25rpx;
-    background-color: #fff;
-}
-
-.ad-tag {
-    height: 3vh;
-    padding: 0 1vw;
-    margin: 0 1vw;
-    background-color: #0bb39a;
-    color: #ffffff;
-}
-
-.ad-desc {
-    color: #1b1b1b;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.scroll {
-    height: 88vh;
-
-}
-
-.shopcar {
-    display: flex;
-    width: 96vw;
-    margin: 1vh 2vw;
-    padding: 2vh 0;
-    padding-bottom: 1vh;
-    font-size: 25rpx;
-    background-color: #fff;
-}
-
-.shopcar-image image {
-    width: 15vw;
-    height: 10vh;
-    padding: 0 1vw;
-    margin-right: 1vw;
-}
-
-.shopcar-text-title {
-    margin-bottom: 1vh;
-    font-weight: 900;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.shopcar-text {
-    width: 70%;
-
-}
-
-.shopcar-text-attrstext {
-    padding: .2vh 1vw;
-    font-size: 23rpx;
-    background-color: #ededed;
-    color: #595959;
-}
-
-.shopcar-text-price {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.shopcar-text-price-item {
-    margin: 1vh 0;
-    font-size: 25rpx;
-    color: #d10000;
-}
-
-.all-shopcar {
-    position: absolute;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 8vh;
-    width: 100vw;
-    background-color: #ffffff;
-    font-size: 30rpx;
-    overflow: hidden;
-}
-
-.all {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-left: 2vw;
-
-}
-
-.all-text {
-    margin-left: -2vw;
-    margin-top: 1vh;
-}
-
-.total {
-    display: flex;
-    align-items: center;
-    height: 70%;
-    width: 40vw;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.total-box {
-    margin: 0 .5vw;
-    margin-top: .5vh;
-}
-
-.total-ico {
-    font-size: 20rpx;
-    color: #e98400;
-}
-
-.total-price {
-    font-size: 35rpx;
-    font-weight: 900;
-    color: #e98400;
-
-}
-
-.settlement {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 2vw;
-    padding: 0 6vw;
-    height: 70%;
-    border-radius: 35rpx;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    background-color: #0bb399d7;
-    color: #ffffff;
-}
-</style>
+<style scoped></style>
