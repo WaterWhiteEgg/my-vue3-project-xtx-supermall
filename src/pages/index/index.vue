@@ -1,6 +1,6 @@
 <template>
     <skeleton v-if="showing().isSkeleton"></skeleton>
-    <navber></navber>
+    <indexNavber></indexNavber>
     <swiper-mian :swiperData="swiperData"></swiper-mian>
     <indexMutli :mutliData="mutliData"></indexMutli>
     <IndexHotMutil :hotMutilData="hotMutilData"></IndexHotMutil>
@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import navber from "../../components/navber/navber.vue";
+import indexNavber from "../../components/Content/indexNavber/indexNavber.vue";
 import "../../network/interceptor";
 import skeleton from "../../components/Content/skeleton/skeleton.vue";
 import { bannerData } from "./js/bannerData";

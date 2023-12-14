@@ -22,10 +22,13 @@ export function joinShopcar(data) {
     })
 }
 
-// 清空所有购物车
-export function delShopcar() {
+// 删除/清空(根据数组)购物车
+export function delShopcar(ids) {
     return uniReq({
         url: "/member/cart",
+        data: {
+            ids
+        },
         method: "DELETE",
     })
 }
@@ -37,6 +40,7 @@ export function delShopcar() {
 export function changeShopcar(skuid, data) {
     return uniReq({
         url: "/member/cart/" + skuid,
+        data,
         method: "PUT",
     })
 }

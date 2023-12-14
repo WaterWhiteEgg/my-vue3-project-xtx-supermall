@@ -23,6 +23,7 @@
 		{
 			"path": "pages/shopcar/shopcar",
 			"style": {
+				"navigationStyle": "custom",
 				"navigationBarTitleText": "购物车"
 			}
 		},

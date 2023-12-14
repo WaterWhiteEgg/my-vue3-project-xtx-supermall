@@ -9,7 +9,7 @@
         ><text><text>&#xe8a0;</text> </text>
         <text>客服</text>
       </view>
-      <view class="shop-fn-item"
+      <view class="shop-fn-item" @tap="toShopcar"
         ><text><text>&#xe63f;</text> </text>
         <text>购物车</text>
       </view>
@@ -47,6 +47,14 @@ const shopcarJoin = () => {
     });
   }
 };
+
+// 前往购物车
+const toShopcar = ()=>{
+  uni.switchTab({
+    url:"/pages/shopcar/shopcar"
+  })
+  uni.hideTabBar()
+}
 </script>
 <style scoped>
 .shop {

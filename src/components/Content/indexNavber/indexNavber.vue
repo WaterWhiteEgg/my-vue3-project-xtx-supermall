@@ -18,7 +18,7 @@
 import { computed, ref } from "vue";
 import { scanCodePr } from "@/utils/promise/scanCode.js";
 
-import search from "../../components/search/search.vue"
+import search from "../../../components/search/search.vue"
 
 // 通过安全距离的获取可以动态的适配各种机型的头部距离
 const { safeAreaInsets } = uni.getSystemInfoSync();
@@ -41,7 +41,7 @@ const searchQR = () => {
 };
 </script>
 <style>
-@import url("../../static/icon/iconfont.css");
+@import url("../../../static/icon/iconfont.css");
 
 .navber {
     font-size: 35rpx;
