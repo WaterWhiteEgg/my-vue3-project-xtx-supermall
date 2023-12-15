@@ -18,7 +18,7 @@
     </view>
 </template>
 <script setup>
-import { detail } from "../../../store/toDetail"
+import { globalDetail } from "../../../store/toDetail"
 
 
 // 渲染右展示区的盒子
@@ -31,7 +31,7 @@ const props = defineProps({
     }
 })
 // 进入详情页，需要提供id
-const { toDetail } = detail()
+const { toDetail } = globalDetail()
 </script>
 <style scoped>
 .category-show-box {

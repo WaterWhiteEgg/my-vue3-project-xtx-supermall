@@ -28,6 +28,12 @@
 			}
 		},
 		{
+			"path": "pages/shopcar/other/navShopcar",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
 			"path": "pages/user/user",
 			"style": {
 				"navigationBarTitleText": "我的"

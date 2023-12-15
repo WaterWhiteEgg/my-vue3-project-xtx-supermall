@@ -14,7 +14,7 @@
 <script setup>
 import { debounce } from "../../utils/debounce";
 
-import { detail } from "../../store/toDetail"
+import { globalDetail } from "../../store/toDetail"
 
 // 获取渲染数据
 const props = defineProps({
@@ -34,7 +34,7 @@ const scrolltolower = () => {
     // console.log(props.guesslikeDataArray);
 };
 // 进入详情页，需要提供id
-const { toDetail } = detail()
+const { toDetail } = globalDetail()
 
 </script>
 <style scoped>

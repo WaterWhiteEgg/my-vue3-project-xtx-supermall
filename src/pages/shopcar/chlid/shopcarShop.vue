@@ -28,7 +28,7 @@
         </uni-swipe-action-item>
       </uni-swipe-action>
     </view>
-    <guessLike></guessLike>
+    <guessLike v-if="props.isShowGuess"></guessLike>
   </scroll-view>
   <view class="all-shopcar">
     <view class="all-shopcar-box">
@@ -198,6 +198,12 @@ import { onLoad, onShow } from "@dcloudio/uni-app";
 import guessLike from "../../../components/Content/guessLike/guessLike.vue";
 import counter from "@/components/counter/counter.vue";
 
+const props = defineProps({
+  isShowGuess: {
+    type: Boolean,
+    default: true
+  }
+})
 
 // 记录购物车数据
 const shopcarDatas = ref([])

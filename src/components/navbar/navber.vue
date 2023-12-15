@@ -1,7 +1,12 @@
 <template>
     <view class="navber" :style="{ 'padding-top': safeAreaInsets.top + 'px' }">
-        <view class="navber-ico" @tap="back" >
-            ＜
+        <view class="navber-ico">
+            <slot name="left">
+                <view @tap="back()">
+                    ＜
+                </view>
+            </slot>
+
         </view>
         <view class="navber-text">
             <slot name="title">

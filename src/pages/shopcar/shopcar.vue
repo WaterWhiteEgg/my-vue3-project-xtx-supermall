@@ -1,7 +1,11 @@
 <template>
     <navber>
+        <template #left>
+            <view>
+            </view>
+        </template>
         <template #title>
-            <view >购物车</view>
+            <view>购物车</view>
         </template>
     </navber>
     <shopcarNeedLogin v-if="!isLogin"></shopcarNeedLogin>
@@ -13,15 +17,16 @@ import shopcarAD from "./chlid/shopcarAD.vue";
 import shopcarShop from "./chlid/shopcarShop.vue"
 import shopcarNeedLogin from "./chlid/shopcarNeedLogin.vue";
 import navber from "../../components/navbar/navber.vue"
-import { useRequest } from "../../store/modules/request";
 
-import { onLoad, onShow } from "@dcloudio/uni-app";
+import { useRequest } from "../../store/modules/request";
+import { globalDetail } from "../../store/toDetail";
+
+import { onLoad, onShow, onHide } from "@dcloudio/uni-app";
 import { ref } from "vue";
 
 const isLogin = ref(false)
 // 加载时触发
 onLoad((query) => {
-
 });
 
 
@@ -36,8 +41,7 @@ onShow(() => {
 });
 
 
+
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

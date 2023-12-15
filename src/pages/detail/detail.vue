@@ -1,21 +1,15 @@
 <template>
   <scroll-view scroll-y class="detail-scroll">
     <detailSwiper :detailDataPic="detailDataPic"></detailSwiper>
-    <detailPrice
-      :oldPrice="priceData.oldPrice"
-      :price="priceData.price"
-    ></detailPrice>
+    <detailPrice :oldPrice="priceData.oldPrice" :price="priceData.price"></detailPrice>
     <detailTitle :name="detailData.name" :desc="detailData.desc"></detailTitle>
-    <detailProperties
-      :detailSpecs="detailSpecs"
-      :detailSkus="detailSkus"
-    ></detailProperties>
+    <detailProperties :detailSpecs="detailSpecs" :detailSkus="detailSkus"></detailProperties>
   </scroll-view>
   <detailShop></detailShop>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
-import { onLoad } from "@dcloudio/uni-app";
+import { onMounted,onUnmounted, ref } from "vue";
+import { onLoad, onHide, onUnload, onBackPress } from "@dcloudio/uni-app";
 
 import detailSwiper from "./child/detailSwiper.vue";
 import detailPrice from "./child/detailprice.vue";
@@ -23,15 +17,17 @@ import detailTitle from "./child/detailTitle.vue";
 import detailShop from "./child/detailShop.vue";
 import detailProperties from "./child/detailProperties.vue";
 
-// 获取id
-// 加载时触发
+import { globalDetail } from "../../store/toDetail"
 import { detail } from "../../network/detail";
+import { joinShopcar } from "../../network/shopcar";
 // 初始化数据
 const detailData = ref({});
 const detailDataPic = ref([]);
 const priceData = ref({});
 const detailSpecs = ref([]);
 const detailSkus = ref([]);
+
+// 加载时触发
 onLoad((query) => {
   // 获取详情页的数据,query需要传递id
   detail(query.id).then((res) => {
@@ -47,8 +43,10 @@ onLoad((query) => {
     detailSpecs.value = res.data.result.specs;
     // 规格对应的sku(是产品入库后一种归类方法,简称规格对应的数组)
     detailSkus.value = res.data.result.skus;
+    // 将id存入全局
+    globalDetail().changeId(query.id)
   });
 });
+
 </script>
-<style scoped>
-</style>
+<style scoped></style>

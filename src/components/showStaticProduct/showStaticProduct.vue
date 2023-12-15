@@ -14,7 +14,7 @@
 
 <script setup>
 
-import { detail } from "../../store/toDetail"
+import { globalDetail } from "../../store/toDetail"
 
 const props = defineProps({
     dataArray: {
@@ -27,7 +27,7 @@ const props = defineProps({
 
 // 跳转到详情页
 // 进入详情页，需要提供id
-const { toDetail } = detail()
+const { toDetail } = globalDetail()
 </script>
 <style scoped>
 .showbox {

@@ -1,16 +1,13 @@
 <template>
   <view class="shop">
     <view class="shop-fn">
-      <view class="shop-fn-item"
-        ><text> <text>&#xe666;</text></text>
+      <view class="shop-fn-item"><text> <text>&#xe666;</text></text>
         <text>收藏</text>
       </view>
-      <view class="shop-fn-item"
-        ><text><text>&#xe8a0;</text> </text>
+      <view class="shop-fn-item"><text><text>&#xe8a0;</text> </text>
         <text>客服</text>
       </view>
-      <view class="shop-fn-item" @tap="toShopcar"
-        ><text><text>&#xe63f;</text> </text>
+      <view class="shop-fn-item" @tap="toNavShopcar"><text><text>&#xe63f;</text> </text>
         <text>购物车</text>
       </view>
     </view>
@@ -23,6 +20,10 @@
 <script setup>
 import { joinShopcar } from "../../../network/shopcar";
 import { globalSkuItem } from "../../../store/skus";
+
+const props = defineProps({
+
+})
 
 // 加入购物车
 const shopcarJoin = () => {
@@ -49,11 +50,11 @@ const shopcarJoin = () => {
 };
 
 // 前往购物车
-const toShopcar = ()=>{
-  uni.switchTab({
-    url:"/pages/shopcar/shopcar"
+const toNavShopcar = () => {
+  uni.navigateTo({
+    url: "/pages/shopcar/other/navShopcar"
   })
-  uni.hideTabBar()
+
 }
 </script>
 <style scoped>

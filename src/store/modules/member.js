@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useMember = defineStore('member', () => {
+    
+
     // 地址栏数据
     const addressData = ref([])
     // 覆盖addressData的数据
