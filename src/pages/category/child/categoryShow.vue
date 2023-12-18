@@ -17,7 +17,7 @@
     </scroll-view>
 </template>
 <script setup>
-import { watch, watchEffect, ref } from "vue";
+import { watch, watchEffect, ref, onMounted } from "vue";
 
 import swiperMain from "../../../components/swiper/swiperMian.vue";
 import categoryShowbox from "./categoryShowbox.vue";
@@ -38,11 +38,15 @@ const props = defineProps({
 // 轮播图数据获取
 
 const swiperData = ref();
-import { banner } from "../../../network/banner";
-banner().then((res) => {
-    swiperData.value = res.data.result;
-});
+// import { banner } from "../../../network/banner.js";
+// 挂载时触发
+onMounted(() => {
 
+    banner().then((res) => {
+        swiperData.value = res.data.result;
+    });
+
+})
 // 转载到showall
 const navShowall = (goods) => {
     uni.navigateTo({

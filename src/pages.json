@@ -131,6 +131,24 @@
 					}
 				}
 			]
+		},
+		{
+			"root": "pageOrder",
+			"pages": [
+
+				{
+					"path": "shopcarOrder/shopcarOrder",
+					"style": {
+						"navigationBarTitleText": "订单详情"
+					}
+				},
+				{
+					"path": "completeOrder/completeOrder",
+					"style": {
+						"navigationBarTitleText": "订单填写"
+					}
+				}
+			]
 		}
 	],
 	"preloadRule": {
@@ -138,6 +156,12 @@
 			"network": "all",
 			"packages": [
 				"pageMember"
+			]
+		},
+		"pages/shopcar/shopcar": {
+			"network": "all",
+			"packages": [
+				"pageOrder"
 			]
 		}
 	}

@@ -47,7 +47,7 @@
         <text class="total-price">{{ allPrice }}</text>
       </view>
     </view>
-    <view class="settlement">去结算({{ allSelectItem }})</view>
+    <view class="settlement" @tap="toCompleteOther(allSelectItem === 0)">去结算({{ allSelectItem }})</view>
   </view>
 </template>
 <style scoped>
@@ -341,6 +341,18 @@ const allSelectItem = computed(() => {
   }
   return allSelectArray.value.length
 })
+
+
+// 前往completeOther
+// 但是在这之前，要进行订单提交
+const toCompleteOther = (flag) => {
+  // 如果flag是true的话，停止请求
+  if (!flag) {
+    // 提交订单
+    console.log(shopcarDatas.value);
+    uni.navigateTo({ url: "/pageOrder/completeOrder/completeOrder" })
+  }
+}
 
 
 </script>

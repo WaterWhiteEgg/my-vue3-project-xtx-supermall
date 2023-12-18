@@ -18,7 +18,7 @@
     </view>
 </template>
 <script setup>
-import { globalDetail } from "../../../store/toDetail"
+import { globalDetail } from "../../../store/toDetail.js"
 
 
 // 渲染右展示区的盒子
