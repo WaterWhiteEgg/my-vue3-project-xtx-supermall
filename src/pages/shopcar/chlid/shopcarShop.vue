@@ -192,6 +192,8 @@
 <script setup>
 import { computed, ref, watch, onMounted } from "vue";
 
+import { address } from "@/network/address"
+import { order } from "@/network/purchaseOrder"
 import { changeShopcar, getShopcar, allSelectShopcar, delShopcar } from "../../../network/shopcar"
 import { onLoad, onShow } from "@dcloudio/uni-app";
 
@@ -348,9 +350,35 @@ const allSelectItem = computed(() => {
 const toCompleteOther = (flag) => {
   // 如果flag是true的话，停止请求
   if (!flag) {
-    // 提交订单
-    console.log(shopcarDatas.value);
-    uni.navigateTo({ url: "/pageOrder/completeOrder/completeOrder" })
+    // // 提交订单
+    // // 储存goods数据
+    // const goods = ref([])
+    // // 将数据提取出来
+    // for (let item of shopcarDatas.value) {
+    //   // 筛选被选择的布尔值以及库存
+    //   if (item.selected && item.stock !== 0) {
+    //     goods.value.push({
+    //       skuId: item.skuId,
+    //       count: item.count
+    //     })
+    //   }
+    // }
+    // // 将首选地址的id默认放入
+    // address().then((res) => {
+    //   // 获得后，即可尝试提交表单数据
+    //   order({
+    //     goods: goods.value,
+    //     // 首个地址
+    //     addressId: res.data.result[0].id,
+
+
+
+    //   }).then(() => { })
+
+
+    // })
+    uni.navigateTo({ url: "/pageOrder/completeOrder/completeOrder?mode=shopcar" })
+
   }
 }
 
