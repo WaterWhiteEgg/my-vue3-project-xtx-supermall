@@ -21,6 +21,7 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import propertiesAddress from "./childProperties/propertiesAddress.vue";
+import { globalDetail } from "../../../store/toDetail";
 
 import propertiesAgreement from "./childProperties/propertiesAgreement.vue";
 import propertiesData from "./childProperties/propertiesData.vue";
@@ -105,8 +106,10 @@ const pushAddress = (data) => {
   for (let index in serveItem.value) {
     // 如果id相同就对其执行desc字符变化
     if (serveItem.value[index].id === data.id) {
-      console.log(data);
-      serveItem.value[index].desc[0] = data.address;
+      // console.log(data);
+      serveItem.value[index].desc[0] = data.address.address;
+      // 同时全局记录这个地址id
+      globalDetail().changeAddressId(data.address.id)
       break;
     }
 

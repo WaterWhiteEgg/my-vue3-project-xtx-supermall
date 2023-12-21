@@ -2,10 +2,10 @@
     <view class="method">
         <view class="method-title">
             <view>我的订单</view>
-            <view class="method-title-button" >查看全部订单></view>
+            <view class="method-title-button">查看全部订单＞</view>
         </view>
         <view class="method-bar">
-            <view class="method-bar-item" v-for="(item, index) in userMethods" :key="item.id">
+            <view class="method-bar-item" v-for="(item, index) in userMethods" :key="item.id" @tap="methodsClick(item.id)">
                 <image :src="item.ico" mode="scaleToFill" />
                 <text class="method-bar-item-name">{{ item.name }}</text>
             </view>
@@ -28,7 +28,24 @@ const userMethods = ref([
     { name: "待评价", ico: "../../../static/color/daipingjia.png", id: "beEvaluated" },
     { name: "售后", ico: "../../../static/color/shouhou.png", id: "afterSales" },
 ])
+// 订单的方法执行
+const methodsClick = (id) => {
+    // 根据id执行对应的方法
+    switch (id) {
+        case "obligation":
+            {
+                toWaitOrder()
+                break;
+            }
+    }
 
+}
+// 前往待付款界面
+const toWaitOrder = () => {
+    uni.navigateTo({
+        url: "/pageOrder/waitOrder/waitOrder"
+    })
+}
 // 前往设置
 const toSettings = () => {
     uni.navigateTo({

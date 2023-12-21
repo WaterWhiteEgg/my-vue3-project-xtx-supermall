@@ -1,11 +1,7 @@
 <template>
   <orderAddress @getAddressId="getAddressId"></orderAddress>
   <scroll-view scroll-y class="scroll">
-    <view
-      class="shopcar"
-      v-for="(item, index) in selectedShopcar"
-      :key="item.skuId"
-    >
+    <view class="shopcar" v-for="(item, index) in selectedShopcar" :key="item.skuId">
       <view class="shopcar-image">
         <image :src="item.picture" mode="scaleToFill" />
       </view>
@@ -14,13 +10,9 @@
         <view class="shopcar-text-title">{{ item.name }}</view>
         <text class="shopcar-text-attrstext">{{ item.attrsText }}</text>
         <view class="shopcar-text-price">
-          <view class="shopcar-text-price-item"
-            >￥{{ item.totalPayPrice }}
-            <text
-              class="shopcar-text-price-item-old"
-              v-if="item.totalPayPrice !== item.totalPrice"
-              >￥{{ item.totalPrice }}</text
-            >
+          <view class="shopcar-text-price-item">￥{{ item.totalPayPrice }}
+            <text class="shopcar-text-price-item-old" v-if="item.totalPayPrice !== item.totalPrice">￥{{ item.totalPrice
+            }}</text>
           </view>
 
           <view class="count"> x{{ item.count }} </view>
@@ -29,14 +21,11 @@
     </view>
   </scroll-view>
   <orderSet @changeTime="changeTime" @changeText="changeText"></orderSet>
-  <orderPrice
-    :postFee="summary.postFee"
-    :totalPrice="summary.totalPrice"
-  ></orderPrice>
-  <orderBottom :totalPayPrice="summary.totalPayPrice"></orderBottom>
+  <orderPrice :postFee="summary.postFee" :totalPrice="summary.totalPrice" @changePayType="changePayType"></orderPrice>
+  <orderBottom :totalPayPrice="summary.totalPayPrice" @completeOrder="completeOrder"></orderBottom>
 </template>
 <script setup>
-import { order, orderPre } from "@/network/purchaseOrder";
+import { order, orderPre, orderPreNow } from "@/network/purchaseOrder";
 import { getShopcar } from "@/network/shopcar";
 import { onLoad, onShow } from "@dcloudio/uni-app";
 import { ref } from "vue";
@@ -45,7 +34,6 @@ import orderBottom from "./child/orderBottom.vue";
 import orderPrice from "./child/orderPrice.vue";
 import orderSet from "./child/orderSet.vue";
 
-// 加载时触发
 // 记录购物车列表
 const selectedShopcar = ref([]);
 // 记录购物车列表的id count
@@ -53,31 +41,49 @@ const goods = ref([]);
 // 记录购物车的综合数据
 const summary = ref({});
 
+// 加载时触发
 onLoad((query) => {
   // 如果是购物车模式，则请求购物车列表并筛选出数据准备提交表单
-  if (query.mode === "shopcar") {
-    // 请求购物车的预交付数据
-    orderPre().then((res) => {
-      console.log(res);
-      // 获取整个预交付商品列表
-      selectedShopcar.value = res.data.result.goods;
-      //   获取购物车的综合数据
-      summary.value = res.data.result.summary;
+  switch (query.mode) {
+    case "shopcar": {
 
-      // 筛选出提交数据
-      for (let item of res.data.result.goods) {
-        goods.value.push({
-          skuId: item.skuId,
-          count: item.count,
-        });
-      }
-    });
+      // 请求购物车的预交付数据
+      orderPre().then((res) => {
+        console.log(res);
+        // 获取整个预交付商品列表
+        selectedShopcar.value = res.data.result.goods;
+        //   获取购物车的综合数据
+        summary.value = res.data.result.summary;
+
+        // 筛选出提交数据
+        for (let item of res.data.result.goods) {
+          goods.value.push({
+            skuId: item.skuId,
+            count: item.count,
+          });
+        }
+      });
+
+      break;
+    }
+    case "buy": {
+      orderPreNow({
+        skuId: query.skuId,
+        count: query.count,
+        addressId: query.addressId
+      }).then((res) => {
+        console.log(res);
+      })
+      break;
+    }
   }
+
+
+
 });
 
 // 订单的默认设置值
 const timeIntervalIndex = ref(1);
-
 // 切换timeIntervalIndex;
 const changeTime = (index) => {
   timeIntervalIndex.value = index;
@@ -92,8 +98,64 @@ const changeText = (val) => {
 const addressId = ref("");
 const getAddressId = (id) => {
   addressId.value = id;
-  console.log(3);
 };
+
+// 记录交易类型 ,传过来的值里2代表微信支付,0代表货到付款
+const payType = ref({ payType: 1, payChannel: 2 })
+// 切换交易类型
+const changePayType = (type) => {
+  switch (type) {
+    case 0: {
+      // 货到付款
+      payType.value = {
+        payType: 2,
+        payChannel: null
+      }
+      break;
+    }
+    case 1: {
+      // 支付宝
+      payType.value = {
+        payType: 1,
+        payChannel: 1
+      }
+      break;
+    }
+    case 2: {
+      // 微信
+      payType.value = {
+        payType: 1,
+        payChannel: 2
+      }
+      break;
+    }
+  }
+}
+// 提交购物车表单
+const completeOrder = () => {
+  // 加载动画
+  uni.showLoading({
+    title: "提交中..."
+  })
+  // 整理数据提交表格
+  order(
+    {
+      goods: goods.value,
+      addressId: addressId.value,
+      deliveryTimeType: timeIntervalIndex.value,
+      buyerMessage: setText.value,
+      payType: payType.value.payType,
+      payChannel: payType.value.payChannel
+    }
+
+  ).then((res) => {
+    // 关闭加载动画
+    uni.hideLoading();
+    console.log(res);
+  })
+}
+
+
 </script>
 <style scoped>
 .scroll {

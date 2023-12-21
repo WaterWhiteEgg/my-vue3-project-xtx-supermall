@@ -13,13 +13,14 @@
     </view>
     <view class="shop-button">
       <view class="shopcar" @tap="shopcarJoin">添加购物车</view>
-      <view class="buying">立即购买</view>
+      <view class="buying" @tap="buying">立即购买</view>
     </view>
   </view>
 </template>
 <script setup>
 import { joinShopcar } from "../../../network/shopcar";
 import { globalSkuItem } from "../../../store/skus";
+import { globalDetail } from "../../../store/toDetail";
 
 const props = defineProps({
 
@@ -55,6 +56,24 @@ const toNavShopcar = () => {
     url: "/pages/shopcar/other/navShopcar"
   })
 
+}
+// 前往立即购买,收集好需要的数据query传输
+const buying = () => {
+  // 如果没有提交的数组，则提示无法提交
+  if (Object.keys(globalSkuItem().skuItem).length === 0) {
+    // 弹窗提示
+    uni.showToast({
+      title: "请选择产品规格！",
+      icon: "error",
+    });
+  } else {
+    console.log();
+    // 如要添加地址id要判断是否为null 
+    uni.navigateTo({
+      url: `/pageOrder/completeOrder/completeOrder?mode=buy&skuId=${globalSkuItem().skuItem.id}&count=${globalSkuItem().quantity}&addressId=${globalDetail().addressId}`
+    })
+
+  }
 }
 </script>
 <style scoped>

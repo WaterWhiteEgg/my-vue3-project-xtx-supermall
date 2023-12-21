@@ -4,7 +4,7 @@ import { uniReq } from "./request";
 // 订单请求较为复杂，因为根据状态不同而要执行的东西不同
 // 预交付 预立即提交付 待发货 待收货 待评价 已完成 / 已取消
 
-// 获取预付订单数组
+// 获取购物车预付订单数组
 export function orderPre() {
     return uniReq({
         url: "/member/order/pre",

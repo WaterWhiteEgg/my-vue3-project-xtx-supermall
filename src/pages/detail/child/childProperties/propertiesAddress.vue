@@ -54,7 +54,7 @@ onMounted(() => {
     }
   })
   // 初始化默认选择值给父组件
-  pushAddress(emits, useMember().addressData[useMember().activeRadio].address, "address")
+  pushAddress(emits, useMember().addressData[useMember().activeRadio], "address")
 
 
 });
@@ -62,7 +62,7 @@ onMounted(() => {
 // item点击发送事件
 const itemClick = (item) => {
   // 将itemValue的内容发送到父元素渲染
-  pushAddress(emits, item.address, "address")
+  pushAddress(emits, item, "address")
 
 };
 // 前往地址管理

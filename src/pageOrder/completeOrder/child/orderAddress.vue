@@ -1,19 +1,24 @@
 <template>
   <view class="address" @tap="toAddress">
     <view class="address-box">
-      <view class="address-box-ico">
+      <view class="address-box-title-ico">
         <image src="../../../static/color/positioning.png" mode="scaleToFill" />
       </view>
-      <text
-        >{{ payAddress[0] && payAddress[0].address }}
-        {{ payAddress[0] && payAddress[0].fullLocation }}
-      </text>
+      <view class="address-box-title">
+        <view class="address-box-title-name">{{ payAddress[0] && payAddress[0].receiver }}
+          {{ payAddress[0] && payAddress[0].contact }}
+        </view>
+        <view>
+          {{ payAddress[0] && payAddress[0].fullLocation }}
+          {{ payAddress[0] && payAddress[0].address }}
+        </view>
+      </view>
     </view>
     <view class="address-button"> ➢ </view>
   </view>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 
 import { onLoad, onShow, onUnload } from "@dcloudio/uni-app";
 import { address } from "@/network/address";
@@ -56,14 +61,27 @@ const toAddress = () => {
   align-items: center;
 }
 
-.address-box-ico {
-  margin: 0 1vw;
+.address-box-title {
+  display: flex;
+  flex-direction: column;
 }
 
-.address-box-ico image {
+.address-box-title-name {
+  padding: .5vh 0;
+  font-weight: 900;
+  font-size: 30rpx;
+
+}
+
+.address-box-title-ico {
+  margin: 0 2vw;
+}
+
+.address-box-title-ico image {
   width: 6vw;
   height: 4vh;
 }
+
 .address-button {
   margin-right: 2vw;
   font-size: 35rpx;
