@@ -135,11 +135,17 @@
 		{
 			"root": "pageOrder",
 			"pages": [
-
 				{
 					"path": "shopcarOrder/shopcarOrder",
 					"style": {
 						"navigationBarTitleText": "订单详情"
+					}
+				},
+				{
+					"path": "waitOrder/waitOrder",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTitleText": "等待支付"
 					}
 				},
 				{
