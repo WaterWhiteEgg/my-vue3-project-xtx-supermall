@@ -3,38 +3,21 @@
   <view class="show">
     <image :src="skusItem.picture" mode="aspectFit"> </image>
     <view class="show-desc">
-      <view class="show-desc-price"
-        ><text class="show-desc-price-ico">￥</text>
-        {{ Number(skusItem.price) * quantity }}</view
-      >
+      <view class="show-desc-price"><text class="show-desc-price-ico">￥</text>
+        {{ (Number(skusItem.price) * quantity).toFixed(2) }}</view>
       <view class="show-desc-inventory">库存：{{ skusItem.inventory }}</view>
       <view class="show-desc-select">已选：{{ skusArrayItem }}</view>
     </view>
   </view>
   <scroll-view scroll-y class="scroll">
-    <view
-      v-for="(item, index) in detailSpecs"
-      :key="item.id"
-      class="detailspecs"
-    >
+    <view v-for="(item, index) in detailSpecs" :key="item.id" class="detailspecs">
       <text class="name">{{ item.name }}</text>
       <scroll-view scroll-x class="scroll-item">
-        <view
-          v-for="(itemValue, itemIndex) in item.values"
-          class="item"
-          :key="itemValue.name"
-          @tap="
-            changeActiveItem(index, itemIndex);
-            itemSkusPush();
-          "
-          :class="{ active: isActiveItem(index, itemIndex) }"
-        >
-          <image
-            :src="itemValue.picture"
-            mode="scaleToFill"
-            class="item-image"
-            v-if="itemValue.picture"
-          />
+        <view v-for="(itemValue, itemIndex) in item.values" class="item" :key="itemValue.name" @tap="
+          changeActiveItem(index, itemIndex);
+        itemSkusPush();
+        " :class="{ active: isActiveItem(index, itemIndex) }">
+          <image :src="itemValue.picture" mode="scaleToFill" class="item-image" v-if="itemValue.picture" />
           <text>{{ itemValue.name }}</text>
           <text>{{ item.desc }}</text>
         </view>

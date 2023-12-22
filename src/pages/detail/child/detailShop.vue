@@ -26,8 +26,8 @@ const props = defineProps({
 
 })
 
-// 加入购物车
-const shopcarJoin = () => {
+// 检测全局规格是否添加
+const hasSkuItem = (callback) => {
   // 如果没有提交的数组，则提示无法提交
   if (Object.keys(globalSkuItem().skuItem).length === 0) {
     // 弹窗提示
@@ -36,8 +36,16 @@ const shopcarJoin = () => {
       icon: "error",
     });
   }
-  // 如果有则提交购物车
+  // 如果有则执行回调
   else {
+    callback && callback()
+  }
+}
+// 加入购物车
+const shopcarJoin = () => {
+  // 如果没有提交的数组，则提示无法提交
+  hasSkuItem(() => {
+    // 如果有则提交购物车
     joinShopcar({
       skuId: globalSkuItem().skuItem.id,
       count: globalSkuItem().quantity,
@@ -47,9 +55,10 @@ const shopcarJoin = () => {
         title: "提交成功！",
       });
     });
-  }
-};
+  })
 
+
+}
 // 前往购物车
 const toNavShopcar = () => {
   uni.navigateTo({
@@ -59,21 +68,11 @@ const toNavShopcar = () => {
 }
 // 前往立即购买,收集好需要的数据query传输
 const buying = () => {
-  // 如果没有提交的数组，则提示无法提交
-  if (Object.keys(globalSkuItem().skuItem).length === 0) {
-    // 弹窗提示
-    uni.showToast({
-      title: "请选择产品规格！",
-      icon: "error",
-    });
-  } else {
-    console.log();
-    // 如要添加地址id要判断是否为null 
+  hasSkuItem(() => {
     uni.navigateTo({
       url: `/pageOrder/completeOrder/completeOrder?mode=buy&skuId=${globalSkuItem().skuItem.id}&count=${globalSkuItem().quantity}&addressId=${globalDetail().addressId}`
     })
-
-  }
+  })
 }
 </script>
 <style scoped>

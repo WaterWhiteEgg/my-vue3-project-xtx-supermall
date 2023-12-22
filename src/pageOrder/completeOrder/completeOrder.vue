@@ -46,39 +46,43 @@ onLoad((query) => {
   // 如果是购物车模式，则请求购物车列表并筛选出数据准备提交表单
   switch (query.mode) {
     case "shopcar": {
-
       // 请求购物车的预交付数据
       orderPre().then((res) => {
-        console.log(res);
-        // 获取整个预交付商品列表
-        selectedShopcar.value = res.data.result.goods;
-        //   获取购物车的综合数据
-        summary.value = res.data.result.summary;
-
-        // 筛选出提交数据
-        for (let item of res.data.result.goods) {
-          goods.value.push({
-            skuId: item.skuId,
-            count: item.count,
-          });
-        }
+        autoValue(res)
       });
 
       break;
     }
     case "buy": {
+      // 请求立即购买的预交付数据
+
       orderPreNow({
         skuId: query.skuId,
         count: query.count,
         addressId: query.addressId
       }).then((res) => {
-        console.log(res);
+        autoValue(res)
       })
       break;
     }
   }
 
+  // 相同的函数执行
+  function autoValue(res) {
+    console.log(res);
+    // 获取整个预交付商品列表
+    selectedShopcar.value = res.data.result.goods;
+    //   获取购物车的综合数据
+    summary.value = res.data.result.summary;
+    // 筛选出提交数据
+    for (let item of res.data.result.goods) {
+      goods.value.push({
+        skuId: item.skuId,
+        count: item.count,
+      });
+    }
 
+  }
 
 });
 
