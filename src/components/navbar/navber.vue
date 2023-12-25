@@ -1,5 +1,9 @@
 <template>
-    <view class="navber" :style="{ 'padding-top': safeAreaInsets.top + 'px' }">
+    <view class="navber" :style="{
+        'padding-top': safeAreaInsets.top + 'px',
+        'background-color': props.background,
+        'color':props.color,
+    }">
         <view class="navber-ico">
             <slot name="left">
                 <view @tap="back()">
@@ -41,6 +45,20 @@
 </style>
 <script setup>
 import { back } from "../../utils/back"
+
+const props = defineProps({
+    background: {
+        type: String,
+        default: ""
+    },
+    color: {
+        type: String,
+        default: ""
+    },
+})
+
 // 通过安全距离的获取可以动态的适配各种机型的头部距离
 const { safeAreaInsets } = uni.getSystemInfoSync();
+
+
 </script>

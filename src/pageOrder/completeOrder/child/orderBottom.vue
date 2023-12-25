@@ -51,7 +51,7 @@ const commit = () => {
   padding: 0 6vw;
   border-radius: 55rpx;
   font-size: 30rpx;
-  background-color: #12c1a7;
+  background-color: rgb(18, 191, 165);
   color: #fff;
 }
 </style>
