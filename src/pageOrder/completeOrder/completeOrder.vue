@@ -1,30 +1,13 @@
 <template>
   <orderAddress @getAddressId="getAddressId"></orderAddress>
-  <scroll-view scroll-y class="scroll">
-    <view class="shopcar" v-for="(item, index) in selectedShopcar" :key="item.skuId">
-      <view class="shopcar-image">
-        <image :src="item.picture" mode="scaleToFill" />
-      </view>
-
-      <view class="shopcar-text">
-        <view class="shopcar-text-title">{{ item.name }}</view>
-        <text class="shopcar-text-attrstext">{{ item.attrsText }}</text>
-        <view class="shopcar-text-price">
-          <view class="shopcar-text-price-item">￥{{ item.totalPayPrice }}
-            <text class="shopcar-text-price-item-old" v-if="item.totalPayPrice !== item.totalPrice">￥{{ item.totalPrice
-            }}</text>
-          </view>
-
-          <view class="count"> x{{ item.count }} </view>
-        </view>
-      </view>
-    </view>
-  </scroll-view>
+  <payItemScroll :selectedShopcar="selectedShopcar"></payItemScroll>
   <orderSet @changeTime="changeTime" @changeText="changeText"></orderSet>
   <orderPrice :postFee="summary.postFee" :totalPrice="summary.totalPrice" @changePayType="changePayType"></orderPrice>
   <orderBottom :totalPayPrice="summary.totalPayPrice" @completeOrder="completeOrder"></orderBottom>
 </template>
 <script setup>
+import payItemScroll from "../../components/Content/payItemScroll/payItemScroll.vue";
+
 import { order, orderPre, orderPreNow } from "@/network/purchaseOrder";
 import { getShopcar } from "@/network/shopcar";
 import { onLoad, onShow } from "@dcloudio/uni-app";

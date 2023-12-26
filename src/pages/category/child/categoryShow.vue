@@ -38,7 +38,7 @@ const props = defineProps({
 // 轮播图数据获取
 
 const swiperData = ref();
-// import { banner } from "../../../network/banner.js";
+import { banner } from "../../../network/banner.js";
 // 挂载时触发
 onMounted(() => {
 

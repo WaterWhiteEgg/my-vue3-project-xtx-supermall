@@ -134,7 +134,7 @@ const selectDetailSkus = () => {
       // 若全都正确则将这个sku记录
       skusItem.value = item;
       // 将记录给全局同步
-      globalSkuItem().skuItem = skusItem.value;
+      globalSkuItem().changeSkuItem(skusItem.value);
       // console.log(skusItem.value);
     }
   }
@@ -146,7 +146,7 @@ const changeQuantity = (data) => {
   // 赋值同步
   quantity.value = data.quantity;
   // 同步全局
-  globalSkuItem().quantity = data.quantity;
+  globalSkuItem().changeQuantity(data.quantity);
   //  渲染到父组件
   quantityPush();
 };

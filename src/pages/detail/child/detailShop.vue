@@ -21,6 +21,7 @@
 import { joinShopcar } from "../../../network/shopcar";
 import { globalSkuItem } from "../../../store/skus";
 import { globalDetail } from "../../../store/toDetail";
+import { useRequest } from "../../../store/modules/request";
 
 const props = defineProps({
 
@@ -43,36 +44,57 @@ const hasSkuItem = (callback) => {
 }
 // 加入购物车
 const shopcarJoin = () => {
-  // 如果没有提交的数组，则提示无法提交
-  hasSkuItem(() => {
-    // 如果有则提交购物车
-    joinShopcar({
-      skuId: globalSkuItem().skuItem.id,
-      count: globalSkuItem().quantity,
-    }).then(() => {
-      // 提交成功则提示弹窗
-      uni.showToast({
-        title: "提交成功！",
+  // 检测token
+  if (!toWellLogin()) {
+    // 如果没有提交的数组，则提示无法提交
+    hasSkuItem(() => {
+      // 如果有则提交购物车
+      joinShopcar({
+        skuId: globalSkuItem().skuItem.id,
+        count: globalSkuItem().quantity,
+      }).then(() => {
+        // 提交成功则提示弹窗
+        uni.showToast({
+          title: "提交成功！",
+        });
       });
-    });
-  })
+    })
+  }
+
 
 
 }
 // 前往购物车
 const toNavShopcar = () => {
-  uni.navigateTo({
-    url: "/pages/shopcar/other/navShopcar"
-  })
+  // 检测token
+  if (!toWellLogin()) {
+    uni.navigateTo({
+      url: "/pages/shopcar/other/navShopcar"
+    })
+
+
+  }
 
 }
 // 前往立即购买,收集好需要的数据query传输
 const buying = () => {
-  hasSkuItem(() => {
-    uni.navigateTo({
-      url: `/pageOrder/completeOrder/completeOrder?mode=buy&skuId=${globalSkuItem().skuItem.id}&count=${globalSkuItem().quantity}&addressId=${globalDetail().addressId}`
+  // 检测token
+  if (!toWellLogin()) {
+    hasSkuItem(() => {
+      uni.navigateTo({
+        url: `/pageOrder/completeOrder/completeOrder?mode=buy&skuId=${globalSkuItem().skuItem.id}&count=${globalSkuItem().quantity}&addressId=${globalDetail().addressId}`
+      })
     })
-  })
+  }
+}
+// 没有登录就跳转登录
+const toWellLogin = () => {
+  if (useRequest().token === "") {
+    uni.navigateTo({
+      url: "/pages/login/login"
+    })
+  }
+  return useRequest().token === ""
 }
 </script>
 <style scoped>

@@ -8,7 +8,7 @@
   <detailShop></detailShop>
 </template>
 <script setup>
-import { onMounted,onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { onLoad, onHide, onUnload, onBackPress } from "@dcloudio/uni-app";
 
 import detailSwiper from "./child/detailSwiper.vue";
@@ -19,6 +19,7 @@ import detailProperties from "./child/detailProperties.vue";
 
 import { globalDetail } from "../../store/toDetail"
 import { detail } from "../../network/detail";
+import { globalSkuItem } from "../../store/skus";
 import { joinShopcar } from "../../network/shopcar";
 // 初始化数据
 const detailData = ref({});
@@ -45,6 +46,8 @@ onLoad((query) => {
     detailSkus.value = res.data.result.skus;
     // 将id存入全局
     globalDetail().changeId(query.id)
+    // 清空skus
+    globalSkuItem().changeSkuItem({})
   });
 });
 
