@@ -1,6 +1,42 @@
-<template></template>
-<style></style>
-<script>
+<template>
+    <view class="bottom">
+        <text class="bottom-comment">取消订单</text>
+        <text class="bottom-pay">去购买</text>
+    </view>
+</template>
+<style scoped>
+.bottom {
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 3vh 2vw;
+    font-size: 30rpx;
+    background-color: #fff;
+}
+
+
+
+.bottom text {
+    padding: .6vh 6vw;
+    margin: 0 1vw;
+    border-radius: 35rpx;
+    border: .1px solid #0000006e;
+    color: #000000;
+}
+
+.bottom-pay {
+    border: .1px solid #12c1a7 !important;
+    background-color: #12c1a7 !important;
+    color: #fff !important;
+
+}
+</style>
+<script setup>
 const props = defineProps({})
 const emits = defineEmits([""])
 </script>

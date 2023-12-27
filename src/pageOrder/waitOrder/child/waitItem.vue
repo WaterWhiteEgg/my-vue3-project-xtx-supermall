@@ -1,6 +1,6 @@
 <template></template>
-<style></style>
-<script>
+<style scoped></style>
+<script setup>
 const props = defineProps({})
 const emits = defineEmits([""])
 </script>

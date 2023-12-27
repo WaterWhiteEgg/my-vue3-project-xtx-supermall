@@ -29,6 +29,7 @@
 import { onLoad } from "@dcloudio/uni-app";
 import { ref } from "vue";
 
+import { back } from "../../../utils/back"
 import { logintest } from "../../../network/loginTEST";
 import { useRequest } from "../../../store/modules/request"
 
@@ -55,8 +56,8 @@ const dologinTest = () => {
             // 用pinia持久化储存数据
             request.addUserData(res.data.result)
             request.addToken(res.data.result.token)
-            // 成功后跳转
-            uni.switchTab({ url: "/pages/user/user" })
+            // 登录后返回
+            back()
             // 显示成功弹窗
             uni.showToast({
                 title: '登录成功',

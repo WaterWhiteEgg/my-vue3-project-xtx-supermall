@@ -34,7 +34,7 @@ const doLogin = () => {
 // 获取必要提交数据，必须是在button里面通过open-type="getPhoneNumber" @getphonenumber="xxx"获取
 const loginData = ref({});
 const getPhoneNumber = (e) => {
-    console.log(e);
+    // console.log(e);
     // 获取加密数据,用短路防止没有数据时报错
     let encryptedData = e.detail.encryptedData;
     // 获取手机号码,用短路防止没有数据时报错

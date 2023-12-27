@@ -1,8 +1,8 @@
 <template>
-    <scroll-view scroll-y class="scroll">
+    <scroll-view scroll-y class="scroll" :style="{ height: height }">
         <view class="shopcar" v-for="(item, index) in selectedShopcar" :key="item.skuId">
             <view class="shopcar-image">
-                <image :src="item.picture ||item.image " mode="scaleToFill" />
+                <image :src="item.picture || item.image" mode="scaleToFill" />
             </view>
 
             <view class="shopcar-text">
@@ -25,7 +25,7 @@
 .scroll {
     height: 40vh;
     border-radius: 10rpx;
-    background-color: #fff;
+    background-color: #f8f8f8;
 }
 
 .shopcar {
@@ -100,6 +100,10 @@ const props = defineProps({
         default: function () {
             return []
         }
+    },
+    height: {
+        type: String,
+        default: ""
     }
 })
 </script>
