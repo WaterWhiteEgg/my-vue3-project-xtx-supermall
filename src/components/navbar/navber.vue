@@ -28,7 +28,7 @@
     align-items: center;
     padding: 4vh 0;
     font-size: 32rpx;
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .navber-text {

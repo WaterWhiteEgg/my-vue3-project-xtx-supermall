@@ -1,7 +1,16 @@
 <template>
+    <view class="navber">
+        <navber>
+            <template #title>
+                <view>
+                    订单详情
+                </view>
+            </template>
+        </navber>
+    </view>
+
     <scroll-view scroll-y class="wait-scroll">
         <view v-for="(item) in allWaitPayArray" :key="item.id" class="wait">
-
             <waitTitle :waitPayTime="waitPayTime"></waitTitle>
             <waitAddress :addressItem="addressItem"></waitAddress>
             <payItemScroll :selectedShopcar="skusItem" height="30vh"></payItemScroll>
@@ -14,13 +23,20 @@
     <waitBottom></waitBottom>
 </template>
 <style scoped>
-.wait-scroll{
+.navber {
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    width: 100vw;
+}
+
+.wait-scroll {
     height: 90vh;
 }
 </style>
 <script setup>
 import { ref } from "vue";
-import { onLoad, onShow } from "@dcloudio/uni-app";
+import { onLoad, onShow, onReady } from "@dcloudio/uni-app";
 import { order, orderAll, orderId } from "@/network/purchaseOrder";
 import waitTitle from "./child/waitTitle.vue";
 import waitSet from "./child/waitSet.vue"
@@ -30,6 +46,7 @@ import waitMessage from "./child/waitMessage.vue";
 import waitAddress from "./child/waitAddress.vue"
 import payItemScroll from "../../components/Content/payItemScroll/payItemScroll.vue";
 
+import navber from "../../components/navbar/navber.vue";
 import guessLike from "../../components/Content/guessLike/guessLike"
 // 记录所有待付款的数组
 const allWaitPayArray = ref([])
@@ -81,7 +98,7 @@ onLoad((query) => {
             }
             // 获取订单信息
             payMassage.value = {
-                id:res.data.result.id,
+                id: res.data.result.id,
                 createTime: res.data.result.createTime,
 
             }
@@ -97,5 +114,20 @@ onLoad((query) => {
         })
     }
 
+})
+// 获取页面实例
+const pageInstance = getCurrentPages().at(-1)
+// 加载完毕后触发
+onReady(() => {
+    // 加载navbar过渡动画
+    pageInstance.animate(".navber",
+        [{ backgroundColor: 'transparent', visibility: 'hidden', color: 'transparent' },
+        { backgroundColor: '#f8f8f8', color: '#000000' }],
+        1000, {
+        scrollSource: '.wait-scroll',
+        timeRange: 1000,
+        startScrollOffset: 0,
+        endScrollOffset: 50
+    })
 })
 </script>
