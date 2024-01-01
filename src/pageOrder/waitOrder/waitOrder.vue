@@ -11,16 +11,16 @@
 
     <scroll-view scroll-y class="wait-scroll">
         <view v-for="(item) in allWaitPayArray" :key="item.id" class="wait">
-            <waitTitle :waitPayTime="waitPayTime"></waitTitle>
+            <waitTitle :waitPayTime="waitPayTime" :id="id"></waitTitle>
             <waitAddress :addressItem="addressItem"></waitAddress>
             <payItemScroll :selectedShopcar="skusItem" height="30vh"></payItemScroll>
             <waitSet></waitSet>
             <waitPrice :pay="pay"></waitPrice>
             <waitMessage :payMassage="payMassage"></waitMessage>
-            <guessLike></guessLike>
+            <guessLike> </guessLike>
         </view>
     </scroll-view>
-    <waitBottom></waitBottom>
+    <waitBottom :id="id"></waitBottom>
 </template>
 <style scoped>
 .navber {
@@ -69,6 +69,8 @@ const skusItem = ref([])
 const pay = ref({})
 // 记录订单信息
 const payMassage = ref({})
+// 记录订单id
+const id = ref("")
 // 加载时触发
 onLoad((query) => {
     // 判断有没有query里面的数据
@@ -94,15 +96,17 @@ onLoad((query) => {
             pay.value = {
                 postFee: res.data.result.postFee,
                 totalMoney: res.data.result.totalMoney,
-                payMoney: res.data.result.payMoney
+                payMoney: res.data.result.payMoney,
             }
             // 获取订单信息
             payMassage.value = {
                 id: res.data.result.id,
                 createTime: res.data.result.createTime,
-
             }
+            // 赋值订单id
+            id.value = res.data.result.id
         })
+
     }
     // 没有则渲染所有等待付款
     else {
@@ -115,6 +119,7 @@ onLoad((query) => {
     }
 
 })
+
 // 获取页面实例
 const pageInstance = getCurrentPages().at(-1)
 // 加载完毕后触发

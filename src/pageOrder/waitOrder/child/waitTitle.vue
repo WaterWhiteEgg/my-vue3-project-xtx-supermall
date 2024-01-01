@@ -11,7 +11,7 @@
 
         </view>
         <view class="navber-commit">
-            <view class="navber-commit-button">
+            <view class="navber-commit-button" @tap="netPay">
                 去支付
             </view>
         </view>
@@ -50,6 +50,8 @@
 <script setup>
 import navber from '../../../components/navbar/navber.vue';
 import { ref, computed } from 'vue'
+
+import { pay } from "../../../network/pay"
 const props = defineProps({
     // 等待时间数组
     waitPayTime: {
@@ -57,6 +59,11 @@ const props = defineProps({
         default: function () {
             return {}
         }
+    },
+    // 订单id
+    id: {
+        type: String,
+        default: ""
     }
 })
 const emits = defineEmits([""])
@@ -77,4 +84,12 @@ const timer = computed(() => {
 
     return `${tiemrArray[0]}时${tiemrArray[1]}分${tiemrArray[2]}秒`
 })
+
+// 提交模拟支付请求,改变支付状态
+const netPay = () => {
+    pay(props.id).then((res) => {
+        console.log(res);
+    })
+}
+
 </script>

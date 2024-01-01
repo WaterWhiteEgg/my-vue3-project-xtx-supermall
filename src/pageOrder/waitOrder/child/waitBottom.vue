@@ -1,7 +1,7 @@
 <template>
     <view class="bottom">
         <text class="bottom-comment">取消订单</text>
-        <text class="bottom-pay">去购买</text>
+        <text class="bottom-pay" @tap="netPay">去购买</text>
     </view>
 </template>
 <style scoped>
@@ -37,6 +37,20 @@
 }
 </style>
 <script setup>
-const props = defineProps({})
+import { pay } from "../../../network/pay"
+const props = defineProps({
+    // 订单id
+    id: {
+        type: String,
+        default: ""
+    }
+})
 const emits = defineEmits([""])
+
+// 提交模拟支付请求,改变支付状态
+const netPay = () => {
+    pay(props.id).then((res) => {
+        console.log(res);
+    })
+} 
 </script>
