@@ -10,17 +10,17 @@
     </view>
 
     <scroll-view scroll-y class="wait-scroll">
-        <view v-for="(item) in allWaitPayArray" :key="item.id" class="wait">
-            <waitTitle :waitPayTime="waitPayTime" :id="id"></waitTitle>
+        <view class="wait">
+            <waitTitle :waitPayTime="waitPayTime" :id="id" :orderState="orderState" @netPay="netPay"></waitTitle>
             <waitAddress :addressItem="addressItem"></waitAddress>
             <payItemScroll :selectedShopcar="skusItem" height="30vh"></payItemScroll>
             <waitSet></waitSet>
-            <waitPrice :pay="pay"></waitPrice>
+            <waitPrice :payPrice="payPrice"></waitPrice>
             <waitMessage :payMassage="payMassage"></waitMessage>
             <guessLike> </guessLike>
         </view>
     </scroll-view>
-    <waitBottom :id="id"></waitBottom>
+    <waitBottom :id="id" :orderState="orderState" @netPay="netPay"></waitBottom>
 </template>
 <style scoped>
 .navber {
@@ -38,6 +38,8 @@
 import { ref } from "vue";
 import { onLoad, onShow, onReady } from "@dcloudio/uni-app";
 import { order, orderAll, orderId } from "@/network/purchaseOrder";
+import { pay } from "@/network/pay"
+
 import waitTitle from "./child/waitTitle.vue";
 import waitSet from "./child/waitSet.vue"
 import waitPrice from "./child/waitPrice.vue"
@@ -66,11 +68,14 @@ const addressItem = ref({})
 // 记录skus
 const skusItem = ref([])
 // 记录价格信息
-const pay = ref({})
+const payPrice = ref({})
 // 记录订单信息
 const payMassage = ref({})
 // 记录订单id
 const id = ref("")
+// 记录订单状态码，数字形态
+//1为待付款、2为待发货、3为待收货、4为待评价、5为已完成、6为已取消
+const orderState = ref()
 // 加载时触发
 onLoad((query) => {
     // 判断有没有query里面的数据
@@ -91,9 +96,9 @@ onLoad((query) => {
             addressItem.value = new Address(res.data.result)
             // 获取skus信息
             skusItem.value = res.data.result.skus
-            console.log(addressItem.value);
+            // console.log(addressItem.value);
             // 获取价格相关信息
-            pay.value = {
+            payPrice.value = {
                 postFee: res.data.result.postFee,
                 totalMoney: res.data.result.totalMoney,
                 payMoney: res.data.result.payMoney,
@@ -105,6 +110,8 @@ onLoad((query) => {
             }
             // 赋值订单id
             id.value = res.data.result.id
+            // 赋值状态
+            orderState.value = res.data.result.orderState
         })
 
     }
@@ -135,4 +142,17 @@ onReady(() => {
         endScrollOffset: 50
     })
 })
+
+// 处理支付
+const netPay = (Pid) => {
+    console.log(3);
+    uni.showLoading({ title: "等待支付" })
+    // 模拟请求，因为没有真正意义上的支付，不需要请求用户的微信支付宝之类的
+    pay(Pid).then(() => {
+        uni.hideLoading()
+        // console.log(res);
+        // 重新进入页面传id
+        uni.navigateTo({ url: "/pageOrder/waitOrder/waitOrder?id=" + Pid })
+    })
+}
 </script>

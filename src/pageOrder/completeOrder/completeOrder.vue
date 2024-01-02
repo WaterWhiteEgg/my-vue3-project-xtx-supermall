@@ -139,7 +139,7 @@ const completeOrder = () => {
     // 关闭加载动画
     uni.hideLoading();
     // 跳转等待界面,并传入id
-    console.log();
+
     uni.navigateTo({
       url: "/pageOrder/waitOrder/waitOrder?id=" + res.data.result.id
     })

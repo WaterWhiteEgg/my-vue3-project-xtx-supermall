@@ -2,15 +2,15 @@
     <view class="price">
         <view>
             <view>商品总价：</view>
-            <view>￥{{ pay && pay.totalMoney }}</view>
+            <view>￥{{ payPrice && payPrice.totalMoney }}</view>
         </view>
         <view>
             <view>邮费：</view>
-            <view>￥{{ pay && pay.postFee }}</view>
+            <view>￥{{ payPrice && payPrice.postFee }}</view>
         </view>
         <view>
             <view>应付总额：</view>
-            <view class="price-index">￥{{ pay && pay.payMoney }}</view>
+            <view class="price-index">￥{{ payPrice && payPrice.payMoney }}</view>
         </view>
 
     </view>
@@ -39,7 +39,7 @@
 </style>
 <script setup>
 const props = defineProps({
-    pay: {
+    payPrice: {
         type: Object,
         default: function () {
             return {}
