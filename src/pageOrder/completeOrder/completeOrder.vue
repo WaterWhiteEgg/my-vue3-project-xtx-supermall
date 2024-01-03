@@ -8,7 +8,7 @@
 <script setup>
 import payItemScroll from "../../components/Content/payItemScroll/payItemScroll.vue";
 
-import { order, orderPre, orderPreNow } from "@/network/purchaseOrder";
+import { order, orderPre, orderPreNow, orderRepurchase } from "@/network/purchaseOrder";
 import { getShopcar } from "@/network/shopcar";
 import { onLoad, onShow } from "@dcloudio/uni-app";
 import { ref } from "vue";
@@ -38,7 +38,6 @@ onLoad((query) => {
     }
     case "buy": {
       // 请求立即购买的预交付数据
-
       orderPreNow({
         skuId: query.skuId,
         count: query.count,
@@ -47,6 +46,14 @@ onLoad((query) => {
         autoValue(res)
       })
       break;
+    }
+    case "repeatBuy": {
+      // 请求再次购买的数据
+      orderRepurchase(query.id).then((res) => {
+        autoValue(res)
+      })
+      break;
+
     }
   }
 

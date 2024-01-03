@@ -74,6 +74,14 @@ export function orderAll(data) {
     })
 }
 
+
+// 在待收货的状态下确认，变为待评价
+export function orderReceipt(id) {
+    return uniReq({
+        url: "/member/order/" + id + "/receipt",
+        method: "PUT",
+    })
+}
 // 测试用的接口，仅提供状态改变
 
 // 模拟发货,DEV 环境中使用,用于让自己控制收货状态
@@ -85,13 +93,6 @@ export function orderConsignment(id) {
     })
 }
 
-// 在待收货的状态下确认，变为待评价
-export function orderReceipt(id) {
-    return uniReq({
-        url: "/member/order/" + id + "/receipt",
-        method: "PUT",
-    })
-}
 
 // 仅在订单状态为待收货，待评价，已完成时，可获取物流信息
 

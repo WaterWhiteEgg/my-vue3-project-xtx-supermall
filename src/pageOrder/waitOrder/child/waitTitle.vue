@@ -14,14 +14,14 @@
             <view class="navber-commit-button" @tap="netPay" v-if="orderState === 1">
                 去支付
             </view>
-            <view class="navber-commit-button" @tap="buyAgain" v-if="orderState !== 1">
+            <view class="navber-commit-button" @tap="buyAgain" v-if="orderState >= 4">
                 再次购买
             </view>
             <view @tap="TESTorderSend" v-if="orderState === 2 && isDEV">
                 测试发货
             </view>
-            <view @tap="TESTorderTake" v-if="orderState === 3 && isDEV">
-                测试收货
+            <view @tap="finReceipt" class="navber-commit-button" v-if="orderState === 3">
+                确认收货
             </view>
         </view>
     </view>
@@ -60,7 +60,7 @@
 import navber from '../../../components/navbar/navber.vue';
 import { ref, computed } from 'vue'
 
-import { orderConsignment ,orderReceipt} from "../../../network/purchaseOrder"
+import { orderConsignment, orderReceipt } from "../../../network/purchaseOrder"
 
 const props = defineProps({
     // 等待时间数组
@@ -84,7 +84,7 @@ const props = defineProps({
 const emits = defineEmits(["netPay"])
 
 // 状态对应的文本
-const orderStateText = ref(["◷ 等待付款", "等待发货", "等待确认", "确认收货", "确认收货", "取消订单"])
+const orderStateText = ref(["◷ 等待付款", "等待发货", "等待确认", "已确认收货", "已评价", "取消订单"])
 
 // 计算剩余时间
 const timer = computed(() => {
@@ -122,17 +122,28 @@ const TESTorderSend = () => {
 
     })
 }
-// 测试收拟发货
-const TESTorderTake = () => {
-    orderReceipt(props.id).then((res) => {
-        uni.showToast({
-            title: "状态已修改"
-        })
-        console.log(res);
-        // 顺便点点刷新了
-        uni.navigateTo({ url: "/pageOrder/waitOrder/waitOrder?id=" + props.id })
 
+
+// 再次购买请求
+const buyAgain = () => {
+    uni.navigateTo({
+        url: "/pageOrder/completeOrder/completeOrder?mode=repeatBuy&id=" + props.id
     })
 }
 
+// 确认收货请求
+const finReceipt = () => {
+    // 请求用户再次确认
+    uni.showModal({
+        title: '是否确认收货？',
+        // 处理
+        success: () => {
+            orderReceipt(props.id).then((res) => {
+                // 刷新
+                uni.navigateTo({ url: "/pageOrder/waitOrder/waitOrder?id=" + props.id })
+            })
+        }
+    })
+
+}
 </script>

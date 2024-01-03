@@ -1,8 +1,8 @@
 <template>
     <view class="bottom">
-        <text  v-if="orderState === 1">取消订单{{ waitPayTime }}</text>
+        <text v-if="orderState === 1">取消订单{{ waitPayTime }}</text>
         <text class="bottom-pay" @tap="netPay" v-if="orderState === 1">去购买</text>
-        <text @tap="netPay" v-if="orderState !== 1">再次购买</text>
+        <text @tap="buyAgain" v-if="orderState !== 1">再次购买</text>
     </view>
 </template>
 <style scoped>
@@ -55,5 +55,10 @@ const emits = defineEmits([""])
 const netPay = () => {
     emits("netPay", props.id)
 }
-
+// 请求再次购买
+const buyAgain = () => {
+    uni.navigateTo({
+        url: "/pageOrder/completeOrder/completeOrder?mode=repeatBuy&id=" + props.id
+    })
+}
 </script>
