@@ -12,7 +12,7 @@
     <scroll-view scroll-y class="wait-scroll">
         <view class="wait">
             <waitTitle :waitPayTime="waitPayTime" :id="id" :orderState="orderState" @netPay="netPay"></waitTitle>
-            <waitAddress :addressItem="addressItem"></waitAddress>
+            <waitAddress :addressItem="addressItem" v-if="!isEmptyObject(addressItem)"></waitAddress>
             <payItemScroll :selectedShopcar="skusItem" height="30vh"></payItemScroll>
             <waitSet></waitSet>
             <waitPrice :payPrice="payPrice"></waitPrice>
@@ -35,7 +35,7 @@
 }
 </style>
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { onLoad, onShow, onReady } from "@dcloudio/uni-app";
 import { order, orderAll, orderId } from "@/network/purchaseOrder";
 import { pay } from "@/network/pay"
@@ -60,11 +60,13 @@ class Address {
         this.receiverAddress = result.receiverAddress,
             this.receiverContact = result.receiverContact,
             this.receiverMobile = result.receiverMobile,
-            this.createTime = result.createTime
-
+            this.id = result.id,
+            this.orderState = result.orderState
     }
 }
+// 记录地址栏信息
 const addressItem = ref({})
+
 // 记录skus
 const skusItem = ref([])
 // 记录价格信息
@@ -75,7 +77,7 @@ const payMassage = ref({})
 const id = ref("")
 // 记录订单状态码，数字形态
 //1为待付款、2为待发货、3为待收货、4为待评价、5为已完成、6为已取消
-const orderState = ref()
+const orderState = ref(1)
 // 加载时触发
 onLoad((query) => {
     // 判断有没有query里面的数据
@@ -155,4 +157,12 @@ const netPay = (Pid) => {
         uni.navigateTo({ url: "/pageOrder/waitOrder/waitOrder?id=" + Pid })
     })
 }
+
+// 判断对象是否为空
+const isEmptyObject = computed(() => {
+    return (obj) => {
+        return Object.keys(obj).length === 0
+
+    }
+})
 </script>

@@ -1,8 +1,9 @@
 <template>
     <view class="bottom">
-        <text v-if="orderState === 1">取消订单{{ waitPayTime }}</text>
+        <text v-if="orderState === 4 || orderState === 5 || orderState === 6" class="bottom-del">取消订单</text>
+        <text v-if="orderState !== 1">去评价</text>
         <text class="bottom-pay" @tap="netPay" v-if="orderState === 1">去购买</text>
-        <text @tap="buyAgain" v-if="orderState !== 1">再次购买</text>
+        <text @tap="buyAgain" v-if="orderState !== 1" class="bottom-payagain">再次购买</text>
     </view>
 </template>
 <style scoped>
@@ -34,6 +35,16 @@
     border: .1px solid #12c1a7 !important;
     background-color: #12c1a7 !important;
     color: #fff !important;
+
+}
+.bottom-payagain{
+    border: .1px solid #12c1a7 !important;
+    color: #12c1a7 !important;
+
+}
+.bottom-del {
+    border: .1px solid #df2121 !important;
+    color: #df2121 !important;
 
 }
 </style>
