@@ -82,17 +82,6 @@ export function orderReceipt(id) {
         method: "PUT",
     })
 }
-// 测试用的接口，仅提供状态改变
-
-// 模拟发货,DEV 环境中使用,用于让自己控制收货状态
-// 调用后订单状态修改为待收货
-export function orderConsignment(id) {
-    return uniReq({
-        url: "/member/order/consignment/" + id,
-        method: "GET",
-    })
-}
-
 
 // 仅在订单状态为待收货，待评价，已完成时，可获取物流信息
 
@@ -118,9 +107,24 @@ export function orderDel(ids) {
 export function orderCancel(id, message) {
     return uniReq({
         url: "/member/order/" + id + "/cancel",
-        data:{
+        data: {
             message
         },
         method: "PUT",
     })
 }
+
+
+// 测试用的接口，仅提供状态改变
+
+// 模拟发货,DEV 环境中使用,用于让自己控制收货状态
+// 调用后订单状态修改为待收货
+export function orderConsignment(id) {
+    return uniReq({
+        url: "/member/order/consignment/" + id,
+        method: "GET",
+    })
+}
+
+
+

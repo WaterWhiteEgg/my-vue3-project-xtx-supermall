@@ -1,6 +1,6 @@
 <template>
     <view class="bottom">
-        <text v-if="orderState === 4 || orderState === 5 || orderState === 6" class="bottom-del">取消订单</text>
+        <text v-if="orderState === 4 || orderState === 5 || orderState === 6" class="bottom-del" @tap="delOrder">删除订单</text>
         <text v-if="orderState !== 1">去评价</text>
         <text class="bottom-pay" @tap="netPay" v-if="orderState === 1">去购买</text>
         <text @tap="buyAgain" v-if="orderState !== 1" class="bottom-payagain">再次购买</text>
@@ -37,11 +37,13 @@
     color: #fff !important;
 
 }
-.bottom-payagain{
+
+.bottom-payagain {
     border: .1px solid #12c1a7 !important;
     color: #12c1a7 !important;
 
 }
+
 .bottom-del {
     border: .1px solid #df2121 !important;
     color: #df2121 !important;
@@ -49,6 +51,8 @@
 }
 </style>
 <script setup>
+import { orderDel } from "../../../network/purchaseOrder"
+import { back } from "../../../utils/back"
 const props = defineProps({
     // 订单id
     id: {
@@ -71,5 +75,22 @@ const buyAgain = () => {
     uni.navigateTo({
         url: "/pageOrder/completeOrder/completeOrder?mode=repeatBuy&id=" + props.id
     })
+}
+// 删除订单
+const delOrder = () => {
+    // 确认是否删除
+    uni.showModal({
+        title: '是否删除？',
+        success: () => {
+            // 去除订单信息
+            orderDel([props.id]).then((res) => {
+                // console.log(res);
+                back()
+            })
+
+
+        }
+    })
+
 }
 </script>
