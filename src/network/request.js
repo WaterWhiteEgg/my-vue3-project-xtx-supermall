@@ -22,6 +22,9 @@ export const uniReq = (option) => {
                     clearToken()
                     // 重定义页面
                     uni.navigateTo({ url: '/pages/user/user' })
+                    // 弹窗提示
+                    showToast("请重新登录！")
+                    
                     // 返回失败
                     reject({ statusCode, header })
 

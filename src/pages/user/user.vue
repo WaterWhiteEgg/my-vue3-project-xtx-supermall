@@ -2,11 +2,11 @@
     <view class="information-bar" :style="{ 'padding-top': safeAreaInsets.top + 'px' }">
         <view class="information">
             <view class="information-avatar">
-                <image :src="datas.avatar" mode="scaleToFill" />
+                <image :src="datas && datas.avatar" mode="scaleToFill" />
             </view>
             <view class="information-account">
                 <text class="information-account-username" @tap="toLogin(!Object.keys(datas).length)">{{
-                    Object.keys(datas).length ? datas.account :
+                    datas && Object.keys(datas).length ? datas.account :
                     "无登录" }}</text>
                 <text class="information-account-head" @tap="toProfile(Object.keys(datas).length)"><text> 更新头像昵称</text>
                 </text>
@@ -17,7 +17,7 @@
         </view>
     </view>
     <userMethod></userMethod>
-    <guessLike v-if="Object.keys(datas).length"></guessLike>
+    <guessLike v-if="datas && Object.keys(datas).length"></guessLike>
 </template>
 
 <script setup>
@@ -46,7 +46,7 @@ watch(() => {
 
 // 检查token存在以及执行跳转方法
 const testToken = () => {
-    console.log(useRequest().userData);
+    // console.log(useRequest().userData);
     // 赋值
     datas.value = useRequest().userData
     if (useRequest().token) {
@@ -83,7 +83,6 @@ const toProfile = (flag) => {
 </script>
 
 <style scoped>
-
 .information-bar {
     padding-bottom: 10vh;
     font-size: 30rpx;
