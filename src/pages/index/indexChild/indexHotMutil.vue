@@ -38,7 +38,7 @@ const props = defineProps({
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: #f5f5f55d;
+    background-color: #ffffff92;
 }
 
 .hotmutil-textbox {

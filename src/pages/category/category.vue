@@ -54,5 +54,6 @@ const activeItem = (index) => {
 <style scoped>
 .category {
   display: flex;
+  background-color: #fff;
 }
 </style>

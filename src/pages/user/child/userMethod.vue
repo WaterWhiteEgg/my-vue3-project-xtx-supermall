@@ -2,7 +2,7 @@
     <view class="method">
         <view class="method-title">
             <view>我的订单</view>
-            <view class="method-title-button">查看全部订单＞</view>
+            <view class="method-title-button" @tap="toShopcarOrder">查看全部订单＞</view>
         </view>
         <view class="method-bar">
             <view class="method-bar-item" v-for="(item, index) in userMethods" :key="item.id" @tap="methodsClick(item.id)">
@@ -51,6 +51,10 @@ const toSettings = () => {
     uni.navigateTo({
         url: "/pageMember/settings/settings"
     })
+}
+// 前往ShopcarOrder订单列表(全部)
+const toShopcarOrder = () => {
+    uni.navigateTo({ url: '/pageOrder/shopcarOrder/shopcarOrder' })
 }
 </script>
 <style scoped>
