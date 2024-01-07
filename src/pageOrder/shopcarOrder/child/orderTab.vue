@@ -7,11 +7,13 @@
 </template>
 <style scoped>
 .scroll {
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    margin-bottom: .5vh;
+    z-index: 99;
     white-space: nowrap;
     font-size: 30rpx;
     background-color: #fff;
@@ -51,9 +53,9 @@ const realTabIndex = ref(0)
 watchEffect(() => {
     realTabIndex.value = props.tabIndex
 })
-const emits = defineEmits([""])
+const emits = defineEmits(["changeIndex"])
 // 切换tab
 const changeTab = (index) => {
-    realTabIndex.value = index
+    emits("changeIndex", index)
 }
 </script>
