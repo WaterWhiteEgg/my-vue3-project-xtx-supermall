@@ -25,6 +25,7 @@
     align-items: center;
     box-sizing: border-box;
     padding: 2vh 4vw;
+    height: 7vh;
     width: 20vw;
 
 }

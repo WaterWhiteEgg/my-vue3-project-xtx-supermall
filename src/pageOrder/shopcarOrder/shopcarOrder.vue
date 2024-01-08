@@ -1,6 +1,6 @@
 <template>
     <orderTab :tabIndex="tabIndex" :tabItem="tabItem" @changeIndex="changeIndex"></orderTab>
-    <orderItems :items="tabItem[tabIndex].items"></orderItems>
+    <orderItems :items="tabItem[tabIndex].items" @scrolltolower="scrolltolower"></orderItems>
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -36,26 +36,54 @@ onLoad((query) => {
 
 // 请求订单数据
 const goOrderAll = (page, orderState) => {
-    // 等待加载
-    uni.showLoading({title:"祈祷数据中..."})
-    // 网络请求
-    orderAll({
-        page,
-        orderState
-    }).then((res) => {
-        // 将对应数据放入
-        tabItem.value[orderState].items =
-            tabItem.value[orderState].items.concat(res.data.result.items);
-        console.log(res);
-        // 隐藏加载
-        uni.hideLoading()
+    // 判断请求页数是否超过最大页码值
+    if (tabItem.value[orderState].maxPage >= page) {
+        // 等待加载
+        uni.showLoading({ title: "祈祷数据中..." })
+        // 网络请求
+        orderAll({
+            page,
+            orderState
+        }).then((res) => {
+            // 将对应数据放入
+            tabItem.value[orderState].items =
+                tabItem.value[orderState].items.concat(res.data.result.items);
 
-    })
+            tabItem.value[orderState].maxPage = res.data.result.pages
+            console.log(res.data.result);
+            // 隐藏加载
+            uni.hideLoading()
+
+        })
+    }
+    // 如果页码太大，不会执行请求且提示信息
+    else {
+        uni.showToast({
+            title: "已经到底啦~"
+        })
+    }
+
+
 }
 
 // 切换tab的index
 const changeIndex = (index) => {
+    // 切换tab的index
     tabIndex.value = index
+    // 根据page是否为0 决定是否要请求一次数据
+    // items会根据tabIndex的变化而切换主要显示
+    if (!tabItem.value[tabIndex.value].page) {
+        goOrderAll(++tabItem.value[tabIndex.value].page, tabIndex.value)
+
+    }
+
+}
+
+
+// 滚动到底部触发
+const scrolltolower = () => {
+    goOrderAll(++tabItem.value[tabIndex.value].page, tabIndex.value)
+
 }
 </script>
 <style scoped></style>
