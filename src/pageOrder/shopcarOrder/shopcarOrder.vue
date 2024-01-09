@@ -1,6 +1,6 @@
 <template>
     <orderTab :tabIndex="tabIndex" :tabItem="tabItem" @changeIndex="changeIndex"></orderTab>
-    <orderItems :items="tabItem[tabIndex].items" @scrolltolower="scrolltolower"></orderItems>
+    <orderItems :items="tabItem[tabIndex].items" @scrolltolower="scrolltolower" :tabItem="tabItem"></orderItems>
 </template>
 <script setup>
 import { ref } from 'vue'
