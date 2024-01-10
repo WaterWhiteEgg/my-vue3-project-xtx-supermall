@@ -3,7 +3,8 @@
         <view v-for="(item, index) in items" class="item" :key="item.id">
             <view class="item-time">
                 <text>{{ item.createTime }}</text>
-                <view class="gray item-time-del">{{ tabItem[item.orderState].name }} |
+                <view class="gray item-time-del" @tap="delOrder(item.id, item.orderState)">{{ tabItem[item.orderState].name
+                }} |
                     <image src="../../../static/color/delete.png" mode="scaleToFill" />
                 </view>
             </view>
@@ -30,8 +31,8 @@
                 </view>
             </view>
             <view class="item-buttom">
-                <view class="topay" v-if="item.orderState === 1">去支付</view>
-                <view class="toorder" v-if="item.orderState !== 1">查看订单</view>
+                <view class="topay" v-if="item.orderState === 1" @tap="toWaitOrder(item.id)">去支付</view>
+                <view class="toorder" v-if="item.orderState !== 1" @tap="toWaitOrder(item.id)">查看订单</view>
             </view>
         </view>
     </scroll-view>
@@ -183,6 +184,8 @@
 </style>
 <script setup>
 import { ref, watch, watchEffect } from 'vue'
+
+import { orderDel } from "../../../network/purchaseOrder"
 const props = defineProps({
     // 要展示的数据
     items: {
@@ -200,12 +203,47 @@ const props = defineProps({
     }
 
 })
-const emits = defineEmits(["scrolltolower"])
+
+watchEffect(() => {
+})
+const emits = defineEmits(["scrolltolower", "itemsByIdDel"])
 
 // 触底时触发
 const scrolltolower = () => {
     // 发给父组件
     emits("scrolltolower")
 
-} 
+}
+
+
+// 前往订单详情
+const toWaitOrder = (id) => {
+    uni.navigateTo({
+        url: "/pageOrder/waitOrder/waitOrder?id=" + id
+    })
+}
+
+
+// 删除订单
+const delOrder = (id, orderState) => {
+    // 判断orderState是不是4/5/6
+    if ([4, 5, 6].includes(orderState)) {
+        // 确认是否删除
+        uni.showModal({
+            title: '是否删除？',
+            success: () => {
+                emits("itemsByIdDel", id)
+                // 发送给父组件让其修改items
+
+
+            }
+        })
+    }
+    // 不属于状态内的提示不能删除
+    else {
+        uni.showToast({ icon: "error", title: "未完成的订单" })
+    }
+
+}
+
 </script>

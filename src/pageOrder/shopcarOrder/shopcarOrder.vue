@@ -1,11 +1,12 @@
 <template>
     <orderTab :tabIndex="tabIndex" :tabItem="tabItem" @changeIndex="changeIndex"></orderTab>
-    <orderItems :items="tabItem[tabIndex].items" @scrolltolower="scrolltolower" :tabItem="tabItem"></orderItems>
+    <orderItems :items="tabItem[tabIndex].items" @scrolltolower="scrolltolower" @itemsByIdDel="itemsByIdDel"
+        :tabItem="tabItem"></orderItems>
 </template>
 <script setup>
 import { ref } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app';
-import { orderAll } from "../../network/purchaseOrder"
+import { orderAll, orderDel } from "../../network/purchaseOrder"
 
 import orderTab from "./child/orderTab.vue"
 import orderItems from "./child/orderItems.vue"
@@ -84,6 +85,31 @@ const changeIndex = (index) => {
 const scrolltolower = () => {
     goOrderAll(++tabItem.value[tabIndex.value].page, tabIndex.value)
 
+}
+
+// 当items数组里面的item要删除时触发
+const itemsByIdDel = (id) => {
+    // 显示加载
+    uni.showLoading({ title: "删除中" })
+    // 查找索引值修改
+    const index = tabItem.value[tabIndex.value].items.findIndex(item => item.id === id);
+    // 如果找到了则删除
+    if (index !== -1) {
+        // 去除订单信息
+        orderDel([id]).then((res) => {
+            // 将本地数据也删除
+            tabItem.value[tabIndex.value].items.splice(index, 1);
+            // 隐藏加载
+            uni.hideLoading()
+            // 显示状态
+            uni.showToast({ title: "删除成功" })
+        })
+    }
+    // 如果搜寻失败则这个id找不到或已经删除
+    else {
+        uni.showToast({ title: "商品不存在" })
+
+    }
 }
 </script>
 <style scoped></style>
