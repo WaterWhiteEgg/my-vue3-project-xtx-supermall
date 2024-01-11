@@ -35,6 +35,7 @@
                 <view class="toorder" v-if="item.orderState !== 1" @tap="toWaitOrder(item.id)">查看订单</view>
             </view>
         </view>
+        <orderbottom></orderbottom>
     </scroll-view>
 </template>
 <style scoped>
@@ -186,6 +187,9 @@
 import { ref, watch, watchEffect } from 'vue'
 
 import { orderDel } from "../../../network/purchaseOrder"
+
+import orderbottom from './orderbottom.vue';
+
 const props = defineProps({
     // 要展示的数据
     items: {

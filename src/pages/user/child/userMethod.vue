@@ -34,16 +34,41 @@ const methodsClick = (id) => {
     switch (id) {
         case "obligation":
             {
-                toWaitOrder()
+                toShopcarOrderIndex(1)
                 break;
             }
+        case "beShipped":
+            {
+                toShopcarOrderIndex(2)
+                break;
+            }
+        case "goodsBeReceived":
+            {
+                toShopcarOrderIndex(3)
+                break;
+            }
+        case "beEvaluated":
+            {
+                toShopcarOrderIndex(4)
+                break;
+            }
+        case "afterSales":
+            {
+                uni.showToast({ title: "没有售后模块" })
+                break;
+            }
+        // 默认前往所有订单
+        default: {
+            toShopcarOrder()
+            break;
+        }
     }
 
 }
-// 前往待付款界面
-const toWaitOrder = () => {
+// 前往特定分类的所有订单界面
+const toShopcarOrderIndex = (index) => {
     uni.navigateTo({
-        url: "/pageOrder/waitOrder/waitOrder"
+        url: "/pageOrder/shopcarOrder/shopcarOrder?index=" + index
     })
 }
 // 前往设置

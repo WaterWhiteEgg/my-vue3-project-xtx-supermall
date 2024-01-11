@@ -28,7 +28,7 @@ const tabItem = ref([
 onLoad((query) => {
     // 进入页面时，根据index选择进入哪一个页面
     // 默认进入全部页面
-    tabIndex.value = query.index || 0
+    tabIndex.value = Number(query.index) || 0
 
     // 进行首个进入请求
     goOrderAll(++tabItem.value[tabIndex.value].page, tabIndex.value)
