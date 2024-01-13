@@ -22,11 +22,11 @@ const props = defineProps({
 })
 // 方法是静态数据
 const userMethods = ref([
-    { name: "待付款", ico: "../../../static/color/daifukuan.png", id: "obligation" },
-    { name: "待发货", ico: "../../../static/color/daifahuo.png", id: "beShipped" },
-    { name: "待收货", ico: "../../../static/color/daishouhuo.png", id: "goodsBeReceived" },
-    { name: "待评价", ico: "../../../static/color/daipingjia.png", id: "beEvaluated" },
-    { name: "售后", ico: "../../../static/color/shouhou.png", id: "afterSales" },
+    { name: "待付款", ico: "/static/color/daifukuan.png", id: "obligation" },
+    { name: "待发货", ico: "/static/color/daifahuo.png", id: "beShipped" },
+    { name: "待收货", ico: "/static/color/daishouhuo.png", id: "goodsBeReceived" },
+    { name: "待评价", ico: "/static/color/daipingjia.png", id: "beEvaluated" },
+    { name: "售后", ico: "/static/color/shouhou.png", id: "afterSales" },
 ])
 // 订单的方法执行
 const methodsClick = (id) => {

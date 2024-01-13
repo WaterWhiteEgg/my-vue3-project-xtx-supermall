@@ -206,9 +206,19 @@ const props = defineProps({
     default: true
   }
 })
-
 // 记录购物车数据
 const shopcarDatas = ref([])
+
+// 请求getShopcar并赋值
+const netGetShopcar = (callback) => {
+  getShopcar().then((res) => {
+    // 购物车的数据储存赋值
+    shopcarDatas.value = res.data.result;
+    // 回调函数执行,一开始找不出要短路算法
+    callback && callback()
+  });
+}
+
 // 挂载时触发
 onMounted(() => {
   // 尝试请求购物车
@@ -222,15 +232,7 @@ onShow(() => {
 
 })
 
-// 请求getShopcar并赋值
-const netGetShopcar = (callback) => {
-  getShopcar().then((res) => {
-    // 购物车的数据储存赋值
-    shopcarDatas.value = res.data.result;
-    // 回调函数执行,一开始找不出要短路算法
-    callback && callback()
-  });
-}
+
 
 // 根据购物车的selected决定是否全选
 const isAllSelect = computed(() => {

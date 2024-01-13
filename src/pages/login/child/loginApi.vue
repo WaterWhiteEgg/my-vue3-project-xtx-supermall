@@ -1,9 +1,15 @@
 <template>
     <view class="login-box">
+        <!-- #ifdef MP-WEIXIN -->
         <button class="login-quick" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
             <text class="login-quick-ico">&#xe8a0;</text>手机号快捷登录
         </button>
-    <loginOther :code="code"></loginOther>
+        <!-- #endif -->
+
+        <!-- #ifdef H5 -->
+        <view class="login-quick">网页端暂时只能模拟登录！</view>
+        <!-- #endif -->
+        <loginOther :code="code"></loginOther>
     </view>
 </template>
 <script setup>
@@ -17,6 +23,8 @@ import { login } from "../../../network/login";
 
 // 加载时获取query
 // 获取code
+// #ifdef MP-WEIXIN
+// 仅微信调用
 const code = ref();
 onLoad(async (query) => {
     // 获取微信验证需要的token，5分钟内有效
@@ -49,6 +57,8 @@ const getPhoneNumber = (e) => {
     //   执行登录
     doLogin();
 };
+// #endif
+
 </script>
 <style scoped>
 .login-box {
@@ -76,5 +86,4 @@ const getPhoneNumber = (e) => {
     font-size: 35rpx;
     padding: 0 0.5vw;
 }
-
 </style>

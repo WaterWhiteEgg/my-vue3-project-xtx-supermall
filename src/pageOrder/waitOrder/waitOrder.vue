@@ -8,7 +8,6 @@
             </template>
         </navber>
     </view>
-
     <scroll-view scroll-y class="wait-scroll">
         <view class="wait">
             <waitTitle :waitPayTime="waitPayTime" :id="id" :orderState="orderState" @netPay="netPay"></waitTitle>
@@ -81,53 +80,41 @@ const orderState = ref(1)
 // 加载时触发
 onLoad((query) => {
     // 判断有没有query里面的数据
-    if (query.id) {
-        // console.log(query.id);
-        // 有id的话将这个订单展示
-        orderId(query.id).then((res) => {
-            console.log(res);
-            // 赋值
-            allWaitPayArray.value = []
-            allWaitPayArray.value.push(res.data.result)
-            // 获得第一个订单销毁时间，以及订单支付金额
-            waitPayTime.value = {
-                payLatestTime: res.data.result.payLatestTime,
-                payMoney: res.data.result.payMoney,
-            }
-            // 获取地址栏需要的信息
-            addressItem.value = new Address(res.data.result)
-            // 获取skus信息
-            skusItem.value = res.data.result.skus
-            // console.log(addressItem.value);
-            // 获取价格相关信息
-            payPrice.value = {
-                postFee: res.data.result.postFee,
-                totalMoney: res.data.result.totalMoney,
-                payMoney: res.data.result.payMoney,
-            }
-            // 获取订单信息
-            payMassage.value = {
-                id: res.data.result.id,
-                createTime: res.data.result.createTime,
-            }
-            // 赋值订单id
-            id.value = res.data.result.id
-            // 赋值状态
-            orderState.value = res.data.result.orderState
-        })
-
-    }
-    // 没有则渲染所有等待付款
-    else {
-        // 请求所有待付款的订单
-        orderAll({ orderState: 1 }).then((res) => {
-            // 赋值
-            allWaitPayArray.value = res.data.result.items;
-            console.log(allWaitPayArray.value);
-        })
-    }
-
+    // console.log(query.id);
+    // 有id的话将这个订单展示
+    orderId(query.id).then((res) => {
+        console.log(res);
+        // 赋值
+        allWaitPayArray.value = []
+        allWaitPayArray.value.push(res.data.result)
+        // 获得第一个订单销毁时间，以及订单支付金额
+        waitPayTime.value = {
+            payLatestTime: res.data.result.payLatestTime,
+            payMoney: res.data.result.payMoney,
+        }
+        // 获取地址栏需要的信息
+        addressItem.value = new Address(res.data.result)
+        // 获取skus信息
+        skusItem.value = res.data.result.skus
+        // console.log(addressItem.value);
+        // 获取价格相关信息
+        payPrice.value = {
+            postFee: res.data.result.postFee,
+            totalMoney: res.data.result.totalMoney,
+            payMoney: res.data.result.payMoney,
+        }
+        // 获取订单信息
+        payMassage.value = {
+            id: res.data.result.id,
+            createTime: res.data.result.createTime,
+        }
+        // 赋值订单id
+        id.value = res.data.result.id
+        // 赋值状态
+        orderState.value = res.data.result.orderState
+    })
 })
+
 
 // 获取页面实例
 const pageInstance = getCurrentPages().at(-1)
