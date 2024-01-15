@@ -182,6 +182,12 @@
 </template>
 
 <style scoped>
+/* #ifdef H5 */
+@import url("@/pages/index/style/index.css");
+@import url("@/pages/index/indexChild/style/indexHotMutil.css");
+@import url("@/pages/index/indexChild/style/indexMutli.css");
+
+/* #endif */
 .sk-transparent {
     color: transparent !important;
 }
@@ -356,4 +362,5 @@
     height: 100%;
     overflow: hidden;
     background-color: transparent;
-}</style>
+}
+</style>

@@ -34,32 +34,6 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.hotmutil {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: #ffffff92;
-}
+@import url("./style/indexHotMutil.css");
 
-.hotmutil-textbox {
-    font-size: 35rpx;
-}
-
-.hotmutil-alt {
-    padding-left: 2vw;
-    font-size: 20rpx;
-}
-
-.hotmutil-item {
-    display: flex;
-    flex-direction: column;
-    margin: 1vh 4vw 0 4vw;
-}
-
-.hotmutil-imagebox image {
-    text-align: center;
-    padding: 1vh 1vw;
-    width: 17vw;
-    height: 10vh;
-}
 </style>

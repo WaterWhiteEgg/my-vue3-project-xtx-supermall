@@ -1,8 +1,8 @@
 <template>
     <view class="navber" :style="{
-        'padding-top': safeAreaInsets.top + 'px',
+        'padding-top': safeAreaInsets.top  + 'px',
         'background-color': props.background,
-        'color':props.color,
+        'color': props.color,
     }">
         <view class="navber-ico">
             <slot name="left">
@@ -49,11 +49,11 @@ import { back } from "../../utils/back"
 const props = defineProps({
     background: {
         type: String,
-        default: ""
+        default: "#fdfdfd"
     },
     color: {
         type: String,
-        default: ""
+        default: "#000000"
     },
 })
 

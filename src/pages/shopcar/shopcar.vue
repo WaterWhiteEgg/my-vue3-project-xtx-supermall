@@ -1,8 +1,7 @@
 <template>
     <navber>
         <template #left>
-            <view>
-            </view>
+            <view></view>
         </template>
         <template #title>
             <view>购物车</view>

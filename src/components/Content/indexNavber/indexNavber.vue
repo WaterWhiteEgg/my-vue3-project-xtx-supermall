@@ -1,5 +1,5 @@
 <template>
-    <view class="navber" :style="{ 'padding-top': safeAreaInsets.top + 'px' }">
+    <view class="navber" :style="{ 'padding-top': safeAreaInsets.top || 25 + 'px' }">
         <view class="navber-title">
             <text class="navber-title-main">小兔仙儿</text>
             <text class="navber-title-sign">|</text>
@@ -7,8 +7,11 @@
         </view>
         <view class="search">
 
-            <search class="search-index"></search>
-            <text class="search-QR iconfont icon-erweima" @click="searchQR"></text>
+            <search class="search-index">
+                <template #right>
+                    <text class="search-QR iconfont icon-erweima" @click="searchQR"></text>
+                </template>
+            </search>
         </view>
     </view>
 </template>
@@ -73,17 +76,13 @@ const searchQR = () => {
 }
 
 
-.search{
-    position: relative;
+.search {
     margin-top: 2vh;
-    padding-bottom:.1vh ;
+    padding-bottom: .1vh;
 }
 
 .search-QR {
-    position: absolute;
-    top: 0;
-    right: 5vw;
-    padding: 1vh 0;
+    padding-right:35rpx;
     z-index: 9999;
     font-size: 35rpx;
     border-radius: 35rpx;

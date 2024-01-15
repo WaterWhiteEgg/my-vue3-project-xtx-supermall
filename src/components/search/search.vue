@@ -3,6 +3,7 @@
         <view class="search-container">
             <span class="search-icon">&#xe86e;</span>
             <input type="text" placeholder="搜索内容" class="search" @focus="focus" @blur="blur" />
+            <slot name="right"></slot>
         </view>
     </view>
 </template>
@@ -14,8 +15,8 @@ const value = ref("")
 
 </script>
 <style scoped>
-
 .search-container {
+    height: 5vh;
     display: flex;
     align-items: center;
     margin: 1vh 1vw;
@@ -33,6 +34,7 @@ const value = ref("")
 }
 
 .search {
+    margin: 0;
     flex: 1 0 auto;
     font-size: 25rpx;
     font-weight: 100;

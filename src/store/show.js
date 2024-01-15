@@ -5,7 +5,7 @@ import { ref } from 'vue';
 
 export const showing = defineStore('showing', () => {
     // 控制骨架屏显示隐藏
-    const isSkeleton = ref(false)
+    const isSkeleton = ref(true)
     // 开启骨架屏
     function openSkeleton() {
         isSkeleton.value = true
@@ -15,6 +15,6 @@ export const showing = defineStore('showing', () => {
         isSkeleton.value = false
     }
 
-    return { openSkeleton, closeSkeleton };
+    return { isSkeleton,openSkeleton, closeSkeleton };
 
 });

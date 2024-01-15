@@ -1,6 +1,7 @@
 <template>
     <skeleton v-if="showing().isSkeleton"></skeleton>
     <indexNavber></indexNavber>
+
     <swiper-mian :swiperData="swiperData"></swiper-mian>
     <indexMutli :mutliData="mutliData"></indexMutli>
     <IndexHotMutil :hotMutilData="hotMutilData"></IndexHotMutil>
@@ -20,6 +21,7 @@ import indexMutli from "./indexChild/indexMutli.vue";
 import guessLike from "../../components/Content/guessLike/guessLike.vue"
 import IndexHotMutil from "./indexChild/indexHotMutil.vue";
 
+import { onLoad, onShow, onReady } from "@dcloudio/uni-app";
 import { onMounted, ref } from "vue";
 
 const swiperData = ref();
@@ -28,10 +30,16 @@ const hotMutilData = ref([])
 
 // 骨架屏控制
 const { closeSkeleton, openSkeleton, } = showing()
-// 首页渲染时触发
-onMounted(() => {
+// 页面加载时触发
+onLoad((query) => {
     // 骨架屏开启
     openSkeleton()
+})
+
+
+// 首页渲染时触发
+onMounted(() => {
+
     // 请求广告数据
     bannerData().then((res) => {
         // 利用res.status返回成功或错误的结果
@@ -68,31 +76,6 @@ onMounted(() => {
 </script>
 
 <style>
-@import url("../../static/icon/iconfont.css");
-
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo {
-    height: 200rpx;
-    width: 200rpx;
-    margin-top: 200rpx;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50rpx;
-}
-
-.text-area {
-    display: flex;
-    justify-content: center;
-}
-
-.title {
-    font-size: 36rpx;
-    color: #8f8f94;
-}
+@import url("@/static/icon/iconfont.css");
+@import url("./style/index.css");
 </style>
