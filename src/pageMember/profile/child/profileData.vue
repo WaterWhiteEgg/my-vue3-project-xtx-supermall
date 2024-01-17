@@ -4,51 +4,23 @@
       <view class="list-box">
         <view class="list-name"> {{ item.key }}</view>
         <view class="list-value">
-          <input
-            v-if="
-              !item.selectedGender &&
-              !item.selectedBirthday &&
-              !item.selectedCity
-            "
-            type="text"
-            :placeholder="item.prompt"
-            v-model="item.value"
-            :disabled="item.disabled"
-          />
+          <input v-if="!item.selectedGender &&
+            !item.selectedBirthday &&
+            !item.selectedCity
+            " type="text" :placeholder="item.prompt" v-model="item.value" :disabled="item.disabled" />
           <!-- 对于性别选择的特殊情况 -->
           <radio-group @change="changeRadio" v-else-if="item.selectedGender">
-            <radio
-              value="男"
-              :checked="item.value === '男'"
-              name="gender"
-              style="transform: scale(0.7)"
-              color="#00ca76"
-            />男
-            <radio
-              value="女"
-              name="gender"
-              :checked="item.value === '女'"
-              style="transform: scale(0.7)"
-              color="#00ca76"
-            />女
+            <radio value="男" :checked="item.value === '男'" name="gender" style="transform: scale(0.7)" color="#00ca76" />男
+            <radio value="女" name="gender" :checked="item.value === '女'" style="transform: scale(0.7)" color="#00ca76" />女
           </radio-group>
           <!-- 对于日期选择的特殊情况 -->
           <view class="uni-list-cell-db" v-else-if="item.selectedBirthday">
-            <picker
-              mode="date"
-              :value="date"
-              :end="getDate()"
-              @change="bindDateChange"
-            >
+            <picker mode="date" :value="date" :end="getDate()" @change="bindDateChange">
               <view class="uni-input">{{ item.value || "请输入日期" }}</view>
             </picker>
           </view>
           <!-- 对于城市选择的特殊情况 -->
-          <citySelect
-            v-else-if="item.selectedCity"
-            :values="item.value"
-            @selectCity="selectCity"
-          ></citySelect>
+          <citySelect v-else-if="item.selectedCity" :values="item.value" @selectCity="selectCity"></citySelect>
         </view>
       </view>
     </view>
@@ -59,6 +31,8 @@
 import { reactive, onMounted, toRef, ref, watch, toRaw, computed } from "vue";
 import CITYDATA from "../../../network/json/pca-code.json";
 import { putProfile } from "../../../network/profile";
+import { useRequest } from "../../../store/modules/request"
+
 
 import citySelect from "../../../components/citySelect/citySelect.vue";
 
@@ -179,7 +153,9 @@ const bindDateChange = (e) => {
 // 保存个人数据事件
 const save = () => {
   // 注意，发送的对象要与datas里面的索引号一致
-  console.log(cityCodeIndex.value);
+  // 显示加载
+  uni.showLoading({title:"上传中"})
+   // console.log(cityCodeIndex.value);
   putProfile({
     nickname: datas.value[1].value,
     gender: datas.value[2].value,
@@ -189,10 +165,10 @@ const save = () => {
     cityCode: cityCodeIndex.value[1].code + "00",
     countyCode: cityCodeIndex.value[2].code,
   }).then((res) => {
-    // 保存后刷新页面
-    uni.reLaunch({
-      url: "/pageMember/profile/profile",
-    });
+    // 保存后更改信息
+    useRequest().addUserData(res.data.result)
+    // 隐藏加载
+    uni.hideLoading()
   });
 };
 </script>

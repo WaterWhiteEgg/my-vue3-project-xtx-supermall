@@ -10,6 +10,10 @@ export const useRequest = defineStore('request', () => {
     const addUserData = (data) => {
         userData.value = data
     }
+    // 仅更改头像
+    const changeUserDataAvater = (avatar) => {
+        userData.value.avatar = avatar
+    }
     // token
     const addToken = (data) => {
         token.value = data
@@ -17,9 +21,9 @@ export const useRequest = defineStore('request', () => {
     // 清除token以及数据
     function clearToken() {
         token.value = "",
-        userData.value = {}
+            userData.value = {}
     }
-    return { token, userData, addToken, clearToken, addUserData };
+    return { token, userData, addToken, clearToken, addUserData ,changeUserDataAvater};
 
 }, {
     // 设置

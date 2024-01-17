@@ -109,10 +109,10 @@ const toShopcarOrder = () => {
 }
 
 .method-bar-item image {
-    width: 7vw;
-    height: 5vh;
+    width: 30px;
+    height: 30px;
+    aspect-ratio: 1/1;
     object-fit: cover;
-    /* 保持宽高比并填充整个容器，可能会裁剪部分内容 */
 }
 
 .method-bar-item-name {

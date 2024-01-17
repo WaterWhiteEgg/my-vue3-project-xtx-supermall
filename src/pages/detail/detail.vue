@@ -52,4 +52,18 @@ onLoad((query) => {
 });
 
 </script>
-<style scoped></style>
+<style scoped>
+/* #ifdef H5 */
+.detail-scroll {
+  height: calc(90vh - 44px);
+}
+
+/* #endif */
+
+/* #ifdef MP-WEIXIN */
+.detail-scroll {
+  height: 90vh;
+}
+
+/* #endif */
+</style>

@@ -49,7 +49,7 @@ const request = useRequest()
 const dologinTest = () => {
     logintest(
         {
-            phoneNumber: 15603061560
+            phoneNumber: 99999999999
         }
     ).then(
         (res) => {

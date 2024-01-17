@@ -1,9 +1,8 @@
 <template>
   <view class="navber" :style="{ 'padding-top': safeAreaInsets.top + 'px' }">
     <view class="profile-title">
-      <text class="profile-title-back" @tap="back()">{{ "<" }} </text
-      ><text>个人信息</text></view
-    >
+      <text class="profile-title-back" @tap="back()">{{ "<" }} </text><text>个人信息</text>
+    </view>
     <view class="profile-image">
       <view class="profile-image-box">
         <image :src="image" mode="scaleToFill" />
@@ -15,8 +14,9 @@
 <script setup>
 import { watch, ref } from "vue";
 
+import { useRequest } from "../../../store/modules/request"
 import { postAvatar } from "../../../network/profile";
-import {back} from "../../../utils/back"
+import { back } from "../../../utils/back"
 // 头像信息
 const image = ref("");
 
@@ -28,6 +28,7 @@ const props = defineProps({
     },
   },
 });
+const emits = defineEmits(["needUpdate"])
 // 观察userdatas的值变化
 watch(
   () => {
@@ -44,12 +45,13 @@ const { safeAreaInsets } = uni.getSystemInfoSync();
 
 // 点击切换头像
 const changeAvatar = () => {
+    // 显示加载
+    uni.showLoading({ title: "处理中" })
   // 选择图片api
   postAvatar("/member/profile/avatar").then((res) => {
-    // 修改成功后强制刷新页面
-    uni.reLaunch({
-      url: "/pageMember/profile/profile",
-    });
+
+    // 修改成功后提交数据刷新请求
+    emits("needUpdate")
   });
 };
 </script>

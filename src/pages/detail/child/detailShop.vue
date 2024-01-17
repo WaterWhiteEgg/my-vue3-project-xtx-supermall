@@ -1,13 +1,15 @@
 <template>
   <view class="shop">
     <view class="shop-fn">
-      <view class="shop-fn-item"><text> <text>&#xe666;</text></text>
+      <view class="shop-fn-item"><button> <text>&#xe666;</text></button>
         <text>收藏</text>
       </view>
-      <view class="shop-fn-item"><text><text>&#xe8a0;</text> </text>
+      <!-- #ifdef MP-WEIXIN -->
+      <view class="shop-fn-item"><button open-type="contact" @contact="contact"><text>&#xe8a0;</text> </button>
         <text>客服</text>
       </view>
-      <view class="shop-fn-item" @tap="toNavShopcar"><text><text>&#xe63f;</text> </text>
+      <!-- #endif -->
+      <view class="shop-fn-item" @tap="toNavShopcar"><button><text>&#xe63f;</text> </button>
         <text>购物车</text>
       </view>
     </view>
@@ -96,17 +98,24 @@ const toWellLogin = () => {
   }
   return useRequest().token === ""
 }
+
+// 客服信息回调
+const contact = (value) => {
+  console.log(value);
+}
 </script>
 <style scoped>
 .shop {
+  box-sizing: border-box;
   position: absolute;
   bottom: 0;
-  z-index: 9;
-  padding: 0.5vh 0;
+  z-index: 999;
+  height: 10vh;
   font-family: "iconfont";
   display: flex;
   justify-content: space-between;
   font-size: 30rpx;
+  background-color: #f1f1f1;
 }
 
 .shop-fn {
@@ -123,8 +132,12 @@ const toWellLogin = () => {
 }
 
 .shop-button view {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1vh 4vw;
-  margin: 0 1vw;
+  margin: 2vh 1vw;
   font-size: 35rpx;
   border-radius: 40rpx;
   background-color: #12c1a7;
@@ -137,6 +150,18 @@ const toWellLogin = () => {
   justify-content: center;
   align-items: center;
   padding: 0 2vw;
+}
+
+.shop-fn-item button {
+  box-sizing: border-box;
+  background-color: #ffffff00;
+
+}
+
+.shop-fn-item button::after {
+  content: "";
+  border: 0px solid #00000000;
+
 }
 
 .shopcar {
