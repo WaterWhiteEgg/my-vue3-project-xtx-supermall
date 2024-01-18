@@ -27,6 +27,7 @@
     top: 0;
     z-index: 999;
     width: 100vw;
+
 }
 
 .wait-scroll {
@@ -115,7 +116,7 @@ onLoad((query) => {
     })
 })
 
-
+// #ifdef MP-WEIXIN
 // 获取页面实例
 const pageInstance = getCurrentPages().at(-1)
 // 加载完毕后触发
@@ -132,9 +133,10 @@ onReady(() => {
     })
 })
 
+// #endif
+
 // 处理支付
 const netPay = (Pid) => {
-    console.log(3);
     uni.showLoading({ title: "等待支付" })
     // 模拟请求，因为没有真正意义上的支付，不需要请求用户的微信支付宝之类的
     pay(Pid).then(() => {

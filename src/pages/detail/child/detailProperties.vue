@@ -104,6 +104,7 @@ const isActiveId = computed(() => {
 // propertiesAddress返回对应地址
 const pushAddress = (data) => {
   for (let index in serveItem.value) {
+    console.log(data);
     // 如果id相同就对其执行desc字符变化
     if (serveItem.value[index].id === data.id) {
       // console.log(data);

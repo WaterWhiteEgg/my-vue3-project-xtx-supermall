@@ -5,7 +5,7 @@ export const useMember = defineStore('member', () => {
     
 
     // 地址栏数据
-    const addressData = ref([])
+    const addressData = ref([1,2,3])
     // 覆盖addressData的数据
     const changeAaddressData = (data) => {
         addressData.value = data

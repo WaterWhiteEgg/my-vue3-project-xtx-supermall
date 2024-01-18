@@ -41,10 +41,12 @@ const emits = defineEmits(["pushAddress"]);
 
 // 挂载时触发
 onMounted(() => {
+
   // 获取地址的所有数据
   address().then((res) => {
     useMember().changeAaddressData(res.data.result)
-    // console.log(res.data.result);
+    // 初始化默认选择值给父组件
+    pushAddress(emits, useMember().addressData[useMember().activeRadio], "address")
   }).catch((err) => {
     // 若未授权则跳转登录
     if (err.statusCode === 401) {
@@ -53,8 +55,8 @@ onMounted(() => {
       });
     }
   })
-  // 初始化默认选择值给父组件
-  pushAddress(emits, useMember().addressData[useMember().activeRadio], "address")
+
+
 
 
 });

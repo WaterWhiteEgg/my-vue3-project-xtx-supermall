@@ -25,6 +25,7 @@
 .address {
     display: flex;
     flex-direction: column;
+    margin-top: 21vh;
     font-size: 30rpx;
     background-color: #fff;
 

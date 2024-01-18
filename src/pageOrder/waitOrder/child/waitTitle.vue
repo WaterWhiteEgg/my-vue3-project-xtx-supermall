@@ -28,24 +28,33 @@
 </template>
 <style scoped>
 .navber {
-
+    box-sizing: border-box;
+    height: 9vh;
     font-size: 30rpx;
     background-color: #12c1a7;
     color: #fff;
 }
 
 .navber-time {
+    box-sizing: border-box;
     display: flex;
     justify-content: space-around;
+    height: 3vh;
+    background-color: #12c1a7;
+
 }
 
 .navber-commit {
+    box-sizing: border-box;
+    height: 9vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1.5vh 0;
     font-size: 28rpx;
     color: #096658;
+    background-color: #12c1a7;
+
 
 }
 
