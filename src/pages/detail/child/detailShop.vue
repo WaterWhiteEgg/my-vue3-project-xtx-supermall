@@ -167,4 +167,25 @@ const contact = (value) => {
 .shopcar {
   background-color: #fe9539 !important;
 }
-</style>
+
+/* #ifdef MP-WEIXIN */
+
+.shop-fn-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1vw;
+}
+
+.shop-fn-item button {
+  padding: 0 3.5vw;
+
+}
+
+.shop-button view {
+  font-size: 30rpx;
+
+}
+
+/* #endif */</style>
