@@ -49,7 +49,7 @@ const request = useRequest()
 const dologinTest = () => {
     logintest(
         {
-            phoneNumber: 99999999999
+            phoneNumber: 15603061560
         }
     ).then(
         (res) => {
@@ -66,11 +66,7 @@ const dologinTest = () => {
 
         })
         .catch((err) => {
-            console.log(err);
-            uni.showToast({
-                title: 'err',
-                icon: 'error',
-            })
+            // console.log(err);
         })
 }
 </script>

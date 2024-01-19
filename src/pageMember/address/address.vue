@@ -4,7 +4,7 @@
             <view class="item-detail">
                 <view class="item-detail-name">
                     <view>{{ item.receiver }} {{ item.contact }}</view>
-                    <text v-if="item.isDefault" class="cloose">选择</text>
+                    <text v-if="item.isDefault" class="cloose">默认</text>
                 </view>
                 <view class="item-detail-address">{{ item.address }}</view>
             </view>
@@ -66,15 +66,14 @@ onShow(() => {
 });
 // 销毁时触发
 onUnload(() => {
-    // 如果id是address进来的,则在销毁时帮其刷新一下数据
-    if (query.value.id === "address") {
-        address().then((res) => {
-            useMember().changeAaddressData(res.data.result)
+    // 退出时直接同步本地的数据
+    address().then((res) => {
+        useMember().changeAaddressData(res.data.result)
 
-        })
+    })
 
-    }
-})
+}
+)
 // 前往新建/修改地址栏
 const goNewaddress = (query) => {
     uni.navigateTo({

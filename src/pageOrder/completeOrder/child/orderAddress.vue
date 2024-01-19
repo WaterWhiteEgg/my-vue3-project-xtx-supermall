@@ -5,12 +5,12 @@
         <image src="../../../static/color/positioning.png" mode="scaleToFill" />
       </view>
       <view class="address-box-title">
-        <view class="address-box-title-name">{{ payAddress[0] && payAddress[0].receiver }}
-          {{ payAddress[0] && payAddress[0].contact }}
+        <view class="address-box-title-name">{{ payAddress && payAddress.receiver }}
+          {{ payAddress && payAddress.contact }}
         </view>
         <view>
-          {{ payAddress[0] && payAddress[0].fullLocation }}
-          {{ payAddress[0] && payAddress[0].address }}
+          {{ payAddress && payAddress.fullLocation }}
+          {{ payAddress && payAddress.address }}
         </view>
       </view>
     </view>
@@ -22,18 +22,33 @@ import { ref, watchEffect } from "vue";
 
 import { onLoad, onShow, onUnload } from "@dcloudio/uni-app";
 import { address } from "@/network/address";
+import { useMember } from "../../../store/modules/member"
 
 const emits = defineEmits(["getAddressId"]);
 // 储存用户地址
-const payAddress = ref([]);
+const payAddress = ref({});
+// 用户地址为空时显示
+const nullAddress = ref({ receiver: "你还没有地址", contact: "", fullLocation: "", address: "" })
 onShow(() => {
-  //请求用户地址
-  address().then((res) => {
-    payAddress.value = res.data.result;
-    // console.log(res.data.result);
+  //获取用户地址
+  payAddress.value = useMember().addressData[useMember().activeRadio] || []
+  // console.log(useMember().addressData[useMember().activeRadio]);
+  // 如果payAddress没有任何值，则去直接请求地址,将第一个默认值渲染
+  if (payAddress.value.length === 0) {
+    address().then((res) => {
+      payAddress.value = res.data.result[0] || nullAddress.value;
+      // 将顶端的地址id发送
+      emits("getAddressId", payAddress.id);
+    });
+  }
+  // 已经记录则直接提交id
+  else {
     // 将顶端的地址id发送
-    emits("getAddressId", res.data.result[0].id);
-  });
+    emits("getAddressId", payAddress.id);
+  }
+
+
+
 });
 
 // 前往地址栏
