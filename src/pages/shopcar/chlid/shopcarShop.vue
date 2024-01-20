@@ -52,7 +52,7 @@
 </template>
 <style scoped>
 .scroll {
-  height: 88vh;
+  height: calc(87vh - 8vh - 8vh);
 }
 
 .shopcar {

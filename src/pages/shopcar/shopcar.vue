@@ -1,12 +1,15 @@
 <template>
-    <navber>
-        <template #left>
-            <view></view>
-        </template>
-        <template #title>
-            <view>购物车</view>
-        </template>
-    </navber>
+    <view class="navber">
+        <navber>
+            <template #left>
+                <view></view>
+            </template>
+            <template #title>
+                <view>购物车</view>
+            </template>
+        </navber>
+    </view>
+
     <shopcarNeedLogin v-if="!isLogin"></shopcarNeedLogin>
     <shopcarAD v-if="isLogin"></shopcarAD>
     <shopcarShop v-if="isLogin"></shopcarShop>
@@ -43,4 +46,9 @@ onShow(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.navber {
+    box-sizing: border-box;
+    height: 8vh;
+}
+</style>
