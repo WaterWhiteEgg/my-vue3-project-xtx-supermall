@@ -38,8 +38,9 @@ const { toDetail } = globalDetail()
     display: flex;
     flex-wrap: wrap;
     height: 55vh;
+    max-height: 350px;
     font-size: 30rpx;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .category-show-item {
@@ -62,7 +63,6 @@ const { toDetail } = globalDetail()
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    height: 7vh;
     overflow: hidden;
     text-overflow: ellipsis;
 }
