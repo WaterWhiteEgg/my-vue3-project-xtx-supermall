@@ -5,7 +5,7 @@
             <input type="text" placeholder="搜索内容" v-model="textValue" class="search" @focus="focus" @blur="blur"
                 @input="inputText" />
             <slot name="right"></slot>
-            <view class="search-box" v-show="isSearch" :class="{ 'search-box-live': isSearch }">搜索</view>
+            <view class="search-box" v-show="isSearch" :class="{ 'search-box-live': isSearch }">后端接口没做好ing。。。</view>
         </view>
     </view>
 </template>
@@ -13,7 +13,7 @@
 <script setup>
 import { ref } from 'vue'
 
-import { easySearch } from "../../network/search"
+import { easySearch,search } from "../../network/search"
 import { debounce } from "../../utils/debounce"
 import { uni } from '@dcloudio/uni-h5';
 // 输入的文字
@@ -98,7 +98,8 @@ const blur = (e) => {
 
 .search-box-live {
     height: 90vh;
-    background-color: red;
+    background-color: #f3ffed;
+    color: #000;
 
 
 

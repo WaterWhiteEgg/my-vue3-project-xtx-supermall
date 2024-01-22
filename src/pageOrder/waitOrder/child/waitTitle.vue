@@ -7,7 +7,7 @@
         </navber>
         <view class="navber-time">
             <view>总支付：{{ waitPayTime && waitPayTime.payMoney }}￥</view>
-            <view v-if="orderState === 1">销毁剩余时间：{{ timer }}</view>
+            <view v-if="orderState === 1">销毁剩余时间：{{ Object.keys(waitPayTime).length === 0 ? "" : timer }}</view>
 
         </view>
         <view class="navber-commit">

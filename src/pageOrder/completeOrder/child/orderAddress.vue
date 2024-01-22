@@ -37,14 +37,17 @@ onShow(() => {
   if (payAddress.value.length === 0) {
     address().then((res) => {
       payAddress.value = res.data.result[0] || nullAddress.value;
-      // 将顶端的地址id发送
-      emits("getAddressId", payAddress.id);
+      // 将顶端的地址id发送(没有地址不发送)
+      if (!payAddress.value.address === "") {
+        emits("getAddressId", payAddress.value.id);
+
+      }
     });
   }
   // 已经记录则直接提交id
   else {
     // 将顶端的地址id发送
-    emits("getAddressId", payAddress.id);
+    emits("getAddressId", payAddress.value.id);
   }
 
 

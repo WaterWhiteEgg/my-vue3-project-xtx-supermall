@@ -59,7 +59,7 @@ onLoad((query) => {
 
   // 相同的函数执行
   function autoValue(res) {
-    // console.log(res);
+    console.log(res);
     // 获取整个预交付商品列表
     selectedShopcar.value = res.data.result.goods;
     //   获取购物车的综合数据
@@ -127,6 +127,7 @@ const changePayType = (type) => {
 }
 // 提交购物车表单
 const completeOrder = () => {
+
   // 加载动画
   uni.showLoading({
     title: "提交中..."

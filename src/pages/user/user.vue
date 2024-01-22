@@ -23,7 +23,7 @@
 <script setup>
 import { onLoad, onShow } from '@dcloudio/uni-app';
 import { useRequest } from "../../store/modules/request"
-import { ref, watch,onActivated } from 'vue'
+import { ref, watch, onActivated } from 'vue'
 
 import userMethod from "./child/userMethod.vue"
 import guessLike from "../../components/Content/guessLike/guessLike.vue"
@@ -44,7 +44,7 @@ watch(() => {
 
 // 检查token存在以及执行跳转方法
 // 在一般情况下，都需要验证token是否过期，是否有错
-    // 但是目前存在token就可以
+// 但是目前存在token就可以
 const testToken = () => {
     // console.log(useRequest().userData);
     // 赋值
@@ -100,7 +100,7 @@ const toProfile = (flag) => {
 
 .information-avatar {
     padding-top: 1vh;
-
+    min-height: 65px;
     margin: 0 2vw;
 }
 
@@ -108,7 +108,7 @@ const toProfile = (flag) => {
     width: 14vw;
     height: 9.5vh;
     min-width: 65px;
-    min-height:65px ;
+    min-height: 65px;
     border-radius: 50%;
 
 }
