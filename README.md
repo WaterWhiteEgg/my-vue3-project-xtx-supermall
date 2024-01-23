@@ -12,16 +12,9 @@
 npm i
 `
 ## 运行
-`
-npm run dev:h5
-`
 
-or
-
-`
-npm run dev:mp-weixin
-
-`
+```\n npm run dev:h5\n```
+```\n npm run dev:mp-weixin\n```
 [对应的教学视频](https://www.bilibili.com/video/BV1Bp4y1379L/)
 
 
