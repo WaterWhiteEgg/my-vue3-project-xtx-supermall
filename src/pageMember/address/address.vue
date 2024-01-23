@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view class="box">
         <view class="item" v-for="item in addressData" :key="item.address">
             <view class="item-detail">
                 <view class="item-detail-name">
@@ -10,13 +10,16 @@
             </view>
             <view class="item-fn">
                 <uni-swipe-action>
-                    <uni-swipe-action-item>
-                        <view class="modify" @tap="goNewaddress('id=2&uid=' + item.id)">修改</view>
-                        <template #right>
-                            <view class="del" @tap="delItem(item.id)">删除</view>
-                        </template>
+                    <view class="item-fn-box">
+                        <uni-swipe-action-item>
+                            <view class="modify" @tap="goNewaddress('id=2&uid=' + item.id)">修改</view>
+                            <template #right>
+                                <view class="del" @tap="delItem(item.id)">删除</view>
+                            </template>
 
-                    </uni-swipe-action-item>
+                        </uni-swipe-action-item>
+                    </view>
+
                 </uni-swipe-action>
             </view>
         </view>
@@ -93,16 +96,23 @@ const delItem = (uid) => {
 }
 </script>
 <style scoped>
+.box {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    margin: 0 auto;
+    overflow: hidden;
+
+}
+
 .item {
     display: flex;
     justify-content: space-between;
     /* 根据删除盒子的width加上原本长度出现的拖动效果 */
-    width: 90vw;
-    margin: 0 auto;
-
     height: 13vh;
-    font-size: 35rpx;
+    width: calc(90vw + 1px);
     border-bottom: 1px solid #6161612d;
+    font-size: 35rpx;
 }
 
 
@@ -117,6 +127,7 @@ const delItem = (uid) => {
 }
 
 .item-fn {
+    box-sizing: border-box;
     display: flex;
 
 }
@@ -132,9 +143,8 @@ const delItem = (uid) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 96%;
+    width: 90%;
     height: 5vh;
-    margin: 0 auto;
     padding: .1vh 0;
     border-radius: 35rpx;
     font-size: 30rpx;

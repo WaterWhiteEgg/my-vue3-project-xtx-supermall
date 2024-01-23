@@ -32,13 +32,15 @@
   </scroll-view>
   <view class="all-shopcar">
     <view class="all-shopcar-box">
+
       <view class="all-radio">
         <radio style="transform: scale(0.6)" color="#12c1a7" :checked="isAllSelect" :disabled="isDisabled"
           @tap="changeAllRadio(isAllSelect)" />
+        <view class="all-text">
+          <view>全选</view>
+        </view>
       </view>
-      <view class="all-text">
-        <view>全选</view>
-      </view>
+
     </view>
     <view class="total">
       <view>合计:</view>
@@ -61,6 +63,7 @@
   margin: 1vh 2vw;
   padding: 2vh 0;
   padding-bottom: 1vh;
+  overflow: hidden;
   font-size: 25rpx;
   background-color: #fff;
 }
@@ -88,7 +91,8 @@
 }
 
 .shopcar-text {
-  width: 62vw;
+  width: calc(62vw + 2px);
+  overflow: hidden;
 }
 
 .shopcar-text-attrstext {
@@ -134,9 +138,18 @@
   margin-left: 2vw;
 }
 
-.all-text {
-  margin-left: -2vw;
+.all-radio {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
   margin-top: 1vh;
+}
+
+.all-text {
+  padding: 0 1vw;
+  padding-top: .1vh;
+  margin-left: -2vw;
 }
 
 .total {
