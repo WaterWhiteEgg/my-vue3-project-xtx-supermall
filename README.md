@@ -10,7 +10,7 @@
 - 微信平台 需要额外安装 `微信小程序工具` 解析
 - 安卓平台 需要额外安装识别安卓的编译器解析以及打包 可选择 `HBuilderX`
 - ios平台 需要额外安装识别ios的编译器解析以及打包 可选择 `HBuilderX`
-- 其他小程序 安装对应的工具 *我都不知道有什么小程序和工具*
+- 其他小程序 安装对应的工具 *我都不知道有什么小程序和工具;-)*
 ### 安装包
 `
 npm i
@@ -21,7 +21,7 @@ npm i
 
 or  
 
-``` npm run dev:mp-weixin```  
+```npm run dev:mp-weixin```  
 
 
 [对应的教学视频](https://www.bilibili.com/video/BV1Bp4y1379L/)  
