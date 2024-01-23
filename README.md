@@ -13,10 +13,15 @@ npm i
 `
 ## 运行
 
-```npm run dev:h5```
-or
-``` npm run dev:mp-weixin```
-[对应的教学视频](https://www.bilibili.com/video/BV1Bp4y1379L/)
+```npm run dev:h5```  
+
+or  
+
+``` npm run dev:mp-weixin```  
+
+
+[对应的教学视频](https://www.bilibili.com/video/BV1Bp4y1379L/)  
+
 
 
 [对应的接口文档](https://apifox.com/apidoc/shared-0e6ee326-d646-41bd-9214-29dbf47648fa/api-43426882)
