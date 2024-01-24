@@ -15,7 +15,6 @@ import { ref } from 'vue'
 
 import { easySearch,search } from "../../network/search"
 import { debounce } from "../../utils/debounce"
-import { uni } from '@dcloudio/uni-h5';
 // 输入的文字
 const textValue = ref("")
 
