@@ -3,12 +3,12 @@
     <detailSwiper :detailDataPic="detailDataPic"></detailSwiper>
     <detailPrice :oldPrice="priceData.oldPrice" :price="priceData.price"></detailPrice>
     <detailTitle :name="detailData.name" :desc="detailData.desc"></detailTitle>
-    <detailProperties :detailSpecs="detailSpecs" :detailSkus="detailSkus"></detailProperties>
+    <detailProperties ></detailProperties>
   </scroll-view>
   <detailShop></detailShop>
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref ,provide} from "vue";
 import { onLoad, onHide, onUnload, onBackPress } from "@dcloudio/uni-app";
 
 import detailSwiper from "./child/detailSwiper.vue";
@@ -25,8 +25,12 @@ import { joinShopcar } from "../../network/shopcar";
 const detailData = ref({});
 const detailDataPic = ref([]);
 const priceData = ref({});
-const detailSpecs = ref([]);
+
+// 这些数据使用Provide给子组件，类型声明是: InjectionKey<你的类型>
+const detailSpecs  = ref([]); 
+provide("detailSpecs",detailSpecs)
 const detailSkus = ref([]);
+provide("detailSkus",detailSkus)
 
 // 加载时触发
 onLoad((query) => {

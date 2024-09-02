@@ -1,23 +1,41 @@
 <template>
   <popupTitle title="商品规格"></popupTitle>
   <view class="show">
+    {{ a }}
     <image :src="skusItem.picture" mode="aspectFit"> </image>
     <view class="show-desc">
-      <view class="show-desc-price"><text class="show-desc-price-ico">￥</text>
-        {{ (Number(skusItem.price) * quantity).toFixed(2) }}</view>
+      <view class="show-desc-price"
+        ><text class="show-desc-price-ico">￥</text>
+        {{ (Number(skusItem.price) * quantity).toFixed(2) }}</view
+      >
       <view class="show-desc-inventory">库存：{{ skusItem.inventory }}</view>
       <view class="show-desc-select">已选：{{ skusArrayItem }}</view>
     </view>
   </view>
   <scroll-view scroll-y class="scroll">
-    <view v-for="(item, index) in detailSpecs" :key="item.id" class="detailspecs">
+    <view
+      v-for="(item, index) in detailSpecs"
+      :key="item.id"
+      class="detailspecs"
+    >
       <text class="name">{{ item.name }}</text>
       <scroll-view scroll-x class="scroll-item">
-        <view v-for="(itemValue, itemIndex) in item.values" class="item" :key="itemValue.name" @tap="
-          changeActiveItem(index, itemIndex);
-        itemSkusPush();
-        " :class="{ active: isActiveItem(index, itemIndex) }">
-          <image :src="itemValue.picture" mode="scaleToFill" class="item-image" v-if="itemValue.picture" />
+        <view
+          v-for="(itemValue, itemIndex) in item.values"
+          class="item"
+          :key="itemValue.name"
+          @tap="
+            changeActiveItem(index, itemIndex);
+            itemSkusPush();
+          "
+          :class="{ active: isActiveItem(index, itemIndex) }"
+        >
+          <image
+            :src="itemValue.picture"
+            mode="scaleToFill"
+            class="item-image"
+            v-if="itemValue.picture"
+          />
           <text>{{ itemValue.name }}</text>
           <text>{{ item.desc }}</text>
         </view>
@@ -39,22 +57,12 @@ import counter from "../../../../components/counter/counter.vue";
 import { pushItemClick, pushQuantity } from "./js/pushItemClick";
 import { globalSkuItem } from "../../../../store/skus";
 import { onLoad, onShow } from "@dcloudio/uni-app";
-import { ref, computed, watch, onMounted } from "vue";
-const props = defineProps({
-  detailSpecs: {
-    type: Array,
-    default: function () {
-      return [];
-    },
-  },
-  detailSkus: {
-    type: Array,
-    default: function () {
-      return [];
-    },
-  },
-});
+import { ref, computed, watch, onMounted, inject } from "vue";
 
+// 获取detail上的数据，ts里的数据应该是ref<any[]>
+const detailSpecs = inject("detailSpecs");
+const detailSkus = inject("detailSkus");
+// 子传父
 const emits = defineEmits(["itemSkusPush", "pushQuantity"]);
 
 // sku对应的数组
@@ -72,7 +80,7 @@ const skusItem = ref({});
 // 初始化skusArray的初始值
 onMounted(() => {
   // 使skusArray初始化第一个值
-  props.detailSpecs.forEach((item) => {
+  detailSpecs.value.forEach((item) => {
     skusArray.value.push(item.values[0]);
   });
   // 使skusItem初始化第一个值
@@ -93,7 +101,7 @@ const changeActiveItem = (index, itemIndex) => {
   // 将对应活跃的index切换
   activeItem.value[index] = itemIndex;
   // 切换skusArray对应对象的数据
-  skusArray.value[index] = props.detailSpecs[index].values[itemIndex];
+  skusArray.value[index] = detailSpecs.value[index].values[itemIndex];
   // 切换完后决定skus里面的哪个对象
   selectDetailSkus();
 };
@@ -101,7 +109,7 @@ const changeActiveItem = (index, itemIndex) => {
 const isActiveItem = (index, itemIndex) => {
   // 如果activeItem是空的，则初始化它都为0
   if (!activeItem.value.length) {
-    props.detailSpecs.forEach(() => {
+    detailSpecs.value.forEach(() => {
       activeItem.value.push(0);
     });
   }
@@ -116,7 +124,7 @@ const itemSkusPush = () => {
 // 选择决定skus里的对象
 const selectDetailSkus = () => {
   // 遍历detailSkus，寻找相同型号
-  for (let item of props.detailSkus) {
+  for (let item of detailSkus.value) {
     // 记录所有条件正确的值，判断skus的关系
     const isAllItem = ref(true);
     // 再次循环，将specs里面的值进行对比

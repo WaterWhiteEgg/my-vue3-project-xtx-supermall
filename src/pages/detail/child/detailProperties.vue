@@ -12,7 +12,7 @@
       @maskClick="maskClick">
       <propertiesAddress v-if="isActiveId('address')" @pushAddress="pushAddress"></propertiesAddress>
       <propertiesAgreement v-if="isActiveId('agreement')"></propertiesAgreement>
-      <propertiesData v-if="isActiveId('select')" :detailSpecs="detailSpecs" :detailSkus="detailSkus"
+      <propertiesData v-if="isActiveId('select')"
         @itemSkusPush="itemSkusPush" @pushQuantity="pushQuantity"></propertiesData>
     </uni-popup>
   </view>
@@ -25,20 +25,9 @@ import { globalDetail } from "../../../store/toDetail";
 
 import propertiesAgreement from "./childProperties/propertiesAgreement.vue";
 import propertiesData from "./childProperties/propertiesData.vue";
-// 获取尺寸等属性选择
 const prop = defineProps({
-  detailSpecs: {
-    type: Array,
-    default: function () {
-      return [];
-    },
-  },
-  detailSkus: {
-    type: Array,
-    default: function () {
-      return [];
-    },
-  },
+ 
+ 
 });
 
 // 进入专门的弹窗
